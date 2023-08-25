@@ -28,8 +28,6 @@ public class House : ModItem
             return false;
         }
 
-        Main.NewText(ModContent.GetInstance<Config>().BuildStyle);
-
         Schematic.Paste(schematic, 
             style: ModContent.GetInstance<Config>().BuildStyle);
 
@@ -40,7 +38,7 @@ public class House : ModItem
     {
         CreateRecipe()
             .AddIngredient(ItemID.Wood, 100)
-            .AddTile(TileID.WorkBenches)
+            .AddTile(TileID.HeavyWorkBench)
             .Register();
     }
 }

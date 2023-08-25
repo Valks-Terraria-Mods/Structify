@@ -118,6 +118,11 @@ public class Schematic
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
 
+                // Replace the wood wall with the current style wall
+                // Note that this is not perfect because the styles are all over the place
+                if (style != 0)
+                    ReplaceWall(tileInfo, WallID.Wood, 40 + style);
+
                 actions.Add(() =>
                 {
                     // Place walls
@@ -137,9 +142,9 @@ public class Schematic
                     continue;
                 }
 
+                // Place solid tiles
                 actions.Add(() =>
                 {
-                    // Place solid tiles
                     PlaceTile(x, y, tileInfo, style);
                 });
             }
@@ -185,8 +190,23 @@ public class Schematic
 
         actions.Add(() =>
         {
-            PlaceTile(x, y, tileInfo, style);
+            if (tileInfo.TileType == TileID.Chairs && style != 0)
+            {
+                // Chair styles are offset by 1
+                // https://docs.google.com/spreadsheets/d/1b-12C9BrUURP_0pHN7QC-0wYFsSF1ZbWyN6SkWRO48A/edit?usp=sharing
+                PlaceTile(x, y, tileInfo, style + 1);
+            }
+            else
+            {
+                PlaceTile(x, y, tileInfo, style);
+            }
         });
+    }
+
+    static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
+    {
+        if (tileInfo.WallType == oldWall)
+            tileInfo.WallType = newWall;
     }
 
     static void ReplaceTile(TileInfo tileInfo, int oldTile, int newTile)
@@ -197,23 +217,35 @@ public class Schematic
 
     static void PlaceTile(int x, int y, TileInfo tileInfo, int style)
     {
-        // Set empty tiles
+        // Empty tile so clear this tile
         if (!tileInfo.HasTile)
-            Main.tile[x, y].ClearTile();
-        else
         {
-            WorldGen.PlaceTile(x, y, tileInfo.TileType,
-            mute: true,
-            forced: true,
-            plr: -1,
-            style: style);
+            Main.tile[x, y].ClearTile();
+            return;
+        }
 
-            WorldGen.SlopeTile(x, y, tileInfo.Slope);
+        // Replace wood block with appropriate style
+        // Note that this is not perfect because the styles are all over the place
+        if (style != 0)
+            ReplaceTile(tileInfo, TileID.WoodBlock, 156 + style);
 
+        // Place tile
+        WorldGen.PlaceTile(x, y, tileInfo.TileType,
+                mute: true,
+                forced: true,
+                plr: -1,
+                style: style);
+
+        WorldGen.SlopeTile(x, y, tileInfo.Slope);
+
+        if (tileInfo.TileType is TileID.Chairs)
+        {
             // WorldGen.PlaceTile(...) overwrites the TileFrameX so that is why
             // this is set after
+
+            // TileFrameX and TileFrameY seem to break workbenches
             Main.tile[x, y].TileFrameX = (short)tileInfo.TileFrameX;
-            Main.tile[x, y].TileFrameY = (short)tileInfo.TileFrameY;
+            //Main.tile[x, y].TileFrameY = (short)tileInfo.TileFrameY;
         }
     }
 }
