@@ -1,4 +1,14 @@
-If you are reading this, yell at me to make a better description for the mod.
+Create a house item with 100 wood at a heavy workbench.
+
+While holding the house item, click anywhere in the world to place a house.
+
+Currently looking for someone to build better houses for the mod. You will be credited in the mod description.
+
+Houses that I want to add to the mod
+- a medium sized house meant for above ground that houses 2 - 3 NPCs
+- a large sized house meant for above ground that houses 3 - 5 NPCs
+
+Please note that this is a WIP mod!!!
 
 Discord: https://discord.gg/866cg8yfxZ
 GitHub: https://github.com/Valks-Terraria-Mods/ValksStructures

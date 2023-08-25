@@ -37,7 +37,7 @@ public class House : ModItem
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddIngredient(ItemID.Wood, 100)
+            .AddIngredient(ItemID.Wood, 50)
             .AddTile(TileID.HeavyWorkBench)
             .Register();
     }
