@@ -1,0 +1,680 @@
+{
+  "Size": {
+    "X": 8,
+    "Y": 7
+  },
+  "Tiles": [
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 36,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 90,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 126,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 36,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 0,
+      "TileFrameY": 18,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 36,
+      "TileFrameY": 36,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 0,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 144,
+      "TileFrameY": 72,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 4,
+      "TileFrameX": 22,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 54,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 126,
+      "TileFrameY": 72,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 15,
+      "TileFrameX": 18,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 15,
+      "TileFrameX": 18,
+      "TileFrameY": 18,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 54,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 18,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 30,
+      "TileFrameX": 0,
+      "TileFrameY": 72,
+      "Slope": 4,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 18,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 54,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 36,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 30,
+      "TileFrameX": 90,
+      "TileFrameY": 72,
+      "Slope": 3,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 4,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 18,
+      "TileFrameX": 18,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 54,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 108,
+      "TileFrameY": 72,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 15,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 15,
+      "TileFrameX": 0,
+      "TileFrameY": 18,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 54,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 108,
+      "TileFrameY": 72,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 4,
+      "TileFrameX": 44,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 4,
+      "TileType": 0,
+      "TileFrameX": 0,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": false,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 36,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 90,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 90,
+      "TileFrameY": 18,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 108,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 36,
+      "TileFrameY": 0,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 0,
+      "TileFrameY": 18,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 10,
+      "TileFrameX": 0,
+      "TileFrameY": 36,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "WallType": 0,
+      "TileType": 30,
+      "TileFrameX": 90,
+      "TileFrameY": 54,
+      "Slope": 0,
+      "HasTile": true,
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+displayName = Valks Structures
+author = valkyrienyanko
+version = 0.1
+homepage = https://discord.gg/866cg8yfxZ

@@ -1,0 +1,27 @@
+Items: {
+	DebugBottomRight: {
+		DisplayName: Debug Bottom Right
+		Tooltip: ""
+	}
+
+	DebugTopLeft: {
+		DisplayName: Debug Top Left
+		Tooltip: ""
+	}
+
+	House: {
+		DisplayName: House
+		Tooltip: ""
+	}
+}
+
+Configs: {
+	Config: {
+		DisplayName: Config
+
+		BuildStyle: {
+			Label: Build Style
+			Tooltip: ""
+		}
+	}
+}
