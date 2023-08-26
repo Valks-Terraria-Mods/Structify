@@ -121,6 +121,10 @@ public partial class Schematic
                 if (IsReplaceTile(tileInfo))
                     continue;
 
+                // Do not destroy a non-existent tile
+                if (!Main.tile[x, y].HasTile)
+                    continue;
+
                 actions.Add(() =>
                 {
                     WorldGen.KillTile(x, y,
