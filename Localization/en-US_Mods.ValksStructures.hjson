@@ -13,6 +13,46 @@ Items: {
 		DisplayName: House
 		Tooltip: ""
 	}
+
+	HouseSmallUnderground: {
+		DisplayName: House Small Underground
+		Tooltip: ""
+	}
+
+	SmallHouse: {
+		DisplayName: Small House
+		Tooltip: ""
+	}
+
+	LargeHouse: {
+		DisplayName: Large House
+		Tooltip: ""
+	}
+
+	MediumHouse: {
+		DisplayName: Medium House
+		Tooltip: ""
+	}
+
+	PrisonCluster: {
+		DisplayName: Prison Cluster
+		Tooltip: ""
+	}
+
+	SchematicBottomRight: {
+		DisplayName: Schematic Bottom Right
+		Tooltip: ""
+	}
+
+	SchematicReplace: {
+		DisplayName: Schematic Replace
+		Tooltip: ""
+	}
+
+	SchematicTopLeft: {
+		DisplayName: Schematic Top Left
+		Tooltip: ""
+	}
 }
 
 Configs: {

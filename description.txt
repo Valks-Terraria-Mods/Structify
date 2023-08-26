@@ -1,4 +1,4 @@
-Create a house item with 100 wood at a heavy workbench.
+Create a house item with 50 wood at a heavy workbench.
 
 While holding the house item, click anywhere in the world to place a house.
 

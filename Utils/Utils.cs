@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using Terraria.ID;
 
 namespace ValksStructures;
 
@@ -29,7 +30,25 @@ public static class Utils
         TileID.Tables or
         TileID.Tables2 or
         TileID.Torches or
+        TileID.Lamps or
         TileID.Chairs or
+        TileID.Candles or
+        TileID.Bookcases or
+        TileID.Chandeliers or
+        TileID.Switches or
+        TileID.Sundial or
+        TileID.TargetDummy or
+        TileID.Containers or
+        TileID.Containers2 or
+        TileID.FakeContainers or
+        TileID.FakeContainers2 or
+        TileID.Extractinator or
+        TileID.Furnaces or
+        TileID.FoodPlatter or
+        TileID.BubbleMachine or
+        TileID.FogMachine or
+        TileID.IceMachine or
+        TileID.ImbuingStation or
         TileID.Toilets => true,
         _ => false
     };

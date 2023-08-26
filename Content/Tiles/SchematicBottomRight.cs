@@ -1,6 +1,6 @@
 ﻿namespace ValksStructures.Content.Tiles;
 
-public class DebugBottomRight : ModTile
+public class SchematicBottomRight : ModTile
 {
     public override void SetStaticDefaults()
     {

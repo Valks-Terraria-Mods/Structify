@@ -31,11 +31,13 @@ public class CmdSave : ModCommand
             return;
         }
 
-        if (!args[0].All(char.IsLetterOrDigit))
+        // This should be refined if it is to be used because maybe I want
+        // underscores in my filename
+        /*if (!args[0].All(char.IsLetterOrDigit))
         {
             Main.NewText("File name may only contain letters and numbers");
             return;
-        }
+        }*/
 
         int diffX = BottomRight.X - TopLeft.X;
         int diffY = BottomRight.Y - TopLeft.Y;
@@ -50,7 +52,7 @@ public class CmdSave : ModCommand
         Schematic.Save(schematic, savePath, 
             fileName: args[0]);
 
-        Main.NewText("Saved schematic");
+        Main.NewText($"Saved schematic as '{args[0]}.json'");
 
         Utils.OpenFolder(savePath);
     }

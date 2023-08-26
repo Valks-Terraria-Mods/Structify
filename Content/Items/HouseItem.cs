@@ -1,14 +1,15 @@
-﻿using System.Text.Json;
-using System.IO;
+﻿namespace ValksStructures.Content.Items;
 
-namespace ValksStructures.Content.Items;
-
-public class House : ModItem
+public abstract class HouseItem : ModItem
 {
+    protected abstract string SchematicName { get; }
+    protected abstract Ingredient[] Ingredients { get; }
+    protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
+
     public override void SetDefaults()
     {
         Item.maxStack = 999;
-        Item.rare = ItemRarityID.LightPurple;
+        Item.rare = ItemRarity;
         Item.noUseGraphic = true;
         Item.noMelee = true;
         Item.useAnimation = 20;
@@ -20,15 +21,15 @@ public class House : ModItem
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        Schematic schematic = Schematic.Load("House1");
+        Schematic schematic = Schematic.Load(SchematicName);
 
         if (schematic == null)
         {
-            Main.NewText("Schematic is null");
+            Main.NewText($"Could not find the '{SchematicName}' schematic");
             return false;
         }
 
-        Schematic.Paste(schematic, 
+        Schematic.Paste(schematic,
             style: ModContent.GetInstance<Config>().BuildStyle);
 
         return false;
@@ -36,18 +37,11 @@ public class House : ModItem
 
     public override void AddRecipes()
     {
-        CreateRecipe()
-            .AddIngredient(ItemID.Wood, 50)
-            .AddTile(TileID.HeavyWorkBench)
-            .Register();
-    }
-}
+        Recipe recipe = CreateRecipe().AddTile(TileID.HeavyWorkBench);
 
-public class FurnitureTile
-{
-    public Vector2I Position { get; set; }
-    public int TileFrameX { get; set; }
-    public int TileFrameY { get; set; }
-    public int Slope { get; set; }
-    public int Id { get; set; }
+        foreach (Ingredient ingredient in Ingredients)
+            recipe.AddIngredient(ingredient.ItemId, ingredient.Amount);
+
+        recipe.Register();
+    }
 }

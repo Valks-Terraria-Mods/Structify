@@ -20,7 +20,7 @@ public class GlobalTileHooks : GlobalTile
 
     public override void PlaceInWorld(int i, int j, int type, Item item)
     {
-        if (type == ModContent.TileType<Content.Tiles.DebugTopLeft>())
+        if (type == ModContent.TileType<Content.Tiles.SchematicTopLeft>())
         {
             ModContent.GetInstance<CmdSave>().TopLeft = 
                 new Vector2I(i, j);
@@ -28,7 +28,7 @@ public class GlobalTileHooks : GlobalTile
             Main.NewText("Set top left position");
         }
 
-        if (type == ModContent.TileType<Content.Tiles.DebugBottomRight>())
+        if (type == ModContent.TileType<Content.Tiles.SchematicBottomRight>())
         {
             ModContent.GetInstance<CmdSave>().BottomRight = 
                 new Vector2I(i, j);
