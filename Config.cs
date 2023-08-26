@@ -9,7 +9,17 @@ public class Config : ModConfig
     [BackgroundColor(0, 0, 0, 100)]
     public bool BuildInstantly;
 
+    [DefaultValue(1)]
+    [BackgroundColor(0, 0, 0, 100)]
+    [Range(1, 100)]
+    public int BuildTickRate;
+
     [DefaultValue(0)]
     [BackgroundColor(0, 0, 0, 100)]
     public int BuildStyle;
+
+    public override void OnChanged()
+    {
+        VModSystem.BuildTickRate = BuildTickRate;
+    }
 }

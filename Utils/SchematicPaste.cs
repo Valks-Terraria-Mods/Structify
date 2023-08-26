@@ -256,8 +256,11 @@ public partial class Schematic
             furniture[TileID.Chairs].Reverse();
 
         foreach (List<TileInfo> furnitureList in furniture.Values)
-            foreach (TileInfo tileInfo in furnitureList)
-                AddFurnitureTile(tileInfo, styleOffset);
+            actions.Add(() =>
+            {
+                foreach (TileInfo tileInfo in furnitureList)
+                    AddFurnitureTile(tileInfo, styleOffset);
+            });
     }
 
     static void AddFurnitureTile(TileInfo tileInfo, int styleOffset)
@@ -270,10 +273,7 @@ public partial class Schematic
         int x = tileInfo.Position.X;
         int y = tileInfo.Position.Y;
 
-        actions.Add(() =>
-        {
-            PlaceTile(x, y, tileInfo, styleOffset);
-        });
+        PlaceTile(x, y, tileInfo, styleOffset);
     }
 
     static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
