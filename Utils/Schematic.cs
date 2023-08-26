@@ -36,6 +36,7 @@ public partial class Schematic
                     TileFrameX = tile.TileFrameX,
                     TileFrameY = tile.TileFrameY,
                     TileColor = tile.TileColor,
+                    WallColor = tile.WallColor,
                     Slope = (int)tile.Slope,
                     HasTile = tile.HasTile
                 });

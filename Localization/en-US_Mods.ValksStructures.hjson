@@ -68,5 +68,10 @@ Configs: {
 			Label: Build Style
 			Tooltip: ""
 		}
+
+		BuildInstantly: {
+			Label: Build Instantly
+			Tooltip: ""
+		}
 	}
 }

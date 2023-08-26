@@ -55,8 +55,20 @@ public partial class Schematic
         // Add all the furniture
         AddFurnitureTiles(furniture, styleOffset);
 
-        // Construction will be built by one task at a time every frame
-        VModSystem.Update += ExecuteAction;
+        if (ModContent.GetInstance<Config>().BuildInstantly)
+        {
+            foreach (Action action in actions)
+                action();
+
+            actions.Clear();
+
+            Building = false;
+        }
+        else
+        {
+            // Construction will be built by one task at a time every frame
+            VModSystem.Update += ExecuteAction;
+        }
     }
 
     static void PlaceLiquids(
@@ -186,6 +198,8 @@ public partial class Schematic
                             // Wall exists here, replace it
                             WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
                         }
+
+                        WorldGen.paintWall(x, y, tileInfo.WallColor);
                     });
                 }
 
