@@ -29,8 +29,13 @@ public partial class Schematic
                 {
                     WallType = tile.WallType,
                     TileType = tile.TileType,
+                    // This is not working correctly. Wrong styles are being retrieved.
+                    Style = TileObjectData.GetTileStyle(tile),
+                    LiquidAmount = tile.LiquidAmount,
+                    LiquidType = tile.LiquidType,
                     TileFrameX = tile.TileFrameX,
                     TileFrameY = tile.TileFrameY,
+                    TileColor = tile.TileColor,
                     Slope = (int)tile.Slope,
                     HasTile = tile.HasTile
                 });

@@ -8,6 +8,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\Items\Bridge.png" />
     <None Remove="Content\Items\LargeHouse.png" />
     <None Remove="Content\Items\MediumHouse.png" />
     <None Remove="Content\Items\PrisonCluster.png" />

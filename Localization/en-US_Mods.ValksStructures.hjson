@@ -53,6 +53,11 @@ Items: {
 		DisplayName: Schematic Top Left
 		Tooltip: ""
 	}
+
+	Bridge: {
+		DisplayName: Bridge
+		Tooltip: ""
+	}
 }
 
 Configs: {

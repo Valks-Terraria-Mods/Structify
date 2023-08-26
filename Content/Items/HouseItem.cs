@@ -5,6 +5,7 @@ public abstract class HouseItem : ModItem
     protected abstract string SchematicName { get; }
     protected abstract Ingredient[] Ingredients { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
+    protected virtual int VerticalOffset { get; } = 0;
 
     public override void SetDefaults()
     {
@@ -30,7 +31,8 @@ public abstract class HouseItem : ModItem
         }
 
         Schematic.Paste(schematic,
-            style: ModContent.GetInstance<Config>().BuildStyle);
+            style: ModContent.GetInstance<Config>().BuildStyle,
+            vOffset: VerticalOffset);
 
         return false;
     }

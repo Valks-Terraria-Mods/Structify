@@ -4,6 +4,10 @@ public class TileInfo
 {
     public int WallType { get; set; }
     public int TileType { get; set; }
+    public int LiquidType { get; set; }
+    public int Style { get; set; }
+    public byte LiquidAmount { get; set; }
+    public byte TileColor { get; set; }
     public int TileFrameX { get; set; }
     public int TileFrameY { get; set; }
     public int Slope { get; set; }

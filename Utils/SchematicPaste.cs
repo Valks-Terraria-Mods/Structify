@@ -2,7 +2,7 @@
 
 public partial class Schematic
 {
-    public static void Paste(Schematic schematic, int style)
+    public static void Paste(Schematic schematic, int style, int vOffset = 0)
     {
         if (Building)
         {
@@ -18,15 +18,19 @@ public partial class Schematic
         Vector2I size = schematic.Size;
         Vector2I startPos = new(
             (int)Main.MouseWorld.X / 16,
-            (int)Main.MouseWorld.Y / 16 - size.Y + 1);
+            (int)Main.MouseWorld.Y / 16 - size.Y + 1 + vOffset);
 
         Dictionary<int, List<TileInfo>> furniture = 
             PrepareFurnitureDictionary(schematic, size);
 
-        // Destroy the area where the structure will be placed
-        DestroyArea(startPos, size);
-
         int schematicTilesIndex = 0;
+
+        // Destroy the area where the structure will be placed
+        DestroyArea(
+            startPos, 
+            size, 
+            schematic,
+            ref schematicTilesIndex);
 
         // Place walls and tiles
         PlaceWallsAndTiles(
@@ -36,6 +40,12 @@ public partial class Schematic
             ref schematicTilesIndex, 
             style, 
             furniture);
+
+        // Place liquids
+        actions.Add(() =>
+        {
+            PlaceLiquids(startPos, size, schematic, ref schematicTilesIndex);
+        });
 
         // Ensure all tiles are sloped correctly
         SlopeAllTiles(
@@ -49,6 +59,32 @@ public partial class Schematic
 
         // Construction will be built by one task at a time every frame
         VModSystem.Update += ExecuteAction;
+    }
+
+    static void PlaceLiquids(
+        Vector2I startPos, 
+        Vector2I size,
+        Schematic schematic,
+        ref int schematicTilesIndex)
+    {
+        for (int i = 0; i < size.X; i++)
+        {
+            for (int j = 0; j < size.Y; j++)
+            {
+                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+
+                int x = startPos.X + i;
+                int y = startPos.Y + j;
+
+                if (IsLiquid(tileInfo))
+                {
+                    WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
+                        tileInfo.LiquidAmount);
+                };
+            }
+        }
+
+        schematicTilesIndex = 0;
     }
 
     static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(
@@ -69,13 +105,22 @@ public partial class Schematic
         return furniture;
     }
 
-    static void DestroyArea(Vector2I startPos, Vector2I size)
+    static void DestroyArea(
+        Vector2I startPos, 
+        Vector2I size, 
+        Schematic schematic,
+        ref int schematicTilesIndex)
     {
         for (int i = 0; i < size.X; i++)
             for (int j = 0; j < size.Y; j++)
             {
+                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
+
+                if (IsReplaceTile(tileInfo))
+                    continue;
 
                 actions.Add(() =>
                 {
@@ -86,7 +131,13 @@ public partial class Schematic
                         noItem: true);
                 });
             }
+
+        schematicTilesIndex = 0;
     }
+    
+    static bool IsReplaceTile(TileInfo tileInfo) =>
+        tileInfo.TileType == 
+        ModContent.TileType<Content.Tiles.SchematicReplace>();
 
     static void PlaceWallsAndTiles(
         Vector2I startPos, 
@@ -131,10 +182,13 @@ public partial class Schematic
                 }
 
                 // Place solid tiles
-                actions.Add(() =>
+                if (tileInfo.HasTile)
                 {
-                    PlaceTile(x, y, tileInfo, style);
-                });
+                    actions.Add(() =>
+                    {
+                        PlaceTile(x, y, tileInfo, style);
+                    });
+                }
             }
         }
 
@@ -173,7 +227,8 @@ public partial class Schematic
     static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture, int style)
     {
         // Otherwise chairs will not be placed properly
-        furniture[TileID.Chairs].Reverse();
+        if (furniture.ContainsKey(TileID.Chairs))
+            furniture[TileID.Chairs].Reverse();
 
         foreach (List<TileInfo> furnitureList in furniture.Values)
             foreach (TileInfo tileInfo in furnitureList)
@@ -224,10 +279,15 @@ public partial class Schematic
 
     static void PlaceTile(int x, int y, TileInfo tileInfo, int style)
     {
+        if (IsReplaceTile(tileInfo))
+            return;
+
+        Tile tile = Main.tile[x, y];
+
         // Empty tile so clear this tile
         if (!tileInfo.HasTile)
         {
-            Main.tile[x, y].ClearTile();
+            tile.ClearTile();
             return;
         }
 
@@ -236,14 +296,15 @@ public partial class Schematic
         if (style != 0)
             ReplaceTile(tileInfo, TileID.WoodBlock, 156 + style);
 
-        // Place tile
+        // Place tile (no effect for liquids)
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
-                mute: false,
-                forced: true,
-                plr: -1,
-                style: style);
+            mute: false,
+            forced: true,
+            plr: -1,
+            style: style/*tileInfo.Style*/);
 
-        //WorldGen.SlopeTile(x, y, tileInfo.Slope);
+        // Paint the tile with the appropriate color
+        tile.TileColor = tileInfo.TileColor;
 
         if (tileInfo.TileType is TileID.Chairs)
         {
@@ -251,8 +312,10 @@ public partial class Schematic
             // this is set after
 
             // TileFrameX and TileFrameY seem to break workbenches
-            Main.tile[x, y].TileFrameX = (short)tileInfo.TileFrameX;
-            //Main.tile[x, y].TileFrameY = (short)tileInfo.TileFrameY;
+            tile.TileFrameX = (short)tileInfo.TileFrameX;
+            //tile.TileFrameY = (short)tileInfo.TileFrameY;
         }
     }
+
+    static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;
 }
