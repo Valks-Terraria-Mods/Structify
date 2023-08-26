@@ -162,8 +162,17 @@ public partial class Schematic
 
                 actions.Add(() =>
                 {
-                    // Place walls
-                    WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
+                    if (Main.tile[x, y].WallType == 0)
+                    {
+                        // No wall here, so place one
+                        WorldGen.PlaceWall(x, y, tileInfo.WallType,
+                            mute: true);
+                    }
+                    else
+                    {
+                        // Wall exists here, replace it
+                        WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
+                    }
                 });
 
                 // Do not add furniture tiles right now
@@ -285,7 +294,7 @@ public partial class Schematic
 
         // Place tile (no effect for liquids)
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
-            mute: false,
+            mute: true,
             forced: true,
             plr: -1,
             style: style + styleOffset);
