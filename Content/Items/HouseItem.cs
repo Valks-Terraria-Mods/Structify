@@ -31,7 +31,7 @@ public abstract class HouseItem : ModItem
         }
 
         Schematic.Paste(schematic,
-            style: ModContent.GetInstance<Config>().BuildStyle,
+            styleOffset: ModContent.GetInstance<Config>().BuildStyle,
             vOffset: VerticalOffset);
 
         return false;

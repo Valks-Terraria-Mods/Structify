@@ -2,7 +2,7 @@
 
 public partial class Schematic
 {
-    public static void Paste(Schematic schematic, int style, int vOffset = 0)
+    public static void Paste(Schematic schematic, int styleOffset, int vOffset = 0)
     {
         if (Building)
         {
@@ -38,7 +38,7 @@ public partial class Schematic
             size, 
             schematic,
             ref schematicTilesIndex, 
-            style, 
+            styleOffset, 
             furniture);
 
         // Place liquids
@@ -55,7 +55,7 @@ public partial class Schematic
             schematic);
 
         // Add all the furniture
-        AddFurnitureTiles(furniture, style);
+        AddFurnitureTiles(furniture, styleOffset);
 
         // Construction will be built by one task at a time every frame
         VModSystem.Update += ExecuteAction;
@@ -124,7 +124,6 @@ public partial class Schematic
 
                 actions.Add(() =>
                 {
-                    WorldGen.KillWall(x, y);
                     WorldGen.KillTile(x, y,
                         fail: false,
                         effectOnly: false,
@@ -144,7 +143,7 @@ public partial class Schematic
         Vector2I size,
         Schematic schematic,
         ref int schematicTilesIndex,
-        int style,
+        int styleOffset,
         Dictionary<int, List<TileInfo>> furniture)
     {
         for (int i = 0; i < size.X; i++)
@@ -158,14 +157,13 @@ public partial class Schematic
 
                 // Replace the wood wall with the current style wall
                 // Note that this is not perfect because the styles are all over the place
-                if (style != 0)
-                    ReplaceWall(tileInfo, WallID.Wood, 40 + style);
+                if (styleOffset != 0)
+                    ReplaceWall(tileInfo, WallID.Wood, 40 + styleOffset);
 
                 actions.Add(() =>
                 {
                     // Place walls
-                    WorldGen.PlaceWall(x, y, tileInfo.WallType, 
-                        mute: false);
+                    WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
                 });
 
                 // Do not add furniture tiles right now
@@ -186,7 +184,7 @@ public partial class Schematic
                 {
                     actions.Add(() =>
                     {
-                        PlaceTile(x, y, tileInfo, style);
+                        PlaceTile(x, y, tileInfo, styleOffset);
                     });
                 }
             }
@@ -224,7 +222,7 @@ public partial class Schematic
         schematicTilesIndex = 0;
     }
 
-    static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture, int style)
+    static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture, int styleOffset)
     {
         // Otherwise chairs will not be placed properly
         if (furniture.ContainsKey(TileID.Chairs))
@@ -232,10 +230,10 @@ public partial class Schematic
 
         foreach (List<TileInfo> furnitureList in furniture.Values)
             foreach (TileInfo tileInfo in furnitureList)
-                AddFurnitureTile(tileInfo, style);
+                AddFurnitureTile(tileInfo, styleOffset);
     }
 
-    static void AddFurnitureTile(TileInfo tileInfo, int style)
+    static void AddFurnitureTile(TileInfo tileInfo, int styleOffset)
     {
         // Open doors break surrounding tiles when placed in the world
         ReplaceTile(tileInfo, TileID.OpenDoor, TileID.ClosedDoor);
@@ -247,16 +245,7 @@ public partial class Schematic
 
         actions.Add(() =>
         {
-            if (tileInfo.TileType == TileID.Chairs && style != 0)
-            {
-                // Chair styles are offset by 1
-                // https://docs.google.com/spreadsheets/d/1b-12C9BrUURP_0pHN7QC-0wYFsSF1ZbWyN6SkWRO48A/edit?usp=sharing
-                PlaceTile(x, y, tileInfo, style + 1);
-            }
-            else
-            {
-                PlaceTile(x, y, tileInfo, style);
-            }
+            PlaceTile(x, y, tileInfo, styleOffset);
         });
     }
 
@@ -277,7 +266,7 @@ public partial class Schematic
         WorldGen.SlopeTile(x, y, tileInfo.Slope);
     }
 
-    static void PlaceTile(int x, int y, TileInfo tileInfo, int style)
+    static void PlaceTile(int x, int y, TileInfo tileInfo, int styleOffset)
     {
         if (IsReplaceTile(tileInfo))
             return;
@@ -291,17 +280,15 @@ public partial class Schematic
             return;
         }
 
-        // Replace wood block with appropriate style
-        // Note that this is not perfect because the styles are all over the place
-        if (style != 0)
-            ReplaceTile(tileInfo, TileID.WoodBlock, 156 + style);
+        // Get the style of this tile
+        int style = TileStyle.CalculateStyle(tileInfo);
 
         // Place tile (no effect for liquids)
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
             mute: false,
             forced: true,
             plr: -1,
-            style: style/*tileInfo.Style*/);
+            style: style + styleOffset);
 
         // Paint the tile with the appropriate color
         tile.TileColor = tileInfo.TileColor;

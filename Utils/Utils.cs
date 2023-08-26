@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Terraria.ID;
 
 namespace ValksStructures;
 

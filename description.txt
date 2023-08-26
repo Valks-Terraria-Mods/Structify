@@ -1,14 +1,16 @@
-Create a house item with 50 wood at a heavy workbench.
+While holding a structure item, click anywhere in the world to place a house.
 
-While holding the house item, click anywhere in the world to place a house.
+Recipes (all made at a heavy workbench)
+- Small Underground House (50 wood)
+- Small House (50 wood)
+- Bridge (50 stone)
+- Medium House (100 wood)
+- Large House (175 wood, 25 stone)
+- Prison Cluster (200 wood)
 
-Currently looking for someone to build better houses for the mod. You will be credited in the mod description.
+Credit
+- All structures made by name36154
+- All mod scripts by valkyrienyanko
 
-Houses that I want to add to the mod
-- a medium sized house meant for above ground that houses 2 - 3 NPCs
-- a large sized house meant for above ground that houses 3 - 5 NPCs
-
-Please note that this is a WIP mod!!!
-
-Discord: https://discord.gg/866cg8yfxZ
-GitHub: https://github.com/Valks-Terraria-Mods/ValksStructures
+Suggestions and Feedback: https://discord.gg/866cg8yfxZ
+Source Code: https://github.com/Valks-Terraria-Mods/ValksStructures
