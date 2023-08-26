@@ -2,6 +2,8 @@
 
 public partial class Schematic
 {
+    static List<TileInfo> solidTiles = new();
+
     public static void Paste(Schematic schematic, int styleOffset, int vOffset = 0)
     {
         if (Building)
@@ -48,11 +50,7 @@ public partial class Schematic
         });
 
         // Ensure all tiles are sloped correctly
-        SlopeAllTiles(
-            startPos, 
-            size,
-            ref schematicTilesIndex,
-            schematic);
+        SlopeAllTiles();
 
         // Add all the furniture
         AddFurnitureTiles(furniture, styleOffset);
@@ -147,11 +145,18 @@ public partial class Schematic
         int styleOffset,
         Dictionary<int, List<TileInfo>> furniture)
     {
+        // Reset solid tiles dictionary
+        solidTiles.Clear();
+
         for (int i = 0; i < size.X; i++)
         {
             for (int j = 0; j < size.Y; j++)
             {
                 TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+                
+                // This is a replace tile, don't place anything here
+                if (IsReplaceTile(tileInfo))
+                    continue;
 
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
@@ -196,6 +201,12 @@ public partial class Schematic
                 // Place solid tiles
                 if (tileInfo.HasTile)
                 {
+                    // Pass over the position
+                    tileInfo.Position = new Vector2I(x, y);
+
+                    // Keep track of solid tiles for later use with slope
+                    solidTiles.Add(tileInfo);
+
                     actions.Add(() =>
                     {
                         PlaceTile(x, y, tileInfo, styleOffset);
@@ -207,33 +218,17 @@ public partial class Schematic
         schematicTilesIndex = 0;
     }
 
-    static void SlopeAllTiles(
-        Vector2I startPos, 
-        Vector2I size,
-        ref int schematicTilesIndex,
-        Schematic schematic)
+    static void SlopeAllTiles()
     {
         // Final pass to ensure all tiles are sloped correctly
-        for (int i = 0; i < size.X; i++)
+        foreach (TileInfo solidTile in solidTiles)
         {
-            for (int j = 0; j < size.Y; j++)
+            actions.Add(() =>
             {
-                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
-
-                int x = startPos.X + i;
-                int y = startPos.Y + j;
-
-                if (tileInfo.HasTile)
-                {
-                    actions.Add(() =>
-                    {
-                        SlopeTile(x, y, tileInfo);
-                    });
-                }
-            }
+                Vector2I pos = solidTile.Position;
+                SlopeTile(pos.X, pos.Y, solidTile);
+            });
         }
-
-        schematicTilesIndex = 0;
     }
 
     static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture, int styleOffset)
