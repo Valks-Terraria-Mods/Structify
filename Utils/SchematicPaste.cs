@@ -119,6 +119,7 @@ public partial class Schematic
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
 
+                // Do not kill tile if it is a replace tile
                 if (IsReplaceTile(tileInfo))
                     continue;
 
@@ -160,20 +161,24 @@ public partial class Schematic
                 if (styleOffset != 0)
                     ReplaceWall(tileInfo, WallID.Wood, 40 + styleOffset);
 
-                actions.Add(() =>
+                // Only place walls if wall exists in this tileInfo
+                if (tileInfo.WallType != 0)
                 {
-                    if (Main.tile[x, y].WallType == 0)
+                    actions.Add(() =>
                     {
-                        // No wall here, so place one
-                        WorldGen.PlaceWall(x, y, tileInfo.WallType,
-                            mute: true);
-                    }
-                    else
-                    {
-                        // Wall exists here, replace it
-                        WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
-                    }
-                });
+                        if (Main.tile[x, y].WallType == 0)
+                        {
+                            // No wall here, so place one
+                            WorldGen.PlaceWall(x, y, tileInfo.WallType,
+                                mute: true);
+                        }
+                        else
+                        {
+                            // Wall exists here, replace it
+                            WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
+                        }
+                    });
+                }
 
                 // Do not add furniture tiles right now
                 if (Utils.IsFurnitureTile(tileInfo.TileType))
