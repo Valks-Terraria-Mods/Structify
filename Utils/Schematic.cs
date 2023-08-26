@@ -8,7 +8,7 @@ public partial class Schematic
     public Vector2I Size { get; set; }
     public List<TileInfo> Tiles { get; set; } = new();
 
-    public static bool Building { get; private set; }
+    public static bool IsCurrentlyBuilding { get; private set; }
 
     static readonly List<Action> actions = new();
 
@@ -74,7 +74,7 @@ public partial class Schematic
         if (actions.Count == 0)
         {
             VModSystem.Update -= ExecuteAction;
-            Building = false;
+            IsCurrentlyBuilding = false;
             return;
         }
 

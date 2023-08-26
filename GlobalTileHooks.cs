@@ -7,7 +7,7 @@ public class GlobalTileHooks : GlobalTile
         // Do not drop any furniture when building a schematic
         // This prevents doors from dropping if the schematic is
         // building over a door
-        if (Schematic.Building)
+        if (Schematic.IsCurrentlyBuilding)
         {
             if (Utils.IsFurnitureTile(type))
             {

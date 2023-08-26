@@ -2,11 +2,11 @@
 
 public partial class Schematic
 {
-    static List<TileInfo> solidTiles = new();
+    static readonly List<TileInfo> solidTiles = new();
 
     public static void Paste(Schematic schematic, int styleOffset, int vOffset = 0)
     {
-        if (Building)
+        if (IsCurrentlyBuilding)
         {
             Main.NewText("Please wait for the current house to " +
                 "finish building");
@@ -15,7 +15,7 @@ public partial class Schematic
         }
 
         // Setup all variables
-        Building = true;
+        IsCurrentlyBuilding = true;
 
         Vector2I size = schematic.Size;
         Vector2I startPos = new(
@@ -62,7 +62,7 @@ public partial class Schematic
 
             actions.Clear();
 
-            Building = false;
+            IsCurrentlyBuilding = false;
         }
         else
         {
