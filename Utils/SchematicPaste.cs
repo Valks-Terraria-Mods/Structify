@@ -312,6 +312,7 @@ public partial class Schematic
             // this is set after
 
             // TileFrameX and TileFrameY seem to break workbenches
+            // and other pieces of furniture
             tile.TileFrameX = (short)tileInfo.TileFrameX;
             //tile.TileFrameY = (short)tileInfo.TileFrameY;
         }

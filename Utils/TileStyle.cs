@@ -4,7 +4,18 @@ public static class TileStyle
 {
     static readonly Dictionary<int, SpriteSheetDir> spriteSheetDirs = new()
     {
-        { TileID.Platforms, SpriteSheetDir.Vertical }
+        { TileID.Platforms, SpriteSheetDir.Vertical },
+        { TileID.ClosedDoor, SpriteSheetDir.Vertical },
+        { TileID.WorkBenches, SpriteSheetDir.Horizontal },
+        // There are only 2 styles of gates (Left and Right)
+        { TileID.TallGateClosed, SpriteSheetDir.Vertical },
+        // There is only 1 style of trapdoor
+        { TileID.TrapdoorClosed, SpriteSheetDir.Horizontal },
+        { TileID.Beds, SpriteSheetDir.Vertical },
+        { TileID.Tables, SpriteSheetDir.Horizontal },
+        { TileID.Tables2, SpriteSheetDir.Horizontal },
+        { TileID.Torches, SpriteSheetDir.Vertical },
+        { TileID.Lamps, SpriteSheetDir.Vertical }
     };
 
     public static int CalculateStyle(TileInfo tileInfo)
