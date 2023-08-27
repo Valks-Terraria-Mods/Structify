@@ -346,6 +346,13 @@ public partial class Schematic
     {
         Tile tile = Main.tile[x, y];
         tile.ResetToType((ushort)tileInfo.TileType);
+
+        // Paint the tile with the appropriate color
+        tile.TileColor = tileInfo.TileColor;
+
+        // Helps with visuals
+        tile.TileFrameX = (short)tileInfo.TileFrameX;
+        tile.TileFrameY = (short)tileInfo.TileFrameY;
     }
 
     static void PlaceTile(int x, int y, TileInfo tileInfo, int styleOffset)

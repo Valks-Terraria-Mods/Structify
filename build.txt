@@ -1,4 +1,4 @@
 displayName = Valks Structures
 author = valkyrienyanko
-version = 0.1.15
+version = 0.1.16
 homepage = https://discord.gg/866cg8yfxZ
