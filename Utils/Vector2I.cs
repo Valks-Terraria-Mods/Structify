@@ -13,6 +13,9 @@ public struct Vector2I
         Y = y;
     }
 
+    public static Vector2I operator+ (Vector2I a, Vector2I b) =>
+        new(a.X + b.X, a.Y + b.Y);
+
     public static bool operator== (Vector2I a, Vector2I b) =>
         a.X == b.X && a.Y == b.Y;
 

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using ValksStructures.Content.Items;
 
 namespace ValksStructures;
 
@@ -7,10 +8,6 @@ public partial class Schematic
 {
     public Vector2I Size { get; set; }
     public List<TileInfo> Tiles { get; set; } = new();
-
-    public static bool IsCurrentlyBuilding { get; private set; }
-
-    static readonly List<Action> actions = new();
 
     public static Schematic Create(Vector2I topLeft, int diffX, int diffY)
     {
@@ -67,18 +64,5 @@ public partial class Schematic
         string json = reader.ReadToEnd();
 
         return JsonSerializer.Deserialize<Schematic>(json);
-    }
-
-    static void ExecuteAction()
-    {
-        if (actions.Count == 0)
-        {
-            VModSystem.Update -= ExecuteAction;
-            IsCurrentlyBuilding = false;
-            return;
-        }
-
-        actions[0]();
-        actions.RemoveAt(0);
     }
 }

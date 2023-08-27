@@ -1,11 +1,11 @@
 ﻿namespace ValksStructures.Content.Items;
 
-public abstract class HouseItem : ModItem
+public abstract class StructureItem : ModItem
 {
-    protected abstract string SchematicName { get; }
+    public static bool IsCurrentlyBuilding { get; set; }
+
     protected abstract Ingredient[] Ingredients { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
-    protected virtual int VerticalOffset { get; } = 0;
 
     public override void SetDefaults()
     {
@@ -22,18 +22,7 @@ public abstract class HouseItem : ModItem
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        Schematic schematic = Schematic.Load(SchematicName);
-
-        if (schematic == null)
-        {
-            Main.NewText($"Could not find the '{SchematicName}' schematic");
-            return false;
-        }
-
-        Schematic.Paste(schematic,
-            styleOffset: ModContent.GetInstance<Config>().BuildStyle,
-            vOffset: VerticalOffset);
-
+        UseItem(player);
         return false;
     }
 
@@ -46,4 +35,6 @@ public abstract class HouseItem : ModItem
 
         recipe.Register();
     }
+
+    public abstract void UseItem(Player player);
 }

@@ -1,12 +1,16 @@
-﻿namespace ValksStructures;
+﻿using Terraria;
+using ValksStructures.Content.Items;
+
+namespace ValksStructures;
 
 public partial class Schematic
 {
     static readonly List<TileInfo> solidTiles = new();
+    static bool containsFallingTiles;
 
     public static void Paste(Schematic schematic, int styleOffset, int vOffset = 0)
     {
-        if (IsCurrentlyBuilding)
+        if (StructureItem.IsCurrentlyBuilding)
         {
             Main.NewText("Please wait for the current house to " +
                 "finish building");
@@ -15,7 +19,8 @@ public partial class Schematic
         }
 
         // Setup all variables
-        IsCurrentlyBuilding = true;
+        containsFallingTiles = false;
+        StructureItem.IsCurrentlyBuilding = true;
 
         Vector2I size = schematic.Size;
         Vector2I startPos = new(
@@ -43,8 +48,37 @@ public partial class Schematic
             styleOffset, 
             furniture);
 
+        // Place tiles as reset tiles
+        // Doing it this way will not disturb falling tiles like sand
+        if (containsFallingTiles)
+        {
+            foreach (TileInfo solidTile in solidTiles)
+            {
+                VModSystem.AddAction(() =>
+                {
+                    ResetTileToType(
+                        solidTile.Position.X,
+                        solidTile.Position.Y,
+                        solidTile);
+                });
+            }
+        }
+
+        // Place tiles
+        foreach (TileInfo solidTile in solidTiles)
+        {
+            VModSystem.AddAction(() =>
+            {
+                PlaceTile(
+                    solidTile.Position.X,
+                    solidTile.Position.Y,
+                    solidTile,
+                    styleOffset);
+            });
+        }
+
         // Place liquids
-        actions.Add(() =>
+        VModSystem.AddAction(() =>
         {
             PlaceLiquids(startPos, size, schematic, ref schematicTilesIndex);
         });
@@ -55,19 +89,37 @@ public partial class Schematic
         // Add all the furniture
         AddFurnitureTiles(furniture, styleOffset);
 
+        // Clear liquids
+        VModSystem.AddAction(() =>
+        {
+            for (int i = 0; i < size.X; i++)
+            {
+                for (int j = 0; j < size.Y; j++)
+                {
+                    TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+
+                    int x = startPos.X + i;
+                    int y = startPos.Y + j;
+
+                    if (IsLiquid(tileInfo))
+                        continue;
+
+                    Tile tile = Main.tile[x, y];
+                    tile.Clear(TileDataType.Liquid);
+                }
+            }
+
+            schematicTilesIndex = 0;
+        });
+
         if (ModContent.GetInstance<Config>().BuildInstantly)
         {
-            foreach (Action action in actions)
-                action();
-
-            actions.Clear();
-
-            IsCurrentlyBuilding = false;
+            VModSystem.ExecuteAllActions();
         }
         else
         {
             // Construction will be built by one task at a time every frame
-            VModSystem.Update += ExecuteAction;
+            VModSystem.StartActions();
         }
     }
 
@@ -129,20 +181,22 @@ public partial class Schematic
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
 
+                Tile tile = Main.tile[x, y];
+
+                if (TileID.Sets.Falling[tile.TileType])
+                    containsFallingTiles = true;
+
                 // Do not kill tile if it is a replace tile
                 if (IsReplaceTile(tileInfo))
                     continue;
 
                 // Do not destroy a non-existent tile
-                if (!Main.tile[x, y].HasTile)
+                if (!tile.HasTile)
                     continue;
 
-                actions.Add(() =>
+                VModSystem.AddAction(() =>
                 {
-                    WorldGen.KillTile(x, y,
-                        fail: false,
-                        effectOnly: false,
-                        noItem: true);
+                    Utils.KillEverything(new Vector2I(x, y));
                 });
             }
 
@@ -185,7 +239,7 @@ public partial class Schematic
                 // Only place walls if wall exists in this tileInfo
                 if (tileInfo.WallType != 0)
                 {
-                    actions.Add(() =>
+                    VModSystem.AddAction(() =>
                     {
                         if (Main.tile[x, y].WallType == 0)
                         {
@@ -224,11 +278,6 @@ public partial class Schematic
 
                     // Keep track of solid tiles for later use with slope
                     solidTiles.Add(tileInfo);
-
-                    actions.Add(() =>
-                    {
-                        PlaceTile(x, y, tileInfo, styleOffset);
-                    });
                 }
             }
         }
@@ -241,7 +290,7 @@ public partial class Schematic
         // Final pass to ensure all tiles are sloped correctly
         foreach (TileInfo solidTile in solidTiles)
         {
-            actions.Add(() =>
+            VModSystem.AddAction(() =>
             {
                 Vector2I pos = solidTile.Position;
                 SlopeTile(pos.X, pos.Y, solidTile);
@@ -256,7 +305,7 @@ public partial class Schematic
             furniture[TileID.Chairs].Reverse();
 
         foreach (List<TileInfo> furnitureList in furniture.Values)
-            actions.Add(() =>
+            VModSystem.AddAction(() =>
             {
                 foreach (TileInfo tileInfo in furnitureList)
                     AddFurnitureTile(tileInfo, styleOffset);
@@ -293,6 +342,12 @@ public partial class Schematic
         WorldGen.SlopeTile(x, y, tileInfo.Slope);
     }
 
+    static void ResetTileToType(int x, int y, TileInfo tileInfo)
+    {
+        Tile tile = Main.tile[x, y];
+        tile.ResetToType((ushort)tileInfo.TileType);
+    }
+
     static void PlaceTile(int x, int y, TileInfo tileInfo, int styleOffset)
     {
         if (IsReplaceTile(tileInfo))
@@ -314,7 +369,7 @@ public partial class Schematic
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
             mute: true,
             forced: true,
-            plr: -1,
+            plr: Main.LocalPlayer.whoAmI,
             style: style + styleOffset);
 
         // Paint the tile with the appropriate color

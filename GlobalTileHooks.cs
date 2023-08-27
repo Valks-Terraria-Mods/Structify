@@ -1,4 +1,6 @@
-﻿namespace ValksStructures;
+﻿using ValksStructures.Content.Items;
+
+namespace ValksStructures;
 
 public class GlobalTileHooks : GlobalTile
 {
@@ -7,7 +9,7 @@ public class GlobalTileHooks : GlobalTile
         // Do not drop any furniture when building a schematic
         // This prevents doors from dropping if the schematic is
         // building over a door
-        if (Schematic.IsCurrentlyBuilding)
+        if (StructureItem.IsCurrentlyBuilding)
         {
             if (Utils.IsFurnitureTile(type))
             {

@@ -58,6 +58,11 @@ Items: {
 		DisplayName: Bridge
 		Tooltip: ""
 	}
+
+	Hellavator: {
+		DisplayName: Hellavator
+		Tooltip: ""
+	}
 }
 
 Configs: {

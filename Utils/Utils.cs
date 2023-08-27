@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Terraria.ID;
 
 namespace ValksStructures;
 
@@ -16,6 +15,19 @@ public static class Utils
                 Verb = "open"
             });
     }
+
+    public static void KillEverything(Vector2I pos)
+    {
+        if (IsInWorld(pos))
+        {
+            Tile tile = Main.tile[pos.X, pos.Y];
+            tile.ClearEverything();
+        }
+    }
+
+    public static bool IsInWorld(Vector2I pos) =>
+        pos.X > 0 && pos.X < Main.maxTilesX - 1 &&
+        pos.Y > 0 && pos.Y < Main.maxTilesY - 1;
 
     public static bool IsFurnitureTile(int id)
     {

@@ -1,6 +1,6 @@
 ﻿namespace ValksStructures.Content.Items;
 
-public class LargeHouse : HouseItem
+public class LargeHouse : SchematicItem
 {
     protected override string SchematicName => "LargeHouse1";
     protected override Ingredient[] Ingredients => new Ingredient[]

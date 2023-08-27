@@ -1,6 +1,4 @@
-﻿using Terraria.ObjectData;
-
-namespace ValksStructures.Content.Tiles;
+﻿namespace ValksStructures.Content.Tiles;
 
 // This ModTile is a platform so it does not change the slope of surrounding tiles when placed
 // ExamplePlatform.cs: https://github.com/tModLoader/tModLoader/blob/73dc09057d52503d77499ea907beb4307618a326/ExampleMod/Content/Tiles/Furniture/ExamplePlatform.cs
