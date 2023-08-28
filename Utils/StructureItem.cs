@@ -18,6 +18,7 @@ public abstract class StructureItem : ModItem
         Item.useStyle = ItemUseStyleID.Swing;
         Item.shoot = ProjectileID.BoneArrow;
         Item.consumable = true;
+        // Tooltip.SetDefault("Hello world");
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
