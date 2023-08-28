@@ -8,7 +8,7 @@ public partial class Schematic
     static readonly List<TileInfo> solidTiles = new();
     static bool containsFallingTiles;
 
-    public static void Paste(Schematic schematic, int styleOffset, int vOffset = 0)
+    public static void Paste(Schematic schematic, int vOffset = 0)
     {
         if (StructureItem.IsCurrentlyBuilding)
         {
@@ -44,8 +44,7 @@ public partial class Schematic
             startPos, 
             size, 
             schematic,
-            ref schematicTilesIndex, 
-            styleOffset, 
+            ref schematicTilesIndex,  
             furniture);
 
         // Place tiles as reset tiles
@@ -56,6 +55,10 @@ public partial class Schematic
             {
                 VModSystem.AddAction(() =>
                 {
+                    Vector2I pos = solidTile.Position;
+
+                    //WorldGen.KillTile(pos.X, pos.Y, noItem: true);
+
                     ResetTileToType(
                         solidTile.Position.X,
                         solidTile.Position.Y,
@@ -72,8 +75,7 @@ public partial class Schematic
                 PlaceTile(
                     solidTile.Position.X,
                     solidTile.Position.Y,
-                    solidTile,
-                    styleOffset);
+                    solidTile);
             });
         }
 
@@ -87,7 +89,7 @@ public partial class Schematic
         SlopeAllTiles();
 
         // Add all the furniture
-        AddFurnitureTiles(furniture, styleOffset);
+        AddFurnitureTiles(furniture);
 
         // Clear liquids
         VModSystem.AddAction(() =>
@@ -196,7 +198,14 @@ public partial class Schematic
 
                 VModSystem.AddAction(() =>
                 {
-                    Utils.KillEverything(new Vector2I(x, y));
+                    if (containsFallingTiles)
+                    {
+                        tile.ClearTile();
+                    }
+                    else
+                    {
+                        WorldGen.KillTile(x, y, noItem: true);
+                    }
                 });
             }
 
@@ -212,7 +221,6 @@ public partial class Schematic
         Vector2I size,
         Schematic schematic,
         ref int schematicTilesIndex,
-        int styleOffset,
         Dictionary<int, List<TileInfo>> furniture)
     {
         // Reset solid tiles dictionary
@@ -230,11 +238,6 @@ public partial class Schematic
 
                 int x = startPos.X + i;
                 int y = startPos.Y + j;
-
-                // Replace the wood wall with the current style wall
-                // Note that this is not perfect because the styles are all over the place
-                if (styleOffset != 0)
-                    ReplaceWall(tileInfo, WallID.Wood, 40 + styleOffset);
 
                 // Only place walls if wall exists in this tileInfo
                 if (tileInfo.WallType != 0)
@@ -298,7 +301,7 @@ public partial class Schematic
         }
     }
 
-    static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture, int styleOffset)
+    static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture)
     {
         // Otherwise chairs will not be placed properly
         if (furniture.ContainsKey(TileID.Chairs))
@@ -308,11 +311,11 @@ public partial class Schematic
             VModSystem.AddAction(() =>
             {
                 foreach (TileInfo tileInfo in furnitureList)
-                    AddFurnitureTile(tileInfo, styleOffset);
+                    AddFurnitureTile(tileInfo);
             });
     }
 
-    static void AddFurnitureTile(TileInfo tileInfo, int styleOffset)
+    static void AddFurnitureTile(TileInfo tileInfo)
     {
         // Open doors break surrounding tiles when placed in the world
         ReplaceTile(tileInfo, TileID.OpenDoor, TileID.ClosedDoor);
@@ -322,7 +325,7 @@ public partial class Schematic
         int x = tileInfo.Position.X;
         int y = tileInfo.Position.Y;
 
-        PlaceTile(x, y, tileInfo, styleOffset);
+        PlaceTile(x, y, tileInfo);
     }
 
     static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
@@ -355,7 +358,7 @@ public partial class Schematic
         tile.TileFrameY = (short)tileInfo.TileFrameY;
     }
 
-    static void PlaceTile(int x, int y, TileInfo tileInfo, int styleOffset)
+    static void PlaceTile(int x, int y, TileInfo tileInfo)
     {
         if (IsReplaceTile(tileInfo))
             return;
@@ -377,7 +380,7 @@ public partial class Schematic
             mute: true,
             forced: true,
             plr: Main.LocalPlayer.whoAmI,
-            style: style + styleOffset);
+            style: style);
 
         // Paint the tile with the appropriate color
         tile.TileColor = tileInfo.TileColor;

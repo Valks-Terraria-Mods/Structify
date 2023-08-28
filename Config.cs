@@ -14,10 +14,6 @@ public class Config : ModConfig
     [Range(1, 100)]
     public int BuildTickRate;
 
-    [DefaultValue(0)]
-    [BackgroundColor(0, 0, 0, 100)]
-    public int BuildStyle;
-
     public override void OnChanged()
     {
         VModSystem.BuildTickRate = BuildTickRate;

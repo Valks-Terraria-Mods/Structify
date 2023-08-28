@@ -15,8 +15,6 @@ public abstract class SchematicItem : StructureItem
             return;
         }
 
-        Schematic.Paste(schematic,
-            styleOffset: ModContent.GetInstance<Config>().BuildStyle,
-            vOffset: VerticalOffset);
+        Schematic.Paste(schematic, VerticalOffset);
     }
 }
