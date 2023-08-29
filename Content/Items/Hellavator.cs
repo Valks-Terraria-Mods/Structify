@@ -8,7 +8,7 @@ public class Hellavator : StructureItem
     };
     protected override int ItemRarity => ItemRarityID.Red;
 
-    public override void PlaceStructure(Player player, Vector2I mPos)
+    public override void UseTheItem(Player player, Vector2I mPos)
     {
         IsCurrentlyBuilding = true;
 
@@ -112,7 +112,7 @@ public class Hellavator : StructureItem
         WorldGen.PlaceTile(pos.X, pos.Y, tileId,
             mute: true,
             forced: true,
-            plr: -1,
+            plr: Main.myPlayer,
             style: style);
 
         if (Main.netMode == NetmodeID.MultiplayerClient)

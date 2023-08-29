@@ -1,6 +1,6 @@
 ﻿namespace ValksStructures.Content.Items;
 
-public abstract class StructureItem : ModItem
+public abstract class StructureItem : InteractItem
 {
     public static bool IsCurrentlyBuilding { get; set; }
 
@@ -9,25 +9,10 @@ public abstract class StructureItem : ModItem
 
     public override void SetDefaults()
     {
+        base.SetDefaults();
         Item.maxStack = 999;
         Item.rare = ItemRarity;
-        Item.noUseGraphic = true;
-        Item.noMelee = true;
-        Item.useAnimation = 20;
-        Item.useTime = 20;
-        Item.useStyle = ItemUseStyleID.Swing;
-        Item.shoot = ProjectileID.BoneArrow;
         Item.consumable = true;
-    }
-
-    public override bool? UseItem(Player player)
-    {
-        Vector2I mPos = new(
-            (int)Main.MouseWorld.X / 16,
-            (int)Main.MouseWorld.Y / 16);
-
-        PlaceStructure(player, mPos);
-        return true;
     }
 
     public override void AddRecipes()
@@ -39,6 +24,4 @@ public abstract class StructureItem : ModItem
 
         recipe.Register();
     }
-
-    public abstract void PlaceStructure(Player player, Vector2I mPos);
 }
