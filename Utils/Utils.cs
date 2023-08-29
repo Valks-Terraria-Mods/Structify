@@ -16,13 +16,89 @@ public static class Utils
             });
     }
 
+    public static void KillTile(Vector2I pos)
+    {
+        int x = pos.X;
+        int y = pos.Y;
+
+        if (!WorldGen.CanKillTile(x, y))
+            return;
+
+        bool killedTree = KillTree(pos.X);
+
+        if (!killedTree)
+        {
+            // Kill the tile
+            try
+            {
+                WorldGen.KillTile(x, y, noItem: true);
+            } catch { }
+        }
+
+        // Send the destroyed tile to other clients if multiplayer
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, x, y);
+    }
+
+    static bool KillTree(int x)
+    {
+        int grassY = GetGrassYAtX(x);
+
+        if (grassY == -1)
+            return false;
+
+        // Kill a tree if it exists here
+        try
+        {
+            WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(
+            x, grassY, TileID.Diamond);
+        } catch
+        {
+
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Get the highest grass Y at given X
+    /// </summary>
+    static int GetGrassYAtX(int x)
+    {
+        int lowestTrunkY = -1;
+
+        for (int y = 0; y < Main.maxTilesY; y++)
+        {
+            Tile tile = Main.tile[x, y];
+
+            if (tile.HasTile)
+            {
+                if (TileID.Sets.IsATreeTrunk[tile.TileType])
+                {
+                    lowestTrunkY = y;
+                }
+            }
+        }
+
+        return lowestTrunkY;
+    }
+
     public static void KillEverything(Vector2I pos)
     {
-        if (IsInWorld(pos))
+        if (!IsInWorld(pos))
+            return;
+
+        bool killedTree = KillTree(pos.X);
+
+        if (!killedTree)
         {
             Tile tile = Main.tile[pos.X, pos.Y];
             tile.ClearEverything();
         }
+
+        // Send the destroyed tile to other clients if multiplayer
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     public static bool IsInWorld(Vector2I pos) =>

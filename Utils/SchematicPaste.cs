@@ -1,5 +1,4 @@
-﻿using Terraria;
-using ValksStructures.Content.Items;
+﻿using ValksStructures.Content.Items;
 
 namespace ValksStructures;
 
@@ -24,7 +23,7 @@ public partial class Schematic
 
         Vector2I size = schematic.Size;
         // Mouse Position is the start position
-        mPos += new Vector2I(0, -size.Y + 1 + vOffset);
+        mPos += new Vector2I(0, -size.Y + vOffset);
 
         Dictionary<int, List<TileInfo>> furniture = 
             PrepareFurnitureDictionary(schematic, size);
@@ -93,27 +92,22 @@ public partial class Schematic
         // Clear liquids
         VModSystem.AddAction(() =>
         {
-            for (int i = 0; i < size.X; i++)
+            foreach (TileInfo tileInfo in schematic.Tiles)
             {
-                for (int j = 0; j < size.Y; j++)
-                {
-                    TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+                Vector2I pos = mPos + tileInfo.Position;
+                int x = pos.X;
+                int y = pos.Y;
 
-                    int x = mPos.X + i;
-                    int y = mPos.Y + j;
+                if (IsLiquid(tileInfo))
+                    continue;
 
-                    if (IsLiquid(tileInfo))
-                        continue;
+                Tile tile = Main.tile[x, y];
+                tile.Clear(TileDataType.Liquid);
 
-                    Tile tile = Main.tile[x, y];
-                    tile.Clear(TileDataType.Liquid);
-
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
-                }
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
             }
 
-            schematicTilesIndex = 0;
         });
 
         if (ModContent.GetInstance<Config>().BuildInstantly)
@@ -128,35 +122,29 @@ public partial class Schematic
     }
 
     static void PlaceLiquids(
-        Vector2I startPos, 
+        Vector2I mPos, 
         Vector2I size,
         Schematic schematic,
         ref int schematicTilesIndex)
     {
-        for (int i = 0; i < size.X; i++)
+        foreach (TileInfo tileInfo in schematic.Tiles)
         {
-            for (int j = 0; j < size.Y; j++)
+            Vector2I pos = mPos + tileInfo.Position;
+            int x = pos.X;
+            int y = pos.Y;
+
+            if (IsLiquid(tileInfo))
             {
-                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+                WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
+                    tileInfo.LiquidAmount);
 
-                int x = startPos.X + i;
-                int y = startPos.Y + j;
-
-                if (IsLiquid(tileInfo))
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
-                        tileInfo.LiquidAmount);
-
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        NetMessage.sendWater(x, y);
-                        NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
-                    }
-                };
-            }
+                    NetMessage.sendWater(x, y);
+                    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
+                }
+            };
         }
-
-        schematicTilesIndex = 0;
     }
 
     static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(
@@ -183,46 +171,41 @@ public partial class Schematic
         Schematic schematic,
         ref int schematicTilesIndex)
     {
-        for (int i = 0; i < size.X; i++)
-            for (int j = 0; j < size.Y; j++)
+        foreach (TileInfo tileInfo in schematic.Tiles)
+        {
+            Vector2I pos = startPos + tileInfo.Position;
+            int x = pos.X;
+            int y = pos.Y;
+            Tile tile = Main.tile[x, y];
+
+            if (TileID.Sets.Falling[tile.TileType])
+                containsFallingTiles = true;
+
+            // Do not kill tile if it is a replace tile
+            if (IsReplaceTile(tileInfo))
+                continue;
+
+            // Do not destroy a non-existent tile
+            if (!tile.HasTile)
+                continue;
+
+            VModSystem.AddAction(() =>
             {
-                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
-
-                int x = startPos.X + i;
-                int y = startPos.Y + j;
-
-                Tile tile = Main.tile[x, y];
-
-                if (TileID.Sets.Falling[tile.TileType])
-                    containsFallingTiles = true;
-
-                // Do not kill tile if it is a replace tile
-                if (IsReplaceTile(tileInfo))
-                    continue;
-
-                // Do not destroy a non-existent tile
-                if (!tile.HasTile)
-                    continue;
-
-                VModSystem.AddAction(() =>
+                if (containsFallingTiles)
                 {
-                    if (containsFallingTiles)
-                    {
-                        tile.ClearTile();
-                    }
-                    else
-                    {
-                        WorldGen.KillTile(x, y, noItem: true);
-                    }
+                    tile.ClearTile();
+                }
+                else
+                {
+                    Utils.KillTile(pos);
+                }
 
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
-                });
-            }
-
-        schematicTilesIndex = 0;
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
+            });
+        }
     }
-    
+
     static bool IsReplaceTile(TileInfo tileInfo) =>
         tileInfo.TileType == 
         ModContent.TileType<Content.Tiles.SchematicReplace>();
@@ -237,69 +220,63 @@ public partial class Schematic
         // Reset solid tiles dictionary
         solidTiles.Clear();
 
-        for (int i = 0; i < size.X; i++)
+        foreach (TileInfo tileInfo in schematic.Tiles)
         {
-            for (int j = 0; j < size.Y; j++)
-            {
-                TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
+            Vector2I pos = startPos + tileInfo.Position;
+            int x = pos.X;
+            int y = pos.Y;
                 
-                // This is a replace tile, don't place anything here
-                if (IsReplaceTile(tileInfo))
-                    continue;
+            // This is a replace tile, don't place anything here
+            if (IsReplaceTile(tileInfo))
+                continue;
 
-                int x = startPos.X + i;
-                int y = startPos.Y + j;
-
-                // Only place walls if wall exists in this tileInfo
-                if (tileInfo.WallType != 0)
+            // Only place walls if wall exists in this tileInfo
+            if (tileInfo.WallType != 0)
+            {
+                VModSystem.AddAction(() =>
                 {
-                    VModSystem.AddAction(() =>
+                    if (Main.tile[x, y].WallType == 0)
                     {
-                        if (Main.tile[x, y].WallType == 0)
-                        {
-                            // No wall here, so place one
-                            WorldGen.PlaceWall(x, y, tileInfo.WallType,
-                                mute: true);
-                        }
-                        else
-                        {
-                            // Wall exists here, replace it
-                            WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
-                        }
+                        // No wall here, so place one
+                        WorldGen.PlaceWall(x, y, tileInfo.WallType,
+                            mute: true);
+                    }
+                    else
+                    {
+                        // Wall exists here, replace it
+                        WorldGen.ReplaceWall(x, y, (ushort)tileInfo.WallType);
+                    }
 
-                        WorldGen.paintWall(x, y, tileInfo.WallColor);
+                    WorldGen.paintWall(x, y, tileInfo.WallColor);
 
-                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                            NetMessage.SendTileSquare(Main.myPlayer, x, y);
-                    });
-                }
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+                });
+            }
 
-                // Do not add furniture tiles right now
-                if (Utils.IsFurnitureTile(tileInfo.TileType))
-                {
-                    // Pass over the position
-                    tileInfo.Position = new Vector2I(x, y);
+            // Do not add furniture tiles right now
+            if (Utils.IsFurnitureTile(tileInfo.TileType))
+            {
+                // Pass over the position
+                tileInfo.Position = new Vector2I(x, y);
 
-                    // Keep track of the furniture tile to be added later
-                    furniture[tileInfo.TileType].Add(tileInfo);
+                // Keep track of the furniture tile to be added later
+                furniture[tileInfo.TileType].Add(tileInfo);
 
-                    // This is a furniture tile so skip it
-                    continue;
-                }
+                // This is a furniture tile so skip it
+                continue;
+            }
 
-                // Place solid tiles
-                if (tileInfo.HasTile)
-                {
-                    // Pass over the position
-                    tileInfo.Position = new Vector2I(x, y);
+            // Place solid tiles
+            if (tileInfo.HasTile)
+            {
+                // Pass over the position
+                tileInfo.Position = new Vector2I(x, y);
 
-                    // Keep track of solid tiles for later use with slope
-                    solidTiles.Add(tileInfo);
-                }
+                // Keep track of solid tiles for later use with slope
+                solidTiles.Add(tileInfo);
             }
         }
-
-        schematicTilesIndex = 0;
     }
 
     static void SlopeAllTiles()
@@ -399,7 +376,7 @@ public partial class Schematic
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
             mute: true,
             forced: true,
-            plr: Main.LocalPlayer.whoAmI,
+            plr: Main.myPlayer,
             style: style);
 
         // Paint the tile with the appropriate color
