@@ -108,7 +108,9 @@ public partial class Schematic
 
                     Tile tile = Main.tile[x, y];
                     tile.Clear(TileDataType.Liquid);
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
+
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
                 }
             }
 
@@ -146,8 +148,11 @@ public partial class Schematic
                     WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
                         tileInfo.LiquidAmount);
 
-                    NetMessage.sendWater(x, y);
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        NetMessage.sendWater(x, y);
+                        NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
+                    }
                 };
             }
         }
@@ -211,7 +216,8 @@ public partial class Schematic
                         WorldGen.KillTile(x, y, noItem: true);
                     }
 
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
                 });
             }
 
@@ -264,7 +270,8 @@ public partial class Schematic
 
                         WorldGen.paintWall(x, y, tileInfo.WallColor);
 
-                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                            NetMessage.SendTileSquare(Main.myPlayer, x, y);
                     });
                 }
 
@@ -352,7 +359,8 @@ public partial class Schematic
     {
         WorldGen.SlopeTile(x, y, tileInfo.Slope);
 
-        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static void ResetTileToType(int x, int y, TileInfo tileInfo)
@@ -367,7 +375,8 @@ public partial class Schematic
         tile.TileFrameX = (short)tileInfo.TileFrameX;
         tile.TileFrameY = (short)tileInfo.TileFrameY;
 
-        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static void PlaceTile(int x, int y, TileInfo tileInfo)
@@ -408,7 +417,8 @@ public partial class Schematic
             //tile.TileFrameY = (short)tileInfo.TileFrameY;
         }
 
-        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;

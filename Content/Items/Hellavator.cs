@@ -8,7 +8,7 @@ public class Hellavator : StructureItem
     };
     protected override int ItemRarity => ItemRarityID.Red;
 
-    public override void UseItem(Player player)
+    public override void PlaceStructure(Player player)
     {
         IsCurrentlyBuilding = true;
 
@@ -119,7 +119,8 @@ public class Hellavator : StructureItem
             plr: -1,
             style: style);
 
-        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void PlaceWall(Vector2I pos, int wallId)
@@ -130,7 +131,8 @@ public class Hellavator : StructureItem
         WorldGen.PlaceWall(pos.X, pos.Y, wallId,
             mute: true);
 
-        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void KillWall(Vector2I pos)
@@ -141,6 +143,7 @@ public class Hellavator : StructureItem
         WorldGen.KillWall(pos.X, pos.Y,
             fail: false);
 
-        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 }
