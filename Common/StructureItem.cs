@@ -22,7 +22,11 @@ public abstract class StructureItem : ModItem
 
     public override bool? UseItem(Player player)
     {
-        PlaceStructure(player);
+        Vector2I mPos = new(
+            (int)Main.MouseWorld.X / 16,
+            (int)Main.MouseWorld.Y / 16);
+
+        PlaceStructure(player, mPos);
         return true;
     }
 
@@ -36,5 +40,5 @@ public abstract class StructureItem : ModItem
         recipe.Register();
     }
 
-    public abstract void PlaceStructure(Player player);
+    public abstract void PlaceStructure(Player player, Vector2I mPos);
 }

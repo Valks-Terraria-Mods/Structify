@@ -15,7 +15,9 @@
     <None Remove="Content\Items\PrisonCluster.png" />
     <None Remove="Content\Items\SchematicReplace.png" />
     <None Remove="Content\Items\SmallHouse.png" />
+    <None Remove="Content\Items\Test.png" />
     <None Remove="Content\Tiles\SchematicReplace.png" />
+    <None Remove="Content\Tiles\Test.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

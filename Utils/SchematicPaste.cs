@@ -8,7 +8,7 @@ public partial class Schematic
     static readonly List<TileInfo> solidTiles = new();
     static bool containsFallingTiles;
 
-    public static void Paste(Schematic schematic, int vOffset = 0)
+    public static void Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
     {
         if (StructureItem.IsCurrentlyBuilding)
         {
@@ -23,9 +23,8 @@ public partial class Schematic
         StructureItem.IsCurrentlyBuilding = true;
 
         Vector2I size = schematic.Size;
-        Vector2I startPos = new(
-            (int)Main.MouseWorld.X / 16,
-            (int)Main.MouseWorld.Y / 16 - size.Y + 1 + vOffset);
+        // Mouse Position is the start position
+        mPos += new Vector2I(0, -size.Y + 1 + vOffset);
 
         Dictionary<int, List<TileInfo>> furniture = 
             PrepareFurnitureDictionary(schematic, size);
@@ -34,14 +33,14 @@ public partial class Schematic
 
         // Destroy the area where the structure will be placed
         DestroyArea(
-            startPos, 
+            mPos, 
             size, 
             schematic,
             ref schematicTilesIndex);
 
         // Place walls and tiles
         PlaceWallsAndTiles(
-            startPos, 
+            mPos, 
             size, 
             schematic,
             ref schematicTilesIndex,  
@@ -82,7 +81,7 @@ public partial class Schematic
         // Place liquids
         VModSystem.AddAction(() =>
         {
-            PlaceLiquids(startPos, size, schematic, ref schematicTilesIndex);
+            PlaceLiquids(mPos, size, schematic, ref schematicTilesIndex);
         });
 
         // Ensure all tiles are sloped correctly
@@ -100,8 +99,8 @@ public partial class Schematic
                 {
                     TileInfo tileInfo = schematic.Tiles[schematicTilesIndex++];
 
-                    int x = startPos.X + i;
-                    int y = startPos.Y + j;
+                    int x = mPos.X + i;
+                    int y = mPos.Y + j;
 
                     if (IsLiquid(tileInfo))
                         continue;

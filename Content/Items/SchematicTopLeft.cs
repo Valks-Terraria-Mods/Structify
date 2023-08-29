@@ -1,11 +1,7 @@
 ﻿namespace ValksStructures.Content.Items;
 
-public class SchematicTopLeft : ModItem
+public class SchematicTopLeft : BasicItem
 {
-    public override void SetDefaults()
-    {
-        Item.maxStack = 999;
-        Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.SchematicTopLeft>());
-        Item.rare = ItemRarityID.Green;
-    }
+    public override int Tile => ModContent.TileType<Tiles.SchematicTopLeft>();
+    public override int Rarity => ItemRarityID.Green;
 }

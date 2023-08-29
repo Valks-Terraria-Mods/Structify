@@ -63,6 +63,11 @@ Items: {
 		DisplayName: Hellavator
 		Tooltip: Scripted by Valkyrienyanko
 	}
+
+	Test: {
+		DisplayName: Test
+		Tooltip: ""
+	}
 }
 
 Configs: {

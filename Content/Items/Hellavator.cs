@@ -8,13 +8,9 @@ public class Hellavator : StructureItem
     };
     protected override int ItemRarity => ItemRarityID.Red;
 
-    public override void PlaceStructure(Player player)
+    public override void PlaceStructure(Player player, Vector2I mPos)
     {
         IsCurrentlyBuilding = true;
-
-        Vector2I mPos = new(
-            (int)Main.MouseWorld.X / 16,
-            (int)Main.MouseWorld.Y / 16);
 
         VModSystem.AddAction(() =>
         {

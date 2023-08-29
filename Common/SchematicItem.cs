@@ -5,7 +5,7 @@ public abstract class SchematicItem : StructureItem
     protected abstract string SchematicName { get; }
     protected virtual int VerticalOffset { get; } = 0;
 
-    public override void PlaceStructure(Player player)
+    public override void PlaceStructure(Player player, Vector2I mPos)
     {
         Schematic schematic = Schematic.Load(SchematicName);
 
@@ -15,7 +15,7 @@ public abstract class SchematicItem : StructureItem
             return;
         }
 
-        Schematic.Paste(schematic, VerticalOffset);
+        Schematic.Paste(schematic, mPos, VerticalOffset);
 
         return;
     }

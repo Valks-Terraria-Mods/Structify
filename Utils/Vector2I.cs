@@ -1,6 +1,6 @@
 ﻿namespace ValksStructures;
 
-/*public struct Vector2I
+public struct Vector2I
 {
     public static Vector2I Zero => new(0, 0);
 
@@ -35,4 +35,4 @@
     // See https://github.com/Unity-Technologies/UnityCsReference/blob/62633e3912ab891be4c6f5ef4500e69f59d85ed4/Runtime/Export/Math/Vector2Int.cs#L238
     public override int GetHashCode() => 
         X.GetHashCode() ^ (Y.GetHashCode() << 2);
-}*/
+}
