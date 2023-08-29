@@ -110,25 +110,37 @@ public class Hellavator : StructureItem
 
     static void PlaceTile(Vector2I pos, int tileId, int style = 0)
     {
-        if (Utils.IsInWorld(pos))
-            WorldGen.PlaceTile(pos.X, pos.Y, tileId,
-                mute: true,
-                forced: true,
-                plr: -1,
-                style: style);
+        if (!Utils.IsInWorld(pos))
+            return;
+
+        WorldGen.PlaceTile(pos.X, pos.Y, tileId,
+            mute: true,
+            forced: true,
+            plr: -1,
+            style: style);
+
+        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void PlaceWall(Vector2I pos, int wallId)
     {
-        if (Utils.IsInWorld(pos))
-            WorldGen.PlaceWall(pos.X, pos.Y, wallId,
-                mute: true);
+        if (!Utils.IsInWorld(pos))
+            return;
+
+        WorldGen.PlaceWall(pos.X, pos.Y, wallId,
+            mute: true);
+
+        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void KillWall(Vector2I pos)
     {
-        if (Utils.IsInWorld(pos))
-            WorldGen.KillWall(pos.X, pos.Y,
-                fail: false);
+        if (!Utils.IsInWorld(pos))
+            return;
+
+        WorldGen.KillWall(pos.X, pos.Y,
+            fail: false);
+
+        NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 }
