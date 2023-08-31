@@ -7,8 +7,8 @@ public class Test2 : GlobalTile
 {
     public override void RightClick(int i, int j, int type)
     {
-        Tile tile = Main.tile[i, j];
-        Main.NewText($"Name: {tile.TileType}, TileFrameX: {tile.TileFrameX}, TileFrameY: {tile.TileFrameY}");
+        //Tile tile = Main.tile[i, j];
+        //Main.NewText($"Name: {tile.TileType}, TileFrameX: {tile.TileFrameX}, TileFrameY: {tile.TileFrameY}");
     }
 }
 
