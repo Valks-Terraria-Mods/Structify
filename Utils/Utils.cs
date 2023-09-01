@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using Terraria;
 
 namespace ValksStructures;
 
@@ -24,16 +25,13 @@ public static class Utils
         if (!WorldGen.CanKillTile(x, y))
             return;
 
-        bool killedTree = KillTree(pos.X);
+        Tile tile = Main.tile[x, y];
 
-        if (!killedTree)
-        {
-            // Kill the tile
-            try
-            {
-                WorldGen.KillTile(x, y, noItem: true);
-            } catch { }
-        }
+        // Resetting the tile type before destroying it is VERY IMPORTANT.
+        // If this is not here then placing structures over trees will
+        // FREEZE THE GAME.
+        tile.ResetToType(TileID.WoodBlock);
+        WorldGen.KillTile(x, y, noItem: true);
 
         // Send the destroyed tile to other clients if multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient)
