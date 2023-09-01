@@ -29,6 +29,7 @@ public static class Utils
         // Resetting the tile type before destroying it is VERY IMPORTANT.
         // If this is not here then placing structures over trees will
         // FREEZE THE GAME.
+        // Edit: Does not appear to fix problem?
         tile.ResetToType(TileID.WoodBlock);
         WorldGen.KillTile(x, y, noItem: true);
 
@@ -37,6 +38,7 @@ public static class Utils
             NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
+    // Unused as tile.ResetToType(...) seems to be doing the job
     static bool KillTree(int x)
     {
         int grassY = GetGrassYAtX(x);
@@ -45,14 +47,8 @@ public static class Utils
             return false;
 
         // Kill a tree if it exists here
-        try
-        {
-            WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(
+        WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(
             x, grassY, TileID.Diamond);
-        } catch
-        {
-
-        }
 
         return true;
     }
@@ -85,13 +81,16 @@ public static class Utils
         if (!IsInWorld(pos))
             return;
 
-        bool killedTree = KillTree(pos.X);
+        Tile tile = Main.tile[pos.X, pos.Y];
 
-        if (!killedTree)
-        {
-            Tile tile = Main.tile[pos.X, pos.Y];
-            tile.ClearEverything();
-        }
+        // Resetting the tile type before destroying it is VERY IMPORTANT.
+        // If this is not here then placing structures over trees will
+        // FREEZE THE GAME.
+        // Edit: Does not appear to fix problem?
+        tile.ResetToType(TileID.WoodBlock);
+
+        // Kill everything
+        tile.ClearEverything();
 
         // Send the destroyed tile to other clients if multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient)
