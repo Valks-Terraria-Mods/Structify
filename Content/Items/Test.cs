@@ -1,7 +1,4 @@
-﻿using Terraria;
-using Terraria.WorldBuilding;
-
-namespace ValksStructures.Content.Items;
+﻿namespace ValksStructures.Content.Items;
 
 public class Test2 : GlobalTile
 {
