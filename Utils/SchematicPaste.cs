@@ -7,12 +7,14 @@ public partial class Schematic
     static readonly List<TileInfo> solidTiles = new();
     static bool containsFallingTiles;
 
-    public static void Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
+    public static void Paste(Schematic schematic, Vector2I mPos, 
+        int vOffset = 0)
     {
+        // Do not let the player build structures concurrently
         if (StructureItem.IsCurrentlyBuilding)
         {
             Main.NewText("Please wait for the current house to " +
-                "finish building");
+                "finish building", Colors.RarityPink);
 
             return;
         }
@@ -21,51 +23,73 @@ public partial class Schematic
         containsFallingTiles = false;
         StructureItem.IsCurrentlyBuilding = true;
 
+        // The size of the schematic
         Vector2I size = schematic.Size;
-        // Mouse Position is the start position
+
+        // Mouse Position (mPos) is the start position
         mPos += new Vector2I(0, -size.Y + vOffset);
 
+        // All furniture tiles will be stored in here
         Dictionary<int, List<TileInfo>> furniture = 
             PrepareFurnitureDictionary(schematic, size);
 
-        int schematicTilesIndex = 0;
-
         // Destroy the area where the structure will be placed
-        DestroyArea(
-            mPos, 
-            size, 
-            schematic,
-            ref schematicTilesIndex);
+        DestroyArea(mPos, schematic);
 
         // Place walls and tiles
-        PlaceWallsAndTiles(
-            mPos, 
-            size, 
-            schematic,
-            ref schematicTilesIndex,  
-            furniture);
+        PlaceWallsAndTiles(mPos, schematic, furniture);
 
         // Place tiles as reset tiles
         // Doing it this way will not disturb falling tiles like sand
         if (containsFallingTiles)
-        {
-            foreach (TileInfo solidTile in solidTiles)
-            {
-                VModSystem.AddAction(() =>
-                {
-                    Vector2I pos = solidTile.Position;
-
-                    //WorldGen.KillTile(pos.X, pos.Y, noItem: true);
-
-                    ResetTileToType(
-                        solidTile.Position.X,
-                        solidTile.Position.Y,
-                        solidTile);
-                });
-            }
-        }
+            ResetAllTiles();
 
         // Place tiles
+        PlaceAllSolidTiles();
+
+        // Place liquids all in one go
+        VModSystem.AddAction(() =>
+            PlaceLiquids(mPos, schematic));
+
+        // Ensure all tiles are sloped correctly
+        SlopeAllTiles();
+
+        // Add all the furniture
+        AddFurnitureTiles(furniture);
+
+        // Clear liquids
+        VModSystem.AddAction(() => 
+            ClearAllLiquids(mPos, schematic));
+
+        if (ModContent.GetInstance<Config>().BuildInstantly)
+            // Construction will be built instantly
+            VModSystem.ExecuteAllActions();
+        else
+            // Construction will be built by one task at a time every frame
+            VModSystem.StartActions();
+    }
+
+    static void ClearAllLiquids(Vector2I mPos, Schematic schematic)
+    {
+        foreach (TileInfo tileInfo in schematic.Tiles)
+        {
+            Vector2I pos = mPos + tileInfo.Position;
+            int x = pos.X;
+            int y = pos.Y;
+
+            if (IsLiquid(tileInfo))
+                continue;
+
+            Tile tile = Main.tile[x, y];
+            tile.Clear(TileDataType.Liquid);
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        }
+    }
+
+    static void PlaceAllSolidTiles()
+    {
         foreach (TileInfo solidTile in solidTiles)
         {
             VModSystem.AddAction(() =>
@@ -76,56 +100,27 @@ public partial class Schematic
                     solidTile);
             });
         }
+    }
 
-        // Place liquids
-        VModSystem.AddAction(() =>
+    static void ResetAllTiles()
+    {
+        foreach (TileInfo solidTile in solidTiles)
         {
-            PlaceLiquids(mPos, size, schematic, ref schematicTilesIndex);
-        });
-
-        // Ensure all tiles are sloped correctly
-        SlopeAllTiles();
-
-        // Add all the furniture
-        AddFurnitureTiles(furniture);
-
-        // Clear liquids
-        VModSystem.AddAction(() =>
-        {
-            foreach (TileInfo tileInfo in schematic.Tiles)
+            VModSystem.AddAction(() =>
             {
-                Vector2I pos = mPos + tileInfo.Position;
-                int x = pos.X;
-                int y = pos.Y;
+                Vector2I pos = solidTile.Position;
 
-                if (IsLiquid(tileInfo))
-                    continue;
+                //WorldGen.KillTile(pos.X, pos.Y, noItem: true);
 
-                Tile tile = Main.tile[x, y];
-                tile.Clear(TileDataType.Liquid);
-
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
-            }
-
-        });
-
-        if (ModContent.GetInstance<Config>().BuildInstantly)
-        {
-            VModSystem.ExecuteAllActions();
-        }
-        else
-        {
-            // Construction will be built by one task at a time every frame
-            VModSystem.StartActions();
+                ResetTileToType(
+                    solidTile.Position.X,
+                    solidTile.Position.Y,
+                    solidTile);
+            });
         }
     }
 
-    static void PlaceLiquids(
-        Vector2I mPos, 
-        Vector2I size,
-        Schematic schematic,
-        ref int schematicTilesIndex)
+    static void PlaceLiquids(Vector2I mPos, Schematic schematic)
     {
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -165,11 +160,7 @@ public partial class Schematic
         return furniture;
     }
 
-    static void DestroyArea(
-        Vector2I startPos, 
-        Vector2I size, 
-        Schematic schematic,
-        ref int schematicTilesIndex)
+    static void DestroyArea(Vector2I startPos, Schematic schematic)
     {
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -192,13 +183,9 @@ public partial class Schematic
             VModSystem.AddAction(() =>
             {
                 if (containsFallingTiles)
-                {
                     tile.ClearTile();
-                }
                 else
-                {
                     Utils.KillTile(pos);
-                }
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendTileSquare(Main.myPlayer, x, y);
@@ -210,11 +197,7 @@ public partial class Schematic
         tileInfo.TileType == 
         ModContent.TileType<Content.Tiles.SchematicReplace>();
 
-    static void PlaceWallsAndTiles(
-        Vector2I startPos, 
-        Vector2I size,
-        Schematic schematic,
-        ref int schematicTilesIndex,
+    static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic,
         Dictionary<int, List<TileInfo>> furniture)
     {
         // Reset solid tiles dictionary
