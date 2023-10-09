@@ -32,7 +32,7 @@ public class VModSystem : ModSystem
 
         actions.Clear();
 
-        StructureItem.IsCurrentlyBuilding = false;
+        ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
     }
 
     static void ExecuteAction()
@@ -40,7 +40,7 @@ public class VModSystem : ModSystem
         if (actions.Count == 0)
         {
             Update -= ExecuteAction;
-            StructureItem.IsCurrentlyBuilding = false;
+            ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
             return;
         }
 

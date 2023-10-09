@@ -2,8 +2,6 @@
 
 public abstract class StructureItem : InteractItem
 {
-    public static bool IsCurrentlyBuilding { get; set; }
-
     protected abstract Ingredient[] Ingredients { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
 

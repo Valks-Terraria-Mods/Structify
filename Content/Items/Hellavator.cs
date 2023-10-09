@@ -10,7 +10,7 @@ public class Hellavator : StructureItem
 
     public override void UseTheItem(Player player, Vector2I mPos)
     {
-        IsCurrentlyBuilding = true;
+        ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
 
         VModSystem.AddAction(() =>
         {

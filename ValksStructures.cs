@@ -14,5 +14,5 @@ namespace ValksStructures;
 
 public class ValksStructures : Mod
 {
-
+    public bool IsCurrentlyBuilding { get; set; }
 }

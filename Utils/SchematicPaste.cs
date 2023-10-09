@@ -11,7 +11,7 @@ public partial class Schematic
         int vOffset = 0)
     {
         // Do not let the player build structures concurrently
-        if (StructureItem.IsCurrentlyBuilding)
+        if (ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding)
         {
             Main.NewText("Please wait for the current house to " +
                 "finish building", Colors.RarityPink);
@@ -21,7 +21,7 @@ public partial class Schematic
 
         // Setup all variables
         containsFallingTiles = false;
-        StructureItem.IsCurrentlyBuilding = true;
+        ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
 
         // The size of the schematic
         Vector2I size = schematic.Size;
