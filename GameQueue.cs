@@ -6,45 +6,45 @@ public class GameQueue : ModSystem
 
     public static int BuildTickRate { get; set; } = 1;
 
-    private static readonly List<Action> actions = [];
+    private static readonly List<Action> _actions = [];
 
-    private int count;
+    private int _count;
 
     public override void PreUpdateEntities()
     {
-        count++;
+        _count++;
 
-        if (count >= BuildTickRate)
+        if (_count >= BuildTickRate)
         {
-            count = 0;
+            _count = 0;
             Update?.Invoke();
         }
     }
 
-    public static void Enqueue(Action action) => actions.Add(action);
+    public static void Enqueue(Action action) => _actions.Add(action);
 
     public static void ExecuteSlowly() => Update += ExecuteAction;
 
     public static void ExecuteInstantly()
     {
-        foreach (Action action in actions)
+        foreach (Action action in _actions)
             action();
 
-        actions.Clear();
+        _actions.Clear();
 
         ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
     }
 
     private static void ExecuteAction()
     {
-        if (actions.Count == 0)
+        if (_actions.Count == 0)
         {
             Update -= ExecuteAction;
             ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
             return;
         }
 
-        actions[0]();
-        actions.RemoveAt(0);
+        _actions[0]();
+        _actions.RemoveAt(0);
     }
 }

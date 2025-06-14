@@ -2,7 +2,7 @@
 
 public static class TileStyle
 {
-    private static readonly Dictionary<int, SpriteSheetDir> spriteSheetDirs = new()
+    private static readonly Dictionary<int, SpriteSheetDir> _spriteSheetDirs = new()
     {
         { TileID.Platforms, SpriteSheetDir.Vertical },
         { TileID.ClosedDoor, SpriteSheetDir.Vertical },
@@ -24,9 +24,9 @@ public static class TileStyle
         int frameX = tileInfo.TileFrameX;
         int frameY = tileInfo.TileFrameY;
 
-        if (spriteSheetDirs.ContainsKey(id))
+        if (_spriteSheetDirs.ContainsKey(id))
         {
-            return spriteSheetDirs[id] == SpriteSheetDir.Horizontal ?
+            return _spriteSheetDirs[id] == SpriteSheetDir.Horizontal ?
                 frameX / 18 : frameY / 18;
         }
 

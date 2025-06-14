@@ -4,8 +4,8 @@ namespace ValksStructures;
 
 public partial class Schematic
 {
-    private static readonly List<TileInfo> solidTiles = [];
-    private static bool containsFallingTiles;
+    private static readonly List<TileInfo> _solidTiles = [];
+    private static bool _containsFallingTiles;
 
     public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
     {
@@ -17,7 +17,7 @@ public partial class Schematic
         }
 
         // Setup all variables
-        containsFallingTiles = false;
+        _containsFallingTiles = false;
         ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
 
         // The size of the schematic
@@ -38,7 +38,7 @@ public partial class Schematic
 
         // Place tiles as reset tiles
         // Doing it this way will not disturb falling tiles like sand
-        if (containsFallingTiles)
+        if (_containsFallingTiles)
             ResetAllTiles();
 
         // Place tiles
@@ -97,7 +97,7 @@ public partial class Schematic
 
     private static void PlaceAllSolidTiles()
     {
-        foreach (TileInfo solidTile in solidTiles)
+        foreach (TileInfo solidTile in _solidTiles)
         {
             GameQueue.Enqueue(() =>
             {
@@ -111,7 +111,7 @@ public partial class Schematic
 
     private static void ResetAllTiles()
     {
-        foreach (TileInfo solidTile in solidTiles)
+        foreach (TileInfo solidTile in _solidTiles)
         {
             GameQueue.Enqueue(() =>
             {
@@ -177,7 +177,7 @@ public partial class Schematic
             Tile tile = Main.tile[x, y];
 
             if (TileID.Sets.Falling[tile.TileType])
-                containsFallingTiles = true;
+                _containsFallingTiles = true;
 
             // Do not kill tile if it is a replace tile
             if (IsReplaceTile(tileInfo))
@@ -189,7 +189,7 @@ public partial class Schematic
 
             GameQueue.Enqueue(() =>
             {
-                if (containsFallingTiles)
+                if (_containsFallingTiles)
                     tile.ClearTile();
                 else
                     Utils.KillTile(pos);
@@ -208,7 +208,7 @@ public partial class Schematic
         Dictionary<int, List<TileInfo>> furniture)
     {
         // Reset solid tiles dictionary
-        solidTiles.Clear();
+        _solidTiles.Clear();
 
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -264,7 +264,7 @@ public partial class Schematic
                 tileInfo.Position = new Vector2I(x, y);
 
                 // Keep track of solid tiles for later use with slope
-                solidTiles.Add(tileInfo);
+                _solidTiles.Add(tileInfo);
             }
         }
     }
@@ -272,7 +272,7 @@ public partial class Schematic
     private static void SlopeAllTiles()
     {
         // Final pass to ensure all tiles are sloped correctly
-        foreach (TileInfo solidTile in solidTiles)
+        foreach (TileInfo solidTile in _solidTiles)
         {
             GameQueue.Enqueue(() =>
             {
