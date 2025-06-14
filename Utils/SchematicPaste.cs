@@ -139,7 +139,7 @@ public partial class Schematic
                 //    NetMessage.sendWater(x, y);
                 //    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
                 //}
-            };
+            }
         }
     }
 
@@ -303,11 +303,13 @@ public partial class Schematic
         PlaceTile(x, y, tileInfo);
     }
 
+/*
     private static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
     {
         if (tileInfo.WallType == oldWall)
             tileInfo.WallType = newWall;
     }
+*/
 
     private static void ReplaceTile(TileInfo tileInfo, int oldTile, int newTile)
     {

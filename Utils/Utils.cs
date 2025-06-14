@@ -39,6 +39,7 @@ public static class Utils
     }
 
     // Unused as tile.ResetToType(...) seems to be doing the job
+/*
     private static bool KillTree(int x)
     {
         int grassY = GetGrassYAtX(x);
@@ -52,7 +53,9 @@ public static class Utils
 
         return true;
     }
+*/
 
+/*
     /// <summary>
     /// Get the highest grass Y at given X
     /// </summary>
@@ -75,6 +78,7 @@ public static class Utils
 
         return lowestTrunkY;
     }
+*/
 
     public static void KillEverything(Vector2I pos)
     {

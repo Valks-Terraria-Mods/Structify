@@ -11,12 +11,6 @@ public class Test2 : GlobalTile
 
 public class Test : InteractItem
 {
-    public override void SetDefaults()
-    {
-        base.SetDefaults();
-        //Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Test>());
-    }
-
     private int GetGrassYAtX(int x)
     {
         int lowestTrunkY = -1;

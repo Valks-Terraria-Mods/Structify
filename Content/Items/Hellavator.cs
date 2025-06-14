@@ -158,6 +158,7 @@ public class Hellavator : StructureItem
         //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
+/*
     private static void KillWall(Vector2I pos)
     {
         if (!Utils.IsInWorld(pos))
@@ -169,4 +170,5 @@ public class Hellavator : StructureItem
         //if (Main.netMode == NetmodeID.MultiplayerClient)
         //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
+*/
 }
