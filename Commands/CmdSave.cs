@@ -5,7 +5,7 @@ namespace Structify.Commands;
 public class CmdSave : ModCommand
 {
     public override string Command => "save";
-    public override CommandType Type => CommandType.World;
+    public override CommandType Type => CommandType.Chat;
     public override bool IsCaseSensitive => true; // So uppercase letters are preserved when saving structure names
 
     public Schematic Schematic { get; set; }

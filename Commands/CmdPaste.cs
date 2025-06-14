@@ -3,7 +3,7 @@ namespace Structify.Commands;
 public class CmdPaste : ModCommand
 {
     public override string Command => "paste";
-    public override CommandType Type => CommandType.World;
+    public override CommandType Type => CommandType.Chat;
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
