@@ -26,27 +26,30 @@ public class Hellavator : StructureItem
             PlaceTorches(mPos);
         });
 
-        VModSystem.AddAction(() =>
+        if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            int xStart = mPos.X - 4;
-            int width = 8;
-            int worldHeight = Main.maxTilesY;
-
-            // packets can only be sent in chunks
-            for (int y = 0; y < worldHeight; y += 100)
+            VModSystem.AddAction(() =>
             {
-                // height of this slice: either 100, or whatever remains at the bottom
-                int sliceHeight = Math.Min(100, worldHeight - y);
+                int xStart = mPos.X - 4;
+                int width = 8;
+                int worldHeight = Main.maxTilesY;
 
-                NetMessage.SendTileSquare(
-                    whoAmi: Main.myPlayer,  // or -1 on the server to broadcast
-                    tileX: xStart,
-                    tileY: y,
-                    xSize: width,
-                    ySize: sliceHeight
-                );
-            }
-        });
+                // packets can only be sent in chunks
+                for (int y = 0; y < worldHeight; y += 100)
+                {
+                    // height of this slice: either 100, or whatever remains at the bottom
+                    int sliceHeight = Math.Min(100, worldHeight - y);
+
+                    NetMessage.SendTileSquare(
+                        whoAmi: Main.myPlayer,  // or -1 on the server to broadcast
+                        tileX: xStart,
+                        tileY: y,
+                        xSize: width,
+                        ySize: sliceHeight
+                    );
+                }
+            });
+        }
 
         VModSystem.StartActions();
 
