@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace ValksStructures.Commands;
+namespace Structify.Commands;
 
 public class CmdTest : ModCommand
 {

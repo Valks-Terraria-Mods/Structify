@@ -1,4 +1,4 @@
-﻿namespace ValksStructures;
+﻿namespace Structify;
 
 [BackgroundColor(0, 0, 0, 100)]
 public class Config : ModConfig

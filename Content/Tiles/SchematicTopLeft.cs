@@ -1,4 +1,4 @@
-﻿namespace ValksStructures.Content.Tiles;
+﻿namespace Structify.Content.Tiles;
 
 public class SchematicTopLeft : ModTile
 {

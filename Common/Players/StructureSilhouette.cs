@@ -1,4 +1,4 @@
-namespace ValksStructures.Common.Players;
+namespace Structify.Common.Players;
 
 public class StructureSilhouette : ModPlayer
 {

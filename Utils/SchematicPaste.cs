@@ -1,4 +1,4 @@
-﻿namespace ValksStructures;
+﻿namespace Structify;
 
 public partial class Schematic
 {

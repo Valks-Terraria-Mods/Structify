@@ -1,6 +1,6 @@
-﻿using ValksStructures.Commands;
+﻿using Structify.Commands;
 
-namespace ValksStructures;
+namespace Structify;
 
 public class GlobalTileHooks : GlobalTile
 {

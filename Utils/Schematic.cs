@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace ValksStructures;
+namespace Structify;
 
 public partial class Schematic
 {

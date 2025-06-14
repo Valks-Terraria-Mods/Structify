@@ -1,4 +1,4 @@
-﻿namespace ValksStructures.Content.Items;
+﻿namespace Structify.Content.Items;
 
 public class Test2 : GlobalTile
 {

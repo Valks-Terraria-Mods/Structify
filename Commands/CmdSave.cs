@@ -1,4 +1,4 @@
-﻿namespace ValksStructures.Commands;
+﻿namespace Structify.Commands;
 
 public class CmdSave : ModCommand
 {

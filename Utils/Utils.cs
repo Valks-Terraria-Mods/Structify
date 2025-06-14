@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace ValksStructures;
+namespace Structify;
 
 public static class Utils
 {
