@@ -249,11 +249,22 @@ public partial class Schematic
             // Do not add furniture tiles right now
             if (Utils.IsFurnitureTile(tileInfo.TileType))
             {
-                // Pass over the position
-                tileInfo.Position = new Vector2I(x, y);
-
                 // Keep track of the furniture tile to be added later
-                furniture[tileInfo.TileType].Add(tileInfo);
+                furniture[tileInfo.TileType].Add(new TileInfo
+                {
+                    Position = pos,
+                    TileType = tileInfo.TileType,
+                    LiquidAmount = tileInfo.LiquidAmount,
+                    LiquidType = tileInfo.LiquidType,
+                    HasTile = tileInfo.HasTile,
+                    Slope = tileInfo.Slope,
+                    Style = tileInfo.Style,
+                    TileColor = tileInfo.TileColor,
+                    TileFrameX = tileInfo.TileFrameX,
+                    TileFrameY = tileInfo.TileFrameY,
+                    WallColor = tileInfo.WallColor,
+                    WallType = tileInfo.WallType
+                });
 
                 // This is a furniture tile so skip it
                 continue;
@@ -262,11 +273,22 @@ public partial class Schematic
             // Place solid tiles
             if (tileInfo.HasTile)
             {
-                // Pass over the position
-                tileInfo.Position = new Vector2I(x, y);
-
                 // Keep track of solid tiles for later use with slope
-                _solidTiles.Add(tileInfo);
+                _solidTiles.Add(new TileInfo
+                {
+                    Position = pos,
+                    TileType = tileInfo.TileType,
+                    LiquidAmount = tileInfo.LiquidAmount,
+                    LiquidType = tileInfo.LiquidType,
+                    HasTile = tileInfo.HasTile,
+                    Slope = tileInfo.Slope,
+                    Style = tileInfo.Style,
+                    TileColor = tileInfo.TileColor,
+                    TileFrameX = tileInfo.TileFrameX,
+                    TileFrameY = tileInfo.TileFrameY,
+                    WallColor = tileInfo.WallColor,
+                    WallType = tileInfo.WallType
+                });
             }
         }
     }
