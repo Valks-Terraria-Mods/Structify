@@ -2,10 +2,10 @@
 
 public class Hellavator : StructureItem
 {
-    protected override Ingredient[] Ingredients => new Ingredient[]
-    {
+    protected override Ingredient[] Ingredients =>
+    [
         new(ItemID.StoneBlock, 100)
-    };
+    ];
     protected override int ItemRarity => ItemRarityID.Red;
 
     public override bool UseTheItem(Player player, Vector2I mPos)

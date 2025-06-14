@@ -4,7 +4,7 @@ namespace ValksStructures;
 
 public partial class Schematic
 {
-    static readonly List<TileInfo> solidTiles = new();
+    static readonly List<TileInfo> solidTiles = [];
     static bool containsFallingTiles;
 
     public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
@@ -161,7 +161,7 @@ public partial class Schematic
             int tileId = tileInfo.TileType;
 
             if (Utils.IsFurnitureTile(tileId) && !furniture.ContainsKey(tileId))
-                furniture[tileInfo.TileType] = new();
+                furniture[tileInfo.TileType] = [];
         }
 
         return furniture;

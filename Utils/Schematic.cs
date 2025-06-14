@@ -6,7 +6,7 @@ namespace ValksStructures;
 public partial class Schematic
 {
     public Vector2I Size { get; set; }
-    public List<TileInfo> Tiles { get; set; } = new();
+    public List<TileInfo> Tiles { get; set; } = [];
 
     public static Schematic Create(Vector2I topLeft, int diffX, int diffY)
     {

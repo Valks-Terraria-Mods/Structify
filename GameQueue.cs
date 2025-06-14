@@ -6,7 +6,7 @@ public class GameQueue : ModSystem
 
     public static int BuildTickRate { get; set; } = 1;
 
-    static readonly List<Action> actions = new();
+    static readonly List<Action> actions = [];
 
     int count;
 
