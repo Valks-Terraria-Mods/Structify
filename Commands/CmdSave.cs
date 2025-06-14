@@ -1,9 +1,10 @@
-﻿namespace ValksStructures;
+﻿namespace ValksStructures.Commands;
 
 public class CmdSave : ModCommand
 {
     public override string Command => "save";
     public override CommandType Type => CommandType.World;
+    public override bool IsCaseSensitive => true; // So uppercase letters are preserved when saving structure names
 
     public Schematic Schematic { get; set; }
     public Vector2I TopLeft { get; set; }

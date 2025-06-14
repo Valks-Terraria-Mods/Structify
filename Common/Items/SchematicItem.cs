@@ -5,6 +5,12 @@ public abstract class SchematicItem : StructureItem
     protected abstract string SchematicName { get; }
     protected virtual int VerticalOffset { get; } = 0;
 
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        // TODO: Load schematic here so we can show dusts on mouse hover
+    }
+
     public override bool UseTheItem(Player player, Vector2I mPos)
     {
         Schematic schematic = Schematic.Load(SchematicName);

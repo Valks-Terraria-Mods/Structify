@@ -1,4 +1,6 @@
-﻿namespace ValksStructures;
+﻿using ValksStructures.Commands;
+
+namespace ValksStructures;
 
 public class GlobalTileHooks : GlobalTile
 {

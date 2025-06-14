@@ -75,9 +75,22 @@ public partial class Schematic
 
     public static Schematic Load(string fileName)
     {
-        Stream stream = ModContent
-            .GetInstance<ValksStructures>()
-            .GetFileStream($"Schematics/{fileName}.json");
+        ValksStructures mod = ModContent.GetInstance<ValksStructures>();
+        
+        string resource = mod
+            .GetFileNames()
+            .FirstOrDefault(n => n
+                .StartsWith("Schematics/", StringComparison.OrdinalIgnoreCase) && Path.GetFileNameWithoutExtension(n)
+                .Equals(fileName, StringComparison.OrdinalIgnoreCase)
+            );
+
+        if (resource == null)
+        {
+            Main.NewText($"Could not find Schematic file {fileName}.");
+            return null;
+        }
+
+        Stream stream = mod.GetFileStream(resource);
 
         using StreamReader reader = new(stream);
         string json = reader.ReadToEnd();
