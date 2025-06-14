@@ -11,7 +11,7 @@ public class Test2 : GlobalTile
 
 public class Test : InteractItem
 {
-    private int GetGrassYAtX(int x)
+    private static int GetGrassYAtX(int x)
     {
         int lowestTrunkY = -1;
 

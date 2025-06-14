@@ -56,7 +56,7 @@ public class Hellavator : StructureItem
         return true;
     }
 
-    private void PlaceLeftWall(Vector2I mPos)
+    private static void PlaceLeftWall(Vector2I mPos)
     {
         for (int x = -4; x < -2; x++)
         {
@@ -69,7 +69,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    private void PlaceRightWall(Vector2I mPos)
+    private static void PlaceRightWall(Vector2I mPos)
     {
         for (int x = 4; x > 2; x--)
         {
@@ -82,7 +82,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    private void PlaceChain(Vector2I mPos)
+    private static void PlaceChain(Vector2I mPos)
     {
         for (int y = 0; y < Main.maxTilesY; y++)
         {
@@ -92,7 +92,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    private void KillEverythingBetweenWalls(Vector2I mPos)
+    private static void KillEverythingBetweenWalls(Vector2I mPos)
     {
         for (int x = -2; x <= 2; x++)
         {
@@ -104,7 +104,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    private void PlaceBackgroundWalls(Vector2I mPos)
+    private static void PlaceBackgroundWalls(Vector2I mPos)
     {
         // Place background walls
         for (int x = -2; x <= 2; x++)
@@ -117,7 +117,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    private void PlaceTorches(Vector2I mPos)
+    private static void PlaceTorches(Vector2I mPos)
     {
         // Place torches
         foreach (int x in new int[] { -2, 2 })
