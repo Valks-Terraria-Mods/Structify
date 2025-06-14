@@ -23,18 +23,18 @@ public partial class Schematic
         // The size of the schematic
         Vector2I size = schematic.Size;
 
-        // Mouse Position (mPos) is the start position
-        mPos += new Vector2I(0, -size.Y + vOffset);
+        // Get the start position
+        Vector2I startPos = mPos + new Vector2I(0, -size.Y + vOffset);
 
         // All furniture tiles will be stored in here
         Dictionary<int, List<TileInfo>> furniture = 
             PrepareFurnitureDictionary(schematic, size);
 
         // Destroy the area where the structure will be placed
-        DestroyArea(mPos, schematic);
+        DestroyArea(startPos, schematic);
 
         // Place walls and tiles
-        PlaceWallsAndTiles(mPos, schematic, furniture);
+        PlaceWallsAndTiles(startPos, schematic, furniture);
 
         // Place tiles as reset tiles
         // Doing it this way will not disturb falling tiles like sand
@@ -45,8 +45,7 @@ public partial class Schematic
         PlaceAllSolidTiles();
 
         // Place liquids all in one go
-        VModSystem.AddAction(() =>
-            PlaceLiquids(mPos, schematic));
+        VModSystem.AddAction(() => PlaceLiquids(startPos, schematic));
 
         // Ensure all tiles are sloped correctly
         SlopeAllTiles();
@@ -55,8 +54,17 @@ public partial class Schematic
         AddFurnitureTiles(furniture);
 
         // Clear liquids
-        VModSystem.AddAction(() => 
-            ClearAllLiquids(mPos, schematic));
+        VModSystem.AddAction(() => ClearAllLiquids(startPos, schematic));
+
+        // Multiplayer
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            VModSystem.AddAction(() =>
+            {
+                // Send the tile square to other clients
+                NetMessage.SendTileSquare(Main.myPlayer, startPos.X, startPos.Y, size.X + 1, size.Y + 1);
+            });
+        }
 
         if (ModContent.GetInstance<Config>().BuildInstantly)
             // Construction will be built instantly
@@ -82,8 +90,8 @@ public partial class Schematic
             Tile tile = Main.tile[x, y];
             tile.Clear(TileDataType.Liquid);
 
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                NetMessage.SendTileSquare(Main.myPlayer, x, y);
+            //if (Main.netMode == NetmodeID.MultiplayerClient)
+            //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
         }
     }
 
@@ -132,11 +140,11 @@ public partial class Schematic
                 WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
                     tileInfo.LiquidAmount);
 
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    NetMessage.sendWater(x, y);
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
-                }
+                //if (Main.netMode == NetmodeID.MultiplayerClient)
+                //{
+                //    NetMessage.sendWater(x, y);
+                //    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
+                //}
             };
         }
     }
@@ -186,8 +194,8 @@ public partial class Schematic
                 else
                     Utils.KillTile(pos);
 
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendTileSquare(Main.myPlayer, x, y);
+                //if (Main.netMode == NetmodeID.MultiplayerClient)
+                //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
             });
         }
     }
@@ -231,8 +239,8 @@ public partial class Schematic
 
                     WorldGen.paintWall(x, y, tileInfo.WallColor);
 
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendTileSquare(Main.myPlayer, x, y);
+                    //if (Main.netMode == NetmodeID.MultiplayerClient)
+                    //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
                 });
             }
 
@@ -317,8 +325,8 @@ public partial class Schematic
     {
         WorldGen.SlopeTile(x, y, tileInfo.Slope);
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static void ResetTileToType(int x, int y, TileInfo tileInfo)
@@ -333,8 +341,8 @@ public partial class Schematic
         tile.TileFrameX = (short)tileInfo.TileFrameX;
         tile.TileFrameY = (short)tileInfo.TileFrameY;
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static void PlaceTile(int x, int y, TileInfo tileInfo)
@@ -375,8 +383,8 @@ public partial class Schematic
             //tile.TileFrameY = (short)tileInfo.TileFrameY;
         }
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;

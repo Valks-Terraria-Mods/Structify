@@ -1,4 +1,5 @@
-﻿using ValksStructures.Content.Items;
+﻿using Terraria;
+using ValksStructures.Content.Items;
 
 namespace ValksStructures;
 

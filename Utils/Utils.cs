@@ -34,8 +34,8 @@ public static class Utils
         WorldGen.KillTile(x, y, noItem: true);
 
         // Send the destroyed tile to other clients if multiplayer
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, x, y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     // Unused as tile.ResetToType(...) seems to be doing the job
@@ -93,8 +93,8 @@ public static class Utils
         tile.ClearEverything();
 
         // Send the destroyed tile to other clients if multiplayer
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     public static bool IsInWorld(Vector2I pos) =>

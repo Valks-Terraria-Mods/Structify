@@ -26,6 +26,28 @@ public class Hellavator : StructureItem
             PlaceTorches(mPos);
         });
 
+        VModSystem.AddAction(() =>
+        {
+            int xStart = mPos.X - 4;
+            int width = 8;
+            int worldHeight = Main.maxTilesY;
+
+            // packets can only be sent in chunks
+            for (int y = 0; y < worldHeight; y += 100)
+            {
+                // height of this slice: either 100, or whatever remains at the bottom
+                int sliceHeight = Math.Min(100, worldHeight - y);
+
+                NetMessage.SendTileSquare(
+                    whoAmi: Main.myPlayer,  // or -1 on the server to broadcast
+                    tileX: xStart,
+                    tileY: y,
+                    xSize: width,
+                    ySize: sliceHeight
+                );
+            }
+        });
+
         VModSystem.StartActions();
 
         return true;
@@ -117,8 +139,8 @@ public class Hellavator : StructureItem
             plr: Main.myPlayer,
             style: style);
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void PlaceWall(Vector2I pos, int wallId)
@@ -129,8 +151,8 @@ public class Hellavator : StructureItem
         WorldGen.PlaceWall(pos.X, pos.Y, wallId,
             mute: true);
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
     static void KillWall(Vector2I pos)
@@ -141,7 +163,7 @@ public class Hellavator : StructureItem
         WorldGen.KillWall(pos.X, pos.Y,
             fail: false);
 
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-            NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
+        //if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 }
