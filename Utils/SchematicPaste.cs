@@ -1,6 +1,4 @@
-﻿using ValksStructures.Content.Items;
-
-namespace ValksStructures;
+﻿namespace ValksStructures;
 
 public partial class Schematic
 {
