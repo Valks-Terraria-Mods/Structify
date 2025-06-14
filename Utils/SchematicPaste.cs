@@ -7,16 +7,13 @@ public partial class Schematic
     static readonly List<TileInfo> solidTiles = new();
     static bool containsFallingTiles;
 
-    public static void Paste(Schematic schematic, Vector2I mPos, 
-        int vOffset = 0)
+    public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
     {
         // Do not let the player build structures concurrently
         if (ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding)
         {
-            Main.NewText("Please wait for the current house to " +
-                "finish building", Colors.RarityPink);
-
-            return;
+            Main.NewText("Please wait for the current house to finish building", Colors.RarityPink);
+            return false;
         }
 
         // Setup all variables
@@ -67,6 +64,8 @@ public partial class Schematic
         else
             // Construction will be built by one task at a time every frame
             VModSystem.StartActions();
+
+        return true;
     }
 
     static void ClearAllLiquids(Vector2I mPos, Schematic schematic)

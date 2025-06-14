@@ -2,6 +2,8 @@
 
 public abstract class InteractItem : ModItem
 {
+    private bool _canUseItem;
+
     public override void SetDefaults()
     {
         Item.stack = 999;
@@ -22,15 +24,21 @@ public abstract class InteractItem : ModItem
         return false;
     }
 
+    public override bool ConsumeItem(Player player)
+    {
+        return _canUseItem;
+    }
+
     public override bool? UseItem(Player player)
     {
         Vector2I mPos = new(
             (int)Main.MouseWorld.X / 16,
             (int)Main.MouseWorld.Y / 16);
 
-        UseTheItem(player, mPos);
+        _canUseItem = UseTheItem(player, mPos);
+
         return true;
     }
 
-    public abstract void UseTheItem(Player player, Vector2I mPos);
+    public abstract bool UseTheItem(Player player, Vector2I mPos);
 }

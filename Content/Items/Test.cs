@@ -37,7 +37,7 @@ public class Test : InteractItem
         return lowestTrunkY + 1;
     }
 
-    public override void UseTheItem(Player player, Vector2I mPos)
+    public override bool UseTheItem(Player player, Vector2I mPos)
     {
         //WorldGen.Place3x2(mPos.X, mPos.Y, TileID.Tables);
 
@@ -45,7 +45,7 @@ public class Test : InteractItem
 
         if (y != -1)
             WorldGen.PlaceTile(mPos.X, y, TileID.Diamond, forced: true);
-            //WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(mPos.X, y, TileID.Diamond);
+        //WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(mPos.X, y, TileID.Diamond);
 
         //WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(mPos.X, mPos.Y, TileID.Diamond);
 
@@ -60,5 +60,7 @@ public class Test : InteractItem
         /*WorldGen.PlaceTile(mPos.X, mPos.Y, TileID.Tables, 
             forced: true,
             plr: Main.myPlayer);*/
+
+        return true;
     }
 }

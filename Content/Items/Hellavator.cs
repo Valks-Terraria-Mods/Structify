@@ -8,7 +8,7 @@ public class Hellavator : StructureItem
     };
     protected override int ItemRarity => ItemRarityID.Red;
 
-    public override void UseTheItem(Player player, Vector2I mPos)
+    public override bool UseTheItem(Player player, Vector2I mPos)
     {
         ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
 
@@ -27,6 +27,8 @@ public class Hellavator : StructureItem
         });
 
         VModSystem.StartActions();
+
+        return true;
     }
 
     void PlaceLeftWall(Vector2I mPos)
