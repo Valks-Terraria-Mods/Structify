@@ -11,32 +11,32 @@ Items: {
 
 	House: {
 		DisplayName: House
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	HouseSmallUnderground: {
 		DisplayName: House Small Underground
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	SmallHouse: {
 		DisplayName: Small House
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	LargeHouse: {
 		DisplayName: Large House
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	MediumHouse: {
 		DisplayName: Medium House
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	PrisonCluster: {
 		DisplayName: Prison Cluster
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	SchematicBottomRight: {
@@ -56,12 +56,12 @@ Items: {
 
 	Bridge: {
 		DisplayName: Bridge
-		Tooltip: Built by Name36154
+		Tooltip: Created by Name36154
 	}
 
 	Hellavator: {
 		DisplayName: Hellavator
-		Tooltip: Scripted by Valkyrienyanko
+		Tooltip: Created by Valkyrienyanko
 	}
 
 	Test: {
@@ -81,7 +81,7 @@ Configs: {
 
 		BuildTickRate: {
 			Label: Build Tick Rate
-			Tooltip: Higher values means slower build times
+			Tooltip: The lower the value the higher the build speed
 		}
 	}
 }

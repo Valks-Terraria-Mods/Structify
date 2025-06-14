@@ -1,4 +1,4 @@
-displayName = Valks Structures
+displayName = Structify
 author = valkyrienyanko
-version = 0.1.25
-homepage = https://discord.gg/866cg8yfxZ
+version = 0.1.26
+homepage = https://discord.gg/j8HQZZ76r8

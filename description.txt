@@ -1,6 +1,6 @@
-While holding a structure item, click anywhere in the world to place a house.
+Tired of building structures? Let this mod do it for you!
 
-Recipes (all made at a heavy workbench)
+Recipes (Crafted at Heavy Workbench)
 - Small Underground House (50 wood)
 - Small House (50 wood)
 - Bridge (50 stone)
@@ -9,9 +9,11 @@ Recipes (all made at a heavy workbench)
 - Prison Cluster (200 wood)
 - Hellevator (100 stone)
 
-Credit
-- All structures made by name36154
-- All mod scripts by valkyrienyanko
+If you are a builder and want to contribute please join the discord and let me know!
 
-Suggestions and Feedback: https://discord.gg/866cg8yfxZ
+Suggestions and Feedback: https://discord.gg/j8HQZZ76r8
 Source Code: https://github.com/Valks-Terraria-Mods/ValksStructures
+
+Planned Features
+- More Structures
+- Structure Silhouette on Mouse Hover
