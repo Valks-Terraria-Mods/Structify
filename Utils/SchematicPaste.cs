@@ -116,11 +116,7 @@ public partial class Schematic
                 Vector2I pos = solidTile.Position;
 
                 //WorldGen.KillTile(pos.X, pos.Y, noItem: true);
-
-                ResetTileToType(
-                    solidTile.Position.X,
-                    solidTile.Position.Y,
-                    solidTile);
+                ResetTileToType(pos.X, pos.Y, solidTile);
             });
         }
     }
