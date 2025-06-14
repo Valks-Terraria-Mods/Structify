@@ -4,8 +4,8 @@ namespace ValksStructures;
 
 public partial class Schematic
 {
-    static readonly List<TileInfo> solidTiles = [];
-    static bool containsFallingTiles;
+    private static readonly List<TileInfo> solidTiles = [];
+    private static bool containsFallingTiles;
 
     public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
     {
@@ -76,7 +76,7 @@ public partial class Schematic
         return true;
     }
 
-    static void ClearAllLiquids(Vector2I mPos, Schematic schematic)
+    private static void ClearAllLiquids(Vector2I mPos, Schematic schematic)
     {
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -95,7 +95,7 @@ public partial class Schematic
         }
     }
 
-    static void PlaceAllSolidTiles()
+    private static void PlaceAllSolidTiles()
     {
         foreach (TileInfo solidTile in solidTiles)
         {
@@ -109,7 +109,7 @@ public partial class Schematic
         }
     }
 
-    static void ResetAllTiles()
+    private static void ResetAllTiles()
     {
         foreach (TileInfo solidTile in solidTiles)
         {
@@ -127,7 +127,7 @@ public partial class Schematic
         }
     }
 
-    static void PlaceLiquids(Vector2I mPos, Schematic schematic)
+    private static void PlaceLiquids(Vector2I mPos, Schematic schematic)
     {
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -149,7 +149,7 @@ public partial class Schematic
         }
     }
 
-    static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(
+    private static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(
         Schematic schematic, 
         Vector2I size)
     {
@@ -167,7 +167,7 @@ public partial class Schematic
         return furniture;
     }
 
-    static void DestroyArea(Vector2I startPos, Schematic schematic)
+    private static void DestroyArea(Vector2I startPos, Schematic schematic)
     {
         foreach (TileInfo tileInfo in schematic.Tiles)
         {
@@ -200,11 +200,11 @@ public partial class Schematic
         }
     }
 
-    static bool IsReplaceTile(TileInfo tileInfo) =>
+    private static bool IsReplaceTile(TileInfo tileInfo) =>
         tileInfo.TileType == 
         ModContent.TileType<Content.Tiles.SchematicReplace>();
 
-    static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic,
+    private static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic,
         Dictionary<int, List<TileInfo>> furniture)
     {
         // Reset solid tiles dictionary
@@ -269,7 +269,7 @@ public partial class Schematic
         }
     }
 
-    static void SlopeAllTiles()
+    private static void SlopeAllTiles()
     {
         // Final pass to ensure all tiles are sloped correctly
         foreach (TileInfo solidTile in solidTiles)
@@ -282,7 +282,7 @@ public partial class Schematic
         }
     }
 
-    static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture)
+    private static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture)
     {
         // Otherwise chairs will not be placed properly
         if (furniture.ContainsKey(TileID.Chairs))
@@ -296,7 +296,7 @@ public partial class Schematic
             });
     }
 
-    static void AddFurnitureTile(TileInfo tileInfo)
+    private static void AddFurnitureTile(TileInfo tileInfo)
     {
         // Open doors break surrounding tiles when placed in the world
         ReplaceTile(tileInfo, TileID.OpenDoor, TileID.ClosedDoor);
@@ -309,19 +309,19 @@ public partial class Schematic
         PlaceTile(x, y, tileInfo);
     }
 
-    static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
+    private static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
     {
         if (tileInfo.WallType == oldWall)
             tileInfo.WallType = newWall;
     }
 
-    static void ReplaceTile(TileInfo tileInfo, int oldTile, int newTile)
+    private static void ReplaceTile(TileInfo tileInfo, int oldTile, int newTile)
     {
         if (tileInfo.TileType == oldTile)
             tileInfo.TileType = newTile;
     }
 
-    static void SlopeTile(int x, int y, TileInfo tileInfo)
+    private static void SlopeTile(int x, int y, TileInfo tileInfo)
     {
         WorldGen.SlopeTile(x, y, tileInfo.Slope);
 
@@ -329,7 +329,7 @@ public partial class Schematic
         //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
-    static void ResetTileToType(int x, int y, TileInfo tileInfo)
+    private static void ResetTileToType(int x, int y, TileInfo tileInfo)
     {
         Tile tile = Main.tile[x, y];
         tile.ResetToType((ushort)tileInfo.TileType);
@@ -345,7 +345,7 @@ public partial class Schematic
         //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
-    static void PlaceTile(int x, int y, TileInfo tileInfo)
+    private static void PlaceTile(int x, int y, TileInfo tileInfo)
     {
         if (IsReplaceTile(tileInfo))
             return;
@@ -387,5 +387,5 @@ public partial class Schematic
         //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
-    static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;
+    private static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;
 }

@@ -6,9 +6,9 @@ public class GameQueue : ModSystem
 
     public static int BuildTickRate { get; set; } = 1;
 
-    static readonly List<Action> actions = [];
+    private static readonly List<Action> actions = [];
 
-    int count;
+    private int count;
 
     public override void PreUpdateEntities()
     {
@@ -35,7 +35,7 @@ public class GameQueue : ModSystem
         ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
     }
 
-    static void ExecuteAction()
+    private static void ExecuteAction()
     {
         if (actions.Count == 0)
         {

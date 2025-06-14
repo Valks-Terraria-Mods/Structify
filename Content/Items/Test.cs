@@ -17,7 +17,7 @@ public class Test : InteractItem
         //Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Test>());
     }
 
-    int GetGrassYAtX(int x)
+    private int GetGrassYAtX(int x)
     {
         int lowestTrunkY = -1;
 

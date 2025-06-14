@@ -56,7 +56,7 @@ public class Hellavator : StructureItem
         return true;
     }
 
-    void PlaceLeftWall(Vector2I mPos)
+    private void PlaceLeftWall(Vector2I mPos)
     {
         for (int x = -4; x < -2; x++)
         {
@@ -69,7 +69,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    void PlaceRightWall(Vector2I mPos)
+    private void PlaceRightWall(Vector2I mPos)
     {
         for (int x = 4; x > 2; x--)
         {
@@ -82,7 +82,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    void PlaceChain(Vector2I mPos)
+    private void PlaceChain(Vector2I mPos)
     {
         for (int y = 0; y < Main.maxTilesY; y++)
         {
@@ -91,8 +91,8 @@ public class Hellavator : StructureItem
             PlaceTile(pos, TileID.Chain);
         }
     }
-    
-    void KillEverythingBetweenWalls(Vector2I mPos)
+
+    private void KillEverythingBetweenWalls(Vector2I mPos)
     {
         for (int x = -2; x <= 2; x++)
         {
@@ -104,7 +104,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    void PlaceBackgroundWalls(Vector2I mPos)
+    private void PlaceBackgroundWalls(Vector2I mPos)
     {
         // Place background walls
         for (int x = -2; x <= 2; x++)
@@ -117,7 +117,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    void PlaceTorches(Vector2I mPos)
+    private void PlaceTorches(Vector2I mPos)
     {
         // Place torches
         foreach (int x in new int[] { -2, 2 })
@@ -131,7 +131,7 @@ public class Hellavator : StructureItem
         }
     }
 
-    static void PlaceTile(Vector2I pos, int tileId, int style = 0)
+    private static void PlaceTile(Vector2I pos, int tileId, int style = 0)
     {
         if (!Utils.IsInWorld(pos))
             return;
@@ -146,7 +146,7 @@ public class Hellavator : StructureItem
         //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
-    static void PlaceWall(Vector2I pos, int wallId)
+    private static void PlaceWall(Vector2I pos, int wallId)
     {
         if (!Utils.IsInWorld(pos))
             return;
@@ -158,7 +158,7 @@ public class Hellavator : StructureItem
         //    NetMessage.SendTileSquare(Main.myPlayer, pos.X, pos.Y);
     }
 
-    static void KillWall(Vector2I pos)
+    private static void KillWall(Vector2I pos)
     {
         if (!Utils.IsInWorld(pos))
             return;

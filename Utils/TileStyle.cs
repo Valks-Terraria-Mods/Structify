@@ -2,7 +2,7 @@
 
 public static class TileStyle
 {
-    static readonly Dictionary<int, SpriteSheetDir> spriteSheetDirs = new()
+    private static readonly Dictionary<int, SpriteSheetDir> spriteSheetDirs = new()
     {
         { TileID.Platforms, SpriteSheetDir.Vertical },
         { TileID.ClosedDoor, SpriteSheetDir.Vertical },
