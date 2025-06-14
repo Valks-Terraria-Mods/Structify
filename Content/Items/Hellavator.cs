@@ -12,7 +12,7 @@ public class Hellavator : StructureItem
     {
         ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
 
-        VModSystem.AddAction(() =>
+        GameQueue.Enqueue(() =>
         {
             PlaceLeftWall(mPos);
             PlaceRightWall(mPos);
@@ -21,14 +21,14 @@ public class Hellavator : StructureItem
             PlaceBackgroundWalls(mPos);
         });
         
-        VModSystem.AddAction(() =>
+        GameQueue.Enqueue(() =>
         {
             PlaceTorches(mPos);
         });
 
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 int xStart = mPos.X - 4;
                 int width = 8;
@@ -51,7 +51,7 @@ public class Hellavator : StructureItem
             });
         }
 
-        VModSystem.StartActions();
+        GameQueue.ExecuteSlowly();
 
         return true;
     }

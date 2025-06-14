@@ -45,7 +45,7 @@ public partial class Schematic
         PlaceAllSolidTiles();
 
         // Place liquids all in one go
-        VModSystem.AddAction(() => PlaceLiquids(startPos, schematic));
+        GameQueue.Enqueue(() => PlaceLiquids(startPos, schematic));
 
         // Ensure all tiles are sloped correctly
         SlopeAllTiles();
@@ -54,12 +54,12 @@ public partial class Schematic
         AddFurnitureTiles(furniture);
 
         // Clear liquids
-        VModSystem.AddAction(() => ClearAllLiquids(startPos, schematic));
+        GameQueue.Enqueue(() => ClearAllLiquids(startPos, schematic));
 
         // Multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 // Send the tile square to other clients
                 NetMessage.SendTileSquare(Main.myPlayer, startPos.X, startPos.Y, size.X + 1, size.Y + 1);
@@ -68,10 +68,10 @@ public partial class Schematic
 
         if (ModContent.GetInstance<Config>().BuildInstantly)
             // Construction will be built instantly
-            VModSystem.ExecuteAllActions();
+            GameQueue.ExecuteInstantly();
         else
             // Construction will be built by one task at a time every frame
-            VModSystem.StartActions();
+            GameQueue.ExecuteSlowly();
 
         return true;
     }
@@ -99,7 +99,7 @@ public partial class Schematic
     {
         foreach (TileInfo solidTile in solidTiles)
         {
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 PlaceTile(
                     solidTile.Position.X,
@@ -113,7 +113,7 @@ public partial class Schematic
     {
         foreach (TileInfo solidTile in solidTiles)
         {
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 Vector2I pos = solidTile.Position;
 
@@ -187,7 +187,7 @@ public partial class Schematic
             if (!tile.HasTile)
                 continue;
 
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 if (containsFallingTiles)
                     tile.ClearTile();
@@ -223,7 +223,7 @@ public partial class Schematic
             // Only place walls if wall exists in this tileInfo
             if (tileInfo.WallType != 0)
             {
-                VModSystem.AddAction(() =>
+                GameQueue.Enqueue(() =>
                 {
                     if (Main.tile[x, y].WallType == 0)
                     {
@@ -274,7 +274,7 @@ public partial class Schematic
         // Final pass to ensure all tiles are sloped correctly
         foreach (TileInfo solidTile in solidTiles)
         {
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 Vector2I pos = solidTile.Position;
                 SlopeTile(pos.X, pos.Y, solidTile);
@@ -289,7 +289,7 @@ public partial class Schematic
             furniture[TileID.Chairs].Reverse();
 
         foreach (List<TileInfo> furnitureList in furniture.Values)
-            VModSystem.AddAction(() =>
+            GameQueue.Enqueue(() =>
             {
                 foreach (TileInfo tileInfo in furnitureList)
                     AddFurnitureTile(tileInfo);

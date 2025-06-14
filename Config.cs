@@ -16,6 +16,6 @@ public class Config : ModConfig
 
     public override void OnChanged()
     {
-        VModSystem.BuildTickRate = BuildTickRate;
+        GameQueue.BuildTickRate = BuildTickRate;
     }
 }

@@ -1,9 +1,6 @@
-﻿using Terraria;
-using ValksStructures.Content.Items;
+﻿namespace ValksStructures;
 
-namespace ValksStructures;
-
-public class VModSystem : ModSystem
+public class GameQueue : ModSystem
 {
     public static event Action Update;
 
@@ -24,9 +21,11 @@ public class VModSystem : ModSystem
         }
     }
 
-    public static void AddAction(Action action) => actions.Add(action);
-    public static void StartActions() => Update += ExecuteAction;
-    public static void ExecuteAllActions()
+    public static void Enqueue(Action action) => actions.Add(action);
+
+    public static void ExecuteSlowly() => Update += ExecuteAction;
+
+    public static void ExecuteInstantly()
     {
         foreach (Action action in actions)
             action();
