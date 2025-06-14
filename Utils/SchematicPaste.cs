@@ -85,8 +85,16 @@ public partial class Schematic
             if (IsLiquid(tileInfo))
                 continue;
 
-            Tile tile = Main.tile[x, y];
-            tile.Clear(TileDataType.Liquid);
+            try
+            {
+                Tile tile = Main.tile[x, y];
+                tile.Clear(TileDataType.Liquid);
+            }
+            catch (Exception e)
+            {
+                Main.NewText(e.Message);
+                Console.WriteLine(e);
+            }
 
             //if (Main.netMode == NetmodeID.MultiplayerClient)
             //    NetMessage.SendTileSquare(Main.myPlayer, x, y);

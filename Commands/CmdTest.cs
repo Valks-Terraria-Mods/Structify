@@ -9,21 +9,6 @@ public class CmdTest : ModCommand
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
-        if (args.Length == 0)
-        {
-            Main.NewText("Specify at least one args");
-            return;
-        }
-        
-        Structify mod = ModContent.GetInstance<Structify>();
-
-        string resource = mod
-            .GetFileNames()
-            .FirstOrDefault(n => n
-                .StartsWith("Schematics/", StringComparison.OrdinalIgnoreCase) && Path.GetFileNameWithoutExtension(n)
-                .Equals(args[0], StringComparison.OrdinalIgnoreCase)
-            );
-        
-        Main.NewText(resource);
+        Main.NewText(GameQueue.Actions.Count.ToString());
     }
 }
