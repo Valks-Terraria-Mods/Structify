@@ -8,7 +8,7 @@ public partial class Schematic
     public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
     {
         // Do not let the player build structures concurrently
-        if (ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding)
+        if (ModContent.GetInstance<Structify>().IsCurrentlyBuilding)
         {
             Main.NewText("Please wait for the current house to finish building", Colors.RarityPink);
             return false;
@@ -16,7 +16,7 @@ public partial class Schematic
 
         // Setup all variables
         _containsFallingTiles = false;
-        ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = true;
+        ModContent.GetInstance<Structify>().IsCurrentlyBuilding = true;
 
         // The size of the schematic
         Vector2I size = schematic.Size;

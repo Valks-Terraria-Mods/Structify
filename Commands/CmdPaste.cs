@@ -9,7 +9,17 @@ public class CmdPaste : ModCommand
     {
         if (args.Length == 0)
         {
-            Main.NewText("Usage: /paste <name>");
+            Schematic savedSchematic = ModContent.GetInstance<CmdSave>().Schematic;
+
+            if (savedSchematic == null)
+            {
+                Main.NewText("Usage: /paste <name>");
+            }
+            else
+            {
+                Paste(savedSchematic);
+            }
+
             return;
         }
 
@@ -23,7 +33,12 @@ public class CmdPaste : ModCommand
             Main.NewText($"Could not find the '{structureName}' schematic");
             return;
         }
-        
+
+        Paste(schematic);
+    }
+
+    private static void Paste(Schematic schematic)
+    {
         Vector2I mPos = new(
             (int)Main.MouseWorld.X / 16,
             (int)Main.MouseWorld.Y / 16);
@@ -32,10 +47,10 @@ public class CmdPaste : ModCommand
 
         if (!success)
         {
-            Main.NewText($"Could not paste the '{structureName}' schematic");
+            Main.NewText($"Could not paste structure");
             return;
         }
 
-        Main.NewText($"Pasted structure {args[0]}");
+        Main.NewText($"Pasted structure");
     }
 }

@@ -12,7 +12,7 @@ global using System.Linq;
 
 namespace Structify;
 
-public class ValksStructures : Mod
+public class Structify : Mod
 {
     public bool IsCurrentlyBuilding { get; set; }
 }

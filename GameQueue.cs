@@ -32,7 +32,7 @@ public class GameQueue : ModSystem
 
         _actions.Clear();
 
-        ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
+        ModContent.GetInstance<Structify>().IsCurrentlyBuilding = false;
     }
 
     private static void ExecuteAction()
@@ -40,7 +40,7 @@ public class GameQueue : ModSystem
         if (_actions.Count == 0)
         {
             Update -= ExecuteAction;
-            ModContent.GetInstance<ValksStructures>().IsCurrentlyBuilding = false;
+            ModContent.GetInstance<Structify>().IsCurrentlyBuilding = false;
             return;
         }
 

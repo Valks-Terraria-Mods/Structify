@@ -75,7 +75,7 @@ public partial class Schematic
 
     public static Schematic Load(string fileName)
     {
-        ValksStructures mod = ModContent.GetInstance<ValksStructures>();
+        Structify mod = ModContent.GetInstance<Structify>();
         
         string resource = mod
             .GetFileNames()

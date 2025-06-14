@@ -1,4 +1,6 @@
-﻿namespace Structify.Commands;
+﻿using System.IO;
+
+namespace Structify.Commands;
 
 public class CmdSave : ModCommand
 {
@@ -43,15 +45,11 @@ public class CmdSave : ModCommand
         int diffX = BottomRight.X - TopLeft.X;
         int diffY = BottomRight.Y - TopLeft.Y;
 
-        Schematic schematic = Schematic.Create(TopLeft, diffX, diffY);
+        Schematic = Schematic.Create(TopLeft, diffX, diffY);
 
-        // Temporary code
-        Schematic = schematic;
+        string savePath = Path.Combine(Main.SavePath, nameof(Structify));
 
-        string savePath = $"{Main.SavePath}/{nameof(ValksStructures)}";
-
-        Schematic.Save(schematic, savePath, 
-            fileName: args[0]);
+        Schematic.Save(Schematic, savePath, fileName: args[0]);
 
         Main.NewText($"Saved schematic as '{args[0]}.json'");
 

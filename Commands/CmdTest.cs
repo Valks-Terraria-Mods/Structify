@@ -15,7 +15,7 @@ public class CmdTest : ModCommand
             return;
         }
         
-        ValksStructures mod = ModContent.GetInstance<ValksStructures>();
+        Structify mod = ModContent.GetInstance<Structify>();
 
         string resource = mod
             .GetFileNames()
