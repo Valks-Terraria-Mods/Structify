@@ -1,4 +1,4 @@
 displayName = Structify
 author = valkyrienyanko
-version = 0.1.29
+version = 0.1.30
 homepage = https://discord.gg/j8HQZZ76r8
