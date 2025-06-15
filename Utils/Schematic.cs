@@ -24,8 +24,6 @@ public partial class Schematic
 
                 if (tile.HasTile && tile.TileType == ModContent.TileType<SchematicReplace>())
                 {
-                    Main.NewText("Detected replace tile");
-                    
                     schematic.Tiles.Add(new TileInfo
                     {
                         IsReplaceTile = true,
