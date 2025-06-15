@@ -16,11 +16,10 @@ public abstract class SchematicItem : StructureItem
     {
         string path = $"Schematics/{SchematicName}.shstruct";
 
-        Point16 dim = Generator.GetStructureDimensions(path, Mod);
+        Point16 dimensions = Generator.GetStructureDimensions(path, Mod);
+        Point16 bottomLeftAnchor = mPos - new Point16(0, dimensions.Y - 1);
 
-        Point16 origin = mPos - new Point16(0, (int)dim.Y);
-
-        Generator.GenerateStructure(path, origin, Mod);
+        Generator.GenerateStructure(path, bottomLeftAnchor, Mod);
 
         return true;
     }
