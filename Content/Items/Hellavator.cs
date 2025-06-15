@@ -2,6 +2,11 @@
 
 namespace Structify.Content.Items;
 
+public enum MessageType : byte
+{
+    SpawnHellavator
+}
+
 public class Hellavator : StructureItem
 {
     protected override Ingredient[] Ingredients =>
@@ -13,45 +18,39 @@ public class Hellavator : StructureItem
 
     public override bool UseTheItem(Player player, Point16 mPos)
     {
+        // If I'm a multiplayer client, ask the server to build the hellavator
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)MessageType.SpawnHellavator);
+            packet.Write((short)mPos.X);
+            packet.Write((short)mPos.Y);
+            packet.Send(); // to server
+            return true;
+        }
+
+        // Singleplayer
+        BuildHellavator(mPos);
+        return true;
+    }
+
+    public static void BuildHellavator(Point16 mPos)
+    {
         PlaceLeftWall(mPos);
         PlaceRightWall(mPos);
         KillEverythingBetweenWalls(mPos);
         PlaceChain(mPos);
         PlaceBackgroundWalls(mPos);
         PlaceTorches(mPos);
-
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-        {
-            int xStart = mPos.X - 4;
-            int width = 8;
-            int worldHeight = Main.maxTilesY;
-
-            // packets can only be sent in chunks
-            for (int y = 0; y < worldHeight; y += 100)
-            {
-                // height of this slice: either 100, or whatever remains at the bottom
-                int sliceHeight = Math.Min(100, worldHeight - y);
-
-                NetMessage.SendTileSquare(
-                    whoAmi: Main.myPlayer,  // or -1 on the server to broadcast
-                    tileX: xStart,
-                    tileY: y,
-                    xSize: width,
-                    ySize: sliceHeight
-                );
-            }
-        }
-
-        return true;
     }
 
     private static void PlaceLeftWall(Point16 mPos)
     {
         for (int x = -4; x < -2; x++)
         {
-            for (int y = 0; y < Main.maxTilesY; y++)
+            for (int y = mPos.Y; y < Main.maxTilesY; y++)
             {
-                Point16 pos = mPos + new Point16(x, y);
+                Point16 pos = new Point16(mPos.X + x, y);
                 KillEverything(pos);
                 PlaceTile(pos, TileID.StoneSlab);
             }
@@ -62,9 +61,9 @@ public class Hellavator : StructureItem
     {
         for (int x = 4; x > 2; x--)
         {
-            for (int y = 0; y < Main.maxTilesY; y++)
+            for (int y = mPos.Y; y < Main.maxTilesY; y++)
             {
-                Point16 pos = mPos + new Point16(x, y);
+                Point16 pos = new Point16(mPos.X + x, y);
                 KillEverything(pos);
                 PlaceTile(pos, TileID.StoneSlab);
             }
@@ -73,9 +72,13 @@ public class Hellavator : StructureItem
 
     private static void PlaceChain(Point16 mPos)
     {
-        for (int y = 0; y < Main.maxTilesY; y++)
+        for (int y = mPos.Y; y < Main.maxTilesY; y++)
         {
-            Point16 pos = mPos + new Point16(0, y);
+            Point16 pos = new Point16(mPos.X, y);
+
+            if (!IsInWorld(pos))
+                continue;
+
             KillEverything(pos);
             PlaceTile(pos, TileID.Chain);
         }
@@ -85,9 +88,9 @@ public class Hellavator : StructureItem
     {
         for (int x = -2; x <= 2; x++)
         {
-            for (int y = 0; y < Main.maxTilesY; y++)
+            for (int y = mPos.Y; y < Main.maxTilesY; y++)
             {
-                Point16 pos = mPos + new Point16(x, y);
+                Point16 pos = new Point16(mPos.X + x, y);
                 KillEverything(pos);
             }
         }
@@ -98,9 +101,9 @@ public class Hellavator : StructureItem
         // Place background walls
         for (int x = -2; x <= 2; x++)
         {
-            for (int y = 1; y < Main.maxTilesY; y++)
+            for (int y = mPos.Y + 1; y < Main.maxTilesY; y++)
             {
-                Point16 pos = mPos + new Point16(x, y);
+                Point16 pos = new Point16(mPos.X + x, y);
                 PlaceWall(pos, WallID.StoneSlab);
             }
         }
@@ -108,14 +111,15 @@ public class Hellavator : StructureItem
 
     private static void PlaceTorches(Point16 mPos)
     {
+        const int RedTorchStyle = 2;
+        
         // Place torches
         foreach (int x in new int[] { -2, 2 })
         {
-            for (int y = 30; y < Main.maxTilesY; y += 30)
+            for (int y = mPos.Y + 30; y < Main.maxTilesY; y += 30)
             {
-                Point16 pos = mPos + new Point16(x, y);
-                int redTorch = 2;
-                PlaceTile(pos, TileID.Torches, redTorch);
+                Point16 pos = new Point16(mPos.X + x, y);
+                PlaceTile(pos, TileID.Torches, RedTorchStyle);
             }
         }
     }
