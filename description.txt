@@ -1,6 +1,8 @@
 Tired of building structures? Let this mod do it for you!
 
-Recipes (Crafted at Heavy Workbench)
+All freezing and crash issues have been resolved.
+
+Recipes (Crafted at a Heavy Workbench)
 - Small Underground House (50 wood)
 - Small House (50 wood)
 - Medium House (100 wood)
@@ -8,11 +10,7 @@ Recipes (Crafted at Heavy Workbench)
 - Tower Cluster (200 wood)
 - Hellevator (100 stone)
 
-If you are a builder and want to contribute please join the discord and let me know!
+If you'd like to report a bug, suggest a new feature, or contribute to building new structures, please join our Discord community using the link below.
 
-Suggestions and Feedback: https://discord.gg/j8HQZZ76r8
+Discord: https://discord.gg/j8HQZZ76r8
 Source Code: https://github.com/Valks-Terraria-Mods/ValksStructures
-
-Planned Features
-- More Structures
-- Structure Silhouette on Mouse Hover
