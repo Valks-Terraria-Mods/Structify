@@ -34,11 +34,14 @@ public abstract class StructureItem : ModItem
 
     public override bool? UseItem(Player player)
     {
-        Point16 mPos = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+        // UseItem is called for every client so we need to check if this is the local player
+        if (Main.myPlayer == player.whoAmI)
+        {
+            Point16 mPos = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            _canUseItem = UseTheItem(player, mPos);
+        }
 
-        _canUseItem = UseTheItem(player, mPos);
-
-        return true;
+        return base.UseItem(player);
     }
 
     public abstract bool UseTheItem(Player player, Point16 mPos);
