@@ -1,4 +1,6 @@
-﻿namespace Structify.Content.Items;
+﻿using Structify.Common.Items;
+
+namespace Structify.Content.Items;
 
 public class LargeHouse : SchematicItem
 {

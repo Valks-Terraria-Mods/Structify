@@ -1,9 +1,10 @@
-﻿namespace Structify.Content.Items;
+﻿using StructureHelper.API;
+
+namespace Structify.Common.Items;
 
 public abstract class SchematicItem : StructureItem
 {
     protected abstract string SchematicName { get; }
-    protected virtual int VerticalOffset { get; } = 0;
 
     public override void SetDefaults()
     {
@@ -11,16 +12,16 @@ public abstract class SchematicItem : StructureItem
         // TODO: Load schematic here so we can show dusts on mouse hover
     }
 
-    public override bool UseTheItem(Player player, Vector2I mPos)
+    public override bool UseTheItem(Player player, Point16 mPos)
     {
-        Schematic schematic = Schematic.Load(SchematicName);
+        string path = $"Schematics/{SchematicName}.shstruct";
 
-        if (schematic == null)
-        {
-            Main.NewText($"Could not find the '{SchematicName}' schematic");
-            return false;
-        }
+        Point16 dim = Generator.GetStructureDimensions(path, Mod);
 
-        return Schematic.Paste(schematic, mPos, VerticalOffset);
+        Point16 origin = mPos - new Point16(0, (int)dim.Y);
+
+        Generator.GenerateStructure(path, origin, Mod);
+
+        return true;
     }
 }

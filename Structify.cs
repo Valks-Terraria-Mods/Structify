@@ -14,5 +14,5 @@ namespace Structify;
 
 public class Structify : Mod
 {
-    public bool IsCurrentlyBuilding { get; set; }
+    
 }

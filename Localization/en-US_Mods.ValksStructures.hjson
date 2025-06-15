@@ -1,19 +1,4 @@
 Items: {
-	DebugBottomRight: {
-		DisplayName: Debug Bottom Right
-		Tooltip: ""
-	}
-
-	DebugTopLeft: {
-		DisplayName: Debug Top Left
-		Tooltip: ""
-	}
-
-	HouseSmallUnderground: {
-		DisplayName: House Small Underground
-		Tooltip: Created by Name36154
-	}
-
 	SmallHouse: {
 		DisplayName: Small House
 		Tooltip: Created by ColinFour
@@ -34,44 +19,10 @@ Items: {
 		Tooltip: Created by Name36154
 	}
 
-	SchematicBottomRight: {
-		DisplayName: Schematic Bottom Right
-		Tooltip: ""
-	}
-
-	SchematicReplace: {
-		DisplayName: Schematic Replace
-		Tooltip: ""
-	}
-
-	SchematicTopLeft: {
-		DisplayName: Schematic Top Left
-		Tooltip: ""
-	}
-
 	Hellavator: {
 		DisplayName: Hellavator
 		Tooltip: Created by Valkyrienyanko
 	}
-
-	Test: {
-		DisplayName: Test
-		Tooltip: ""
-	}
 }
 
-Configs: {
-	Config: {
-		DisplayName: Config
-
-		BuildInstantly: {
-			Label: Build Instantly
-			Tooltip: ""
-		}
-
-		BuildTickRate: {
-			Label: Build Tick Rate
-			Tooltip: The lower the value the higher the build speed
-		}
-	}
-}
+Configs.Config.DisplayName: Config
