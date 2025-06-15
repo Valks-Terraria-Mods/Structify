@@ -27,7 +27,7 @@ public partial class Schematic
         Vector2I startPos = mPos + new Vector2I(0, -size.Y + vOffset);
 
         // All furniture tiles will be stored in here
-        Dictionary<int, List<TileInfo>> furniture = PrepareFurnitureDictionary(schematic, size);
+        Dictionary<int, List<TileInfo>> furniture = PrepareFurnitureDictionary(schematic);
 
         // Destroy the area where the structure will be placed
         DestroyArea(startPos, schematic);
@@ -132,17 +132,16 @@ public partial class Schematic
         }
     }
 
-    private static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(Schematic schematic, Vector2I size)
+    private static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(Schematic schematic)
     {
         Dictionary<int, List<TileInfo>> furniture = new();
 
-        for (int i = 0; i < size.X * size.Y; i++)
+        foreach (TileInfo tileInfo in schematic.Tiles)
         {
-            TileInfo tileInfo = schematic.Tiles[i];
             int tileId = tileInfo.TileType;
 
             if (Utils.IsFurnitureTile(tileId) && !furniture.ContainsKey(tileId))
-                furniture[tileInfo.TileType] = [];
+                furniture[tileId] = [];
         }
 
         return furniture;
@@ -278,16 +277,21 @@ public partial class Schematic
 
     private static void AddFurnitureTiles(Dictionary<int, List<TileInfo>> furniture)
     {
-        // Otherwise chairs will not be placed properly
-        if (furniture.ContainsKey(TileID.Chairs))
-            furniture[TileID.Chairs].Reverse();
+        if (furniture.TryGetValue(TileID.Chairs, out var chairs))
+            chairs.Reverse();
 
-        foreach (List<TileInfo> furnitureList in furniture.Values)
-            GameQueue.Enqueue(() =>
+        foreach (var list in furniture.Values)
+        {
+            foreach (TileInfo tileInfo in list)
             {
-                foreach (TileInfo tileInfo in furnitureList)
-                    AddFurnitureTile(tileInfo);
-            });
+                // capture tileInfo by creating a local copy
+                var infoCopy = tileInfo;
+                GameQueue.Enqueue(() =>
+                {
+                    AddFurnitureTile(infoCopy);
+                });
+            }
+        }
     }
 
     private static void AddFurnitureTile(TileInfo tileInfo)
@@ -336,27 +340,26 @@ public partial class Schematic
             return;
         }
 
-        // Get the style of this tile
-        int style = TileStyle.CalculateStyle(tileInfo);
+        // For furniture, use the saved flatStyle; for everything else, calculate it:
+        int style;
+        if (Utils.IsFurnitureTile(tileInfo.TileType))
+            style = tileInfo.Style;  
+        else
+            style = TileStyle.CalculateStyle(tileInfo);
 
-        // Place tile (no effect for liquids)
+        // Place it
         WorldGen.PlaceTile(x, y, tileInfo.TileType,
             mute: true,
             forced: true,
             plr: Main.myPlayer,
             style: style);
 
-        // Paint the tile with the appropriate color
+        // Re‑paint
         tile.TileColor = tileInfo.TileColor;
 
-        if (tileInfo.TileType is TileID.Chairs)
-        {
-            // WorldGen.PlaceTile(...) overwrites the TileFrameX so that is why this is set after
-
-            // TileFrameX and TileFrameY seem to break workbenches and other pieces of furniture
+        // Chairs need their frameX reset
+        if (tileInfo.TileType == TileID.Chairs)
             tile.TileFrameX = (short)tileInfo.TileFrameX;
-            //tile.TileFrameY = (short)tileInfo.TileFrameY;
-        }
     }
 
     private static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;
