@@ -294,11 +294,14 @@ public partial class Schematic
         // Final pass to ensure all tiles are sloped correctly
         foreach (TileInfo solidTile in _solidTiles)
         {
-            GameQueue.Enqueue(() =>
+            if (solidTile.Slope != 0)
             {
-                Vector2I pos = solidTile.Position;
-                SlopeTile(pos.X, pos.Y, solidTile);
-            });
+                GameQueue.Enqueue(() =>
+                {
+                    Vector2I pos = solidTile.Position;
+                    SlopeTile(pos.X, pos.Y, solidTile);
+                });
+            }
         }
     }
 
