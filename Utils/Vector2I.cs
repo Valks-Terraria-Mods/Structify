@@ -1,6 +1,6 @@
 ﻿namespace Structify;
 
-public struct Vector2I(int x, int y)
+public struct Vector2I(int x, int y) : IEquatable<Vector2I>
 {
     public static Vector2I Zero => new(0, 0);
 
