@@ -181,8 +181,8 @@ public partial class Schematic
             if (TileID.Sets.Falling[tile.TileType])
                 _containsFallingTiles = true;
 
-            // Do not kill tile if it is a replace tile
-            if (IsReplaceTile(tileInfo))
+            // Do not kill tile if it is a replacement tile
+            if (tileInfo.IsReplaceTile)
                 continue;
 
             // Do not destroy a non-existent tile
@@ -202,10 +202,6 @@ public partial class Schematic
         }
     }
 
-    private static bool IsReplaceTile(TileInfo tileInfo) =>
-        tileInfo.TileType == 
-        ModContent.TileType<Content.Tiles.SchematicReplace>();
-
     private static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic,
         Dictionary<int, List<TileInfo>> furniture)
     {
@@ -218,8 +214,8 @@ public partial class Schematic
             int x = pos.X;
             int y = pos.Y;
                 
-            // This is a replace tile, don't place anything here
-            if (IsReplaceTile(tileInfo))
+            // This is a replacement tile, don't place anything here
+            if (tileInfo.IsReplaceTile)
                 continue;
 
             // Only place walls if wall exists in this tileInfo
@@ -373,7 +369,7 @@ public partial class Schematic
 
     private static void PlaceTile(int x, int y, TileInfo tileInfo)
     {
-        if (IsReplaceTile(tileInfo))
+        if (tileInfo.IsReplaceTile)
             return;
 
         Tile tile = Main.tile[x, y];

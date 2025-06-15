@@ -13,6 +13,7 @@ public class TileInfo
     public int TileFrameY { get; set; }
     public int Slope { get; set; }
     public bool HasTile { get; set; }
+    public bool IsReplaceTile { get; set; }
 
     // Note: This property is not used when serialized
     public Vector2I Position { get; set; }

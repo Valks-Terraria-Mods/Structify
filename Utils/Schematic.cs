@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using Structify.Content.Tiles;
 
 namespace Structify;
 
@@ -21,41 +22,35 @@ public partial class Schematic
             {
                 Tile tile = Main.tile[x, y];
 
-                if (tile.TileType == TileID.Tables ||
-                    tile.TileType == TileID.Tables2)
+                if (tile.HasTile && tile.TileType == ModContent.TileType<SchematicReplace>())
                 {
-                    if (tile.TileFrameX != 18 || tile.TileFrameY != 18)
+                    Main.NewText("Detected replace tile");
+                    
+                    schematic.Tiles.Add(new TileInfo
                     {
-                        schematic.Tiles.Add(new TileInfo
-                        {
-                            Position = new Vector2I(x, y) - topLeft,
-                            HasTile = false,
-                            WallColor = tile.WallColor,
-                            WallType = tile.WallType,
-                            LiquidAmount = tile.LiquidAmount,
-                            LiquidType = tile.LiquidType
-                        });
-
-                        continue;
-                    }  
+                        IsReplaceTile = true,
+                        Position = new Vector2I(x, y) - topLeft
+                    });
                 }
-
-                schematic.Tiles.Add(new TileInfo
+                else
                 {
-                    WallType = tile.WallType,
-                    TileType = tile.TileType,
-                    // This is not working correctly. Wrong styles are being retrieved.
-                    Style = TileObjectData.GetTileStyle(tile),
-                    LiquidAmount = tile.LiquidAmount,
-                    LiquidType = tile.LiquidType,
-                    TileFrameX = tile.TileFrameX,
-                    TileFrameY = tile.TileFrameY,
-                    TileColor = tile.TileColor,
-                    WallColor = tile.WallColor,
-                    Slope = (int)tile.Slope,
-                    HasTile = tile.HasTile,
-                    Position = new Vector2I(x, y) - topLeft
-                });
+                    schematic.Tiles.Add(new TileInfo
+                    {
+                        WallType = tile.WallType,
+                        TileType = tile.TileType,
+                        // This is not working correctly. Wrong styles are being retrieved.
+                        Style = TileObjectData.GetTileStyle(tile),
+                        LiquidAmount = tile.LiquidAmount,
+                        LiquidType = tile.LiquidType,
+                        TileFrameX = tile.TileFrameX,
+                        TileFrameY = tile.TileFrameY,
+                        TileColor = tile.TileColor,
+                        WallColor = tile.WallColor,
+                        Slope = (int)tile.Slope,
+                        HasTile = tile.HasTile,
+                        Position = new Vector2I(x, y) - topLeft
+                    });
+                }
             }
         }
 
