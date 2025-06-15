@@ -55,6 +55,11 @@ Mods: {
 				DisplayName: Test
 				Tooltip: ""
 			}
+
+			TowerCluster: {
+				Tooltip: ""
+				DisplayName: Tower Cluster
+			}
 		}
 
 		Configs: {

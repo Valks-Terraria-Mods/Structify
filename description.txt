@@ -3,10 +3,9 @@ Tired of building structures? Let this mod do it for you!
 Recipes (Crafted at Heavy Workbench)
 - Small Underground House (50 wood)
 - Small House (50 wood)
-- Bridge (50 stone)
 - Medium House (100 wood)
 - Large House (175 wood, 25 stone)
-- Prison Cluster (200 wood)
+- Tower Cluster (200 wood)
 - Hellevator (100 stone)
 
 If you are a builder and want to contribute please join the discord and let me know!
