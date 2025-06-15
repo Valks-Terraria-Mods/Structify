@@ -27,6 +27,8 @@ public partial class Schematic
                     schematic.Tiles.Add(new TileInfo
                     {
                         IsReplaceTile = true,
+                        TileType = tile.TileType,
+                        HasTile = tile.HasTile,
                         Position = new Vector2I(x, y) - topLeft
                     });
                 }

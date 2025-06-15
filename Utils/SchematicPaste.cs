@@ -4,8 +4,9 @@ public partial class Schematic
 {
     private static readonly List<TileInfo> _solidTiles = [];
     private static bool _containsFallingTiles;
+    private static bool _showBlueTiles;
 
-    public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0)
+    public static bool Paste(Schematic schematic, Vector2I mPos, int vOffset = 0, bool showBlueTiles = false)
     {
         // Do not let the player build structures concurrently
         if (ModContent.GetInstance<Structify>().IsCurrentlyBuilding)
@@ -15,6 +16,7 @@ public partial class Schematic
         }
 
         // Setup all variables
+        _showBlueTiles = showBlueTiles;
         _containsFallingTiles = false;
         ModContent.GetInstance<Structify>().IsCurrentlyBuilding = true;
 
@@ -159,7 +161,7 @@ public partial class Schematic
                 _containsFallingTiles = true;
 
             // Do not kill tile if it is a replacement tile
-            if (tileInfo.IsReplaceTile)
+            if (tileInfo.IsReplaceTile && !_showBlueTiles)
                 continue;
 
             // Do not destroy a non-existent tile
@@ -188,7 +190,7 @@ public partial class Schematic
             int y = pos.Y;
                 
             // This is a replacement tile, don't place anything here
-            if (tileInfo.IsReplaceTile)
+            if (tileInfo.IsReplaceTile && !_showBlueTiles)
                 continue;
 
             // Only place walls if wall exists in this tileInfo
@@ -322,7 +324,7 @@ public partial class Schematic
 
     private static void PlaceTile(int x, int y, TileInfo tileInfo)
     {
-        if (tileInfo.IsReplaceTile)
+        if (tileInfo.IsReplaceTile && !_showBlueTiles)
             return;
 
         Tile tile = Main.tile[x, y];
