@@ -9,11 +9,6 @@ Items: {
 		Tooltip: ""
 	}
 
-	House: {
-		DisplayName: House
-		Tooltip: Created by Name36154
-	}
-
 	HouseSmallUnderground: {
 		DisplayName: House Small Underground
 		Tooltip: Created by Name36154
@@ -21,7 +16,7 @@ Items: {
 
 	SmallHouse: {
 		DisplayName: Small House
-		Tooltip: Created by Name36154
+		Tooltip: Created by ColinFour
 	}
 
 	LargeHouse: {
@@ -34,8 +29,8 @@ Items: {
 		Tooltip: Created by Name36154
 	}
 
-	PrisonCluster: {
-		DisplayName: Prison Cluster
+	TowerCluster: {
+		DisplayName: Tower Cluster
 		Tooltip: Created by Name36154
 	}
 
@@ -52,11 +47,6 @@ Items: {
 	SchematicTopLeft: {
 		DisplayName: Schematic Top Left
 		Tooltip: ""
-	}
-
-	Bridge: {
-		DisplayName: Bridge
-		Tooltip: Created by Name36154
 	}
 
 	Hellavator: {
