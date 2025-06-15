@@ -25,8 +25,7 @@ public partial class Schematic
         Vector2I startPos = mPos + new Vector2I(0, -size.Y + vOffset);
 
         // All furniture tiles will be stored in here
-        Dictionary<int, List<TileInfo>> furniture = 
-            PrepareFurnitureDictionary(schematic, size);
+        Dictionary<int, List<TileInfo>> furniture = PrepareFurnitureDictionary(schematic, size);
 
         // Destroy the area where the structure will be placed
         DestroyArea(startPos, schematic);
@@ -85,19 +84,8 @@ public partial class Schematic
             if (IsLiquid(tileInfo))
                 continue;
 
-            try
-            {
-                Tile tile = Main.tile[x, y];
-                tile.Clear(TileDataType.Liquid);
-            }
-            catch (Exception e)
-            {
-                Main.NewText($"Failed to get world tile at x{x} y{y}, {e.Message}");
-                Console.WriteLine(e);
-            }
-
-            //if (Main.netMode == NetmodeID.MultiplayerClient)
-            //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
+            Tile tile = Main.tile[x, y];
+            tile.Clear(TileDataType.Liquid);
         }
     }
 
@@ -122,8 +110,6 @@ public partial class Schematic
             GameQueue.Enqueue(() =>
             {
                 Vector2I pos = solidTile.Position;
-
-                //WorldGen.KillTile(pos.X, pos.Y, noItem: true);
                 ResetTileToType(pos.X, pos.Y, solidTile);
             });
         }
@@ -139,21 +125,12 @@ public partial class Schematic
 
             if (IsLiquid(tileInfo))
             {
-                WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType,
-                    tileInfo.LiquidAmount);
-
-                //if (Main.netMode == NetmodeID.MultiplayerClient)
-                //{
-                //    NetMessage.sendWater(x, y);
-                //    NetMessage.SendTileSquare(Main.myPlayer, x, y, TileChangeType.LavaWater);
-                //}
+                WorldGen.PlaceLiquid(x, y, (byte)tileInfo.LiquidType, tileInfo.LiquidAmount);
             }
         }
     }
 
-    private static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(
-        Schematic schematic, 
-        Vector2I size)
+    private static Dictionary<int, List<TileInfo>> PrepareFurnitureDictionary(Schematic schematic, Vector2I size)
     {
         Dictionary<int, List<TileInfo>> furniture = new();
 
@@ -195,15 +172,11 @@ public partial class Schematic
                     tile.ClearTile();
                 else
                     Utils.KillTile(pos);
-
-                //if (Main.netMode == NetmodeID.MultiplayerClient)
-                //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
             });
         }
     }
 
-    private static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic,
-        Dictionary<int, List<TileInfo>> furniture)
+    private static void PlaceWallsAndTiles(Vector2I startPos, Schematic schematic, Dictionary<int, List<TileInfo>> furniture)
     {
         // Reset solid tiles dictionary
         _solidTiles.Clear();
@@ -226,8 +199,7 @@ public partial class Schematic
                     if (Main.tile[x, y].WallType == 0)
                     {
                         // No wall here, so place one
-                        WorldGen.PlaceWall(x, y, tileInfo.WallType,
-                            mute: true);
+                        WorldGen.PlaceWall(x, y, tileInfo.WallType, mute: true);
                     }
                     else
                     {
@@ -236,9 +208,6 @@ public partial class Schematic
                     }
 
                     WorldGen.paintWall(x, y, tileInfo.WallColor);
-
-                    //if (Main.netMode == NetmodeID.MultiplayerClient)
-                    //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
                 });
             }
 
@@ -299,7 +268,7 @@ public partial class Schematic
                 GameQueue.Enqueue(() =>
                 {
                     Vector2I pos = solidTile.Position;
-                    SlopeTile(pos.X, pos.Y, solidTile);
+                    WorldGen.SlopeTile(pos.X, pos.Y, solidTile.Slope);
                 });
             }
         }
@@ -332,26 +301,10 @@ public partial class Schematic
         PlaceTile(x, y, tileInfo);
     }
 
-/*
-    private static void ReplaceWall(TileInfo tileInfo, int oldWall, int newWall)
-    {
-        if (tileInfo.WallType == oldWall)
-            tileInfo.WallType = newWall;
-    }
-*/
-
     private static void ReplaceTile(TileInfo tileInfo, int oldTile, int newTile)
     {
         if (tileInfo.TileType == oldTile)
             tileInfo.TileType = newTile;
-    }
-
-    private static void SlopeTile(int x, int y, TileInfo tileInfo)
-    {
-        WorldGen.SlopeTile(x, y, tileInfo.Slope);
-
-        //if (Main.netMode == NetmodeID.MultiplayerClient)
-        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     private static void ResetTileToType(int x, int y, TileInfo tileInfo)
@@ -365,9 +318,6 @@ public partial class Schematic
         // Helps with visuals
         tile.TileFrameX = (short)tileInfo.TileFrameX;
         tile.TileFrameY = (short)tileInfo.TileFrameY;
-
-        //if (Main.netMode == NetmodeID.MultiplayerClient)
-        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     private static void PlaceTile(int x, int y, TileInfo tileInfo)
@@ -399,17 +349,12 @@ public partial class Schematic
 
         if (tileInfo.TileType is TileID.Chairs)
         {
-            // WorldGen.PlaceTile(...) overwrites the TileFrameX so that is why
-            // this is set after
+            // WorldGen.PlaceTile(...) overwrites the TileFrameX so that is why this is set after
 
-            // TileFrameX and TileFrameY seem to break workbenches
-            // and other pieces of furniture
+            // TileFrameX and TileFrameY seem to break workbenches and other pieces of furniture
             tile.TileFrameX = (short)tileInfo.TileFrameX;
             //tile.TileFrameY = (short)tileInfo.TileFrameY;
         }
-
-        //if (Main.netMode == NetmodeID.MultiplayerClient)
-        //    NetMessage.SendTileSquare(Main.myPlayer, x, y);
     }
 
     private static bool IsLiquid(TileInfo tileInfo) => tileInfo.LiquidAmount > 0;
