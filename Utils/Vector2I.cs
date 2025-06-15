@@ -1,17 +1,11 @@
 ﻿namespace Structify;
 
-public struct Vector2I
+public struct Vector2I(int x, int y)
 {
     public static Vector2I Zero => new(0, 0);
 
-    public int X { get; set; }
-    public int Y { get; set; }
-
-    public Vector2I(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
+    public int X { get; set; } = x;
+    public int Y { get; set; } = y;
 
     public static Vector2I operator+ (Vector2I a, Vector2I b) =>
         new(a.X + b.X, a.Y + b.Y);

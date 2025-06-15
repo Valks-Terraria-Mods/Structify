@@ -1,13 +1,7 @@
 ﻿namespace Structify;
 
-public class Ingredient
+public class Ingredient(short itemId, int amount)
 {
-    public short ItemId { get; set; }
-    public int Amount { get; set; }
-
-    public Ingredient(short itemId, int amount)
-    {
-        ItemId = itemId;
-        Amount = amount;
-    }
+    public short ItemId { get; set; } = itemId;
+    public int Amount { get; set; } = amount;
 }
