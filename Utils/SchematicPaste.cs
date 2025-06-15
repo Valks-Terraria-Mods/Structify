@@ -92,7 +92,7 @@ public partial class Schematic
             }
             catch (Exception e)
             {
-                Main.NewText(e.Message);
+                Main.NewText($"Failed to get world tile at x{x} y{y}, {e.Message}");
                 Console.WriteLine(e);
             }
 
