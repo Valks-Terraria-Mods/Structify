@@ -1,4 +1,4 @@
-Tired of building structures? Let this mod do it for you!
+Structify is a Terraria mod that builds structures for you.
 
 If you'd like to report a bug, suggest a new feature, or contribute to building new structures, please join our Discord community using the link below.
 
