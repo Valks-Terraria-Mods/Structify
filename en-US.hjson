@@ -30,6 +30,16 @@ Mods: {
 				Tooltip: Built by Name36154
 				DisplayName: Tower Cluster
 			}
+
+			CastleGate: {
+				DisplayName: Castle Gate
+				Tooltip: Built by Valkyrienyanko and Burlierbuffalo1
+			}
+
+			FishingPond: {
+				DisplayName: Fishing Pond
+				Tooltip: Built by Valkyrienyanko and Burlierbuffalo1
+			}
 		}
 
 		Configs: {

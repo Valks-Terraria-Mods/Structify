@@ -16,7 +16,7 @@ public class Hellavator : StructureItem
 
     protected override int ItemRarity => ItemRarityID.Red;
 
-    public override bool UseTheItem(Player player, Point16 mPos)
+    protected override bool UseTheItem(Player player, Point16 mPos)
     {
         // If I'm a multiplayer client, ask the server to build the hellavator
         if (Main.netMode == NetmodeID.MultiplayerClient)

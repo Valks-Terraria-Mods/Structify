@@ -1,16 +1,15 @@
 Tired of building structures? Let this mod do it for you!
 
-All freezing and crash issues have been resolved.
-
 Recipes (Crafted at a Heavy Workbench)
 - Small House (50 wood)
 - Medium House (100 wood)
 - Large House (175 wood, 25 stone)
 - Tower Cluster (200 wood)
+- Castle Gate (150 stone)
+- Fishing Pond (150 stone)
 - Hellevator (100 stone)
 
 Planned
-- Fishing Ponds
 - Boss Arenas
 - Greenhouse
 - Remastering and Tweaking Existing Structures

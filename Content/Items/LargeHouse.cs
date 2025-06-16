@@ -10,5 +10,4 @@ public class LargeHouse : SchematicItem
         new(ItemID.Wood, 175),
         new(ItemID.StoneBlock, 25)
     ];
-    protected override int ItemRarity => ItemRarityID.Quest;
 }

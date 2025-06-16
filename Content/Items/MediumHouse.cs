@@ -9,5 +9,4 @@ public class MediumHouse : SchematicItem
     [
         new(ItemID.Wood, 100)
     ];
-    protected override int ItemRarity => ItemRarityID.Pink;
 }

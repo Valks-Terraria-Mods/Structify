@@ -1,9 +1,12 @@
-﻿namespace Structify.Common.Items;
+﻿using Structify.Utils;
+
+namespace Structify.Common.Items;
 
 public abstract class StructureItem : ModItem
 {
     protected abstract Ingredient[] Ingredients { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
+    public virtual int VerticalOffset { get; } = 0;
 
     private bool _canUseItem;
 
@@ -37,14 +40,14 @@ public abstract class StructureItem : ModItem
         // UseItem is called for every client so we need to check if this is the local player
         if (Main.myPlayer == player.whoAmI)
         {
-            Point16 mPos = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            Point16 mPos = Main.MouseWorld.ToTileCoordinates16();
             _canUseItem = UseTheItem(player, mPos);
         }
 
         return base.UseItem(player);
     }
 
-    public abstract bool UseTheItem(Player player, Point16 mPos);
+    protected abstract bool UseTheItem(Player player, Point16 mPos);
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {

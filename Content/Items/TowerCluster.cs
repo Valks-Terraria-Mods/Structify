@@ -9,5 +9,4 @@ public class TowerCluster : SchematicItem
     [
         new(ItemID.Wood, 200)
     ];
-    protected override int ItemRarity => ItemRarityID.LightRed;
 }
