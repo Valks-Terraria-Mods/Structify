@@ -4,13 +4,7 @@ namespace Structify.Common.Items;
 
 public abstract class SchematicItem : StructureItem
 {
-    protected abstract string SchematicName { get; }
-
-    public override void SetDefaults()
-    {
-        base.SetDefaults();
-        // TODO: Load schematic here so we can show dusts on mouse hover
-    }
+    public abstract string SchematicName { get; }
 
     public override bool UseTheItem(Player player, Point16 mPos)
     {

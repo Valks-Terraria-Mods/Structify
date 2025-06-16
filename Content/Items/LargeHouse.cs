@@ -4,7 +4,7 @@ namespace Structify.Content.Items;
 
 public class LargeHouse : SchematicItem
 {
-    protected override string SchematicName => "LargeHouse1";
+    public override string SchematicName => "LargeHouse1";
     protected override Ingredient[] Ingredients =>
     [
         new(ItemID.Wood, 175),

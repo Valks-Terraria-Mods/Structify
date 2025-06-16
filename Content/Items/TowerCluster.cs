@@ -4,7 +4,7 @@ namespace Structify.Content.Items;
 
 public class TowerCluster : SchematicItem
 {
-    protected override string SchematicName => "TowerCluster1";
+    public override string SchematicName => "TowerCluster1";
     protected override Ingredient[] Ingredients =>
     [
         new(ItemID.Wood, 200)
