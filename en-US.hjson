@@ -1,63 +1,33 @@
 Mods: {
 	Structify: {
 		Items: {
-			Bridge: {
-				DisplayName: Bridge
-				Tooltip: ""
-			}
-
 			Hellavator: {
 				DisplayName: Hellavator
-				Tooltip: ""
-			}
-
-			HouseSmallUnderground: {
-				DisplayName: House Small Underground
-				Tooltip: ""
+				Tooltip: Built by Valkyrienyanko
 			}
 
 			LargeHouse: {
 				DisplayName: Large House
-				Tooltip: ""
+				Tooltip: Built by Name36154
 			}
 
 			MediumHouse: {
 				DisplayName: Medium House
-				Tooltip: ""
+				Tooltip: Built by Name36154
 			}
 
 			PrisonCluster: {
 				DisplayName: Prison Cluster
-				Tooltip: ""
-			}
-
-			SchematicBottomRight: {
-				DisplayName: Schematic Bottom Right
-				Tooltip: ""
-			}
-
-			SchematicReplace: {
-				DisplayName: Schematic Replace
-				Tooltip: ""
-			}
-
-			SchematicTopLeft: {
-				DisplayName: Schematic Top Left
-				Tooltip: ""
+				Tooltip: Built by Name36154
 			}
 
 			SmallHouse: {
 				DisplayName: Small House
-				Tooltip: ""
-			}
-
-			Test: {
-				DisplayName: Test
-				Tooltip: ""
+				Tooltip: Built by ColinFour
 			}
 
 			TowerCluster: {
-				Tooltip: ""
+				Tooltip: Built by Name36154
 				DisplayName: Tower Cluster
 			}
 		}

@@ -9,7 +9,7 @@ public abstract class StructureItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.maxStack = 999;
+        Item.maxStack = 100;
         Item.rare = ItemRarity;
         Item.consumable = true;
 
