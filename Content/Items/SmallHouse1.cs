@@ -3,9 +3,10 @@ using Structify.Utils;
 
 namespace Structify.Content.Items;
 
-public class SmallHouse : SchematicItem
+public class SmallHouse1 : SchematicItem
 {
-    public override string SchematicName => "SmallHouse1";
+    protected override string ItemName { get; } = "Small House";
+    
     protected override Ingredient[] Ingredients =>
     [
         new(ItemID.Wood, 75)

@@ -5,7 +5,13 @@ namespace Structify.Common.Items;
 
 public abstract class SchematicItem : StructureItem
 {
-    public abstract string SchematicName { get; }
+    public string SchematicName { get; private set; }
+
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        SchematicName = GetType().Name;
+    }
 
     protected override bool UseTheItem(Player player, Point16 mPos)
     {

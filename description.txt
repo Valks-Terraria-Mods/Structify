@@ -1,16 +1,16 @@
 Tired of building structures? Let this mod do it for you!
 
 Current Structures (All Crafted at a Heavy Workbench)
-- Small, Medium and Large Houses
-- Tower Cluster
-- Castle Gate
-- Fishing Pond
+- Houses of varying sizes
+- Apartment complex
+- Castle tower gate
+- Fishing pond
 - Hellavator
 
-Planned Structures
+Roadmap
 - Boss Arenas
 - Greenhouse
-- Remastering Existing Structures
+- Guard NPCs
 
 Major Known Issues:
 - Placing a hellavator underneath a tree may cause that tree to become indestructible for the entirety of your playthrough.

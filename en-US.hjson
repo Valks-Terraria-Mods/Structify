@@ -45,6 +45,31 @@ Mods: {
 				DisplayName: Small House2
 				Tooltip: ""
 			}
+
+			FishingPond1: {
+				DisplayName: Fishing Pond1
+				Tooltip: ""
+			}
+
+			LargeHouse1: {
+				DisplayName: Large House1
+				Tooltip: ""
+			}
+
+			SmallHouse1: {
+				DisplayName: Small House1
+				Tooltip: ""
+			}
+
+			TowerCluster1: {
+				DisplayName: Tower Cluster1
+				Tooltip: ""
+			}
+
+			TowerGate1: {
+				DisplayName: Tower Gate1
+				Tooltip: ""
+			}
 		}
 
 		Configs: {

@@ -8,12 +8,16 @@ public abstract class StructureItem : ModItem
     protected abstract Ingredient[] Ingredients { get; }
     protected abstract string[] Authors { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
+    protected virtual string ItemName { get; } = "";
     public virtual int VerticalOffset { get; } = 0;
 
     private bool _canUseItem;
 
     public override void SetDefaults()
     {
+        if (!string.IsNullOrWhiteSpace(ItemName))
+            Item.SetNameOverride(ItemName);
+        
         Item.maxStack = 100;
         Item.rare = ItemRarity;
         Item.consumable = true;

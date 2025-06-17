@@ -3,11 +3,11 @@ using Structify.Utils;
 
 namespace Structify.Content.Items;
 
-public class FishingPond : SchematicItem
+public class FishingPond1 : SchematicItem
 {
-    public override string SchematicName => "FishingPond1";
-    public override int VerticalOffset { get; } = 7;
+    protected override string ItemName { get; } = "Fishing Pond";
     protected override string[] Authors { get; } = [Builders.Valkyrienyanko, Builders.Burlierbuffalo1];
+    public override int VerticalOffset { get; } = 7;
     
     protected override Ingredient[] Ingredients =>
     [
