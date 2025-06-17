@@ -12,18 +12,11 @@ Current Structures (All Crafted at a Heavy Workbench)
 - Large Outdoors Boss Arena (300 stone, 15 iron bars)
 - Hellavator (300 stone)
 
-Roadmap
-- Boss Arena
-- Greenhouse
-- Guard NPCs
-
-Major Known Issues:
-- Placing a hellavator underneath a tree may cause that tree to become indestructible for the entirety of your playthrough.
-
 Thank you to the following people for helping build the structures
 - Burlierbuffalo1
 - ColinFour
 - Name36154
+- Grim
 
 If you'd like to report a bug, suggest a new feature, or contribute to building new structures, please join our Discord community using the link below.
 

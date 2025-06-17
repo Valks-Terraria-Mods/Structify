@@ -14,5 +14,5 @@ public class BossArenaOutdoorsLarge : SchematicItem
         new(RecipeGroupID.IronBar, 15)
     ];
 
-    protected override string[] Authors { get; } = [Builders.Grim];
+    protected override string[] Authors { get; } = [Builders.Valkyrienyanko];
 }
