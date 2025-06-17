@@ -11,5 +11,5 @@ public class SmallHouse : SchematicItem
         new(ItemID.Wood, 75)
     ];
     
-    protected override string[] Authors { get; } = [Builders.ColinFour];
+    protected override string[] Authors { get; } = [Builders.ColinFour, Builders.Valkyrienyanko];
 }
