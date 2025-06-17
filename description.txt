@@ -8,7 +8,7 @@ Current Structures (All Crafted at a Heavy Workbench)
 - Hellavator
 
 Roadmap
-- Boss Arenas
+- Boss Arena
 - Greenhouse
 - Guard NPCs
 
