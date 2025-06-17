@@ -5,7 +5,7 @@ namespace Structify.Content.Items;
 
 public class SmallHouse1 : SchematicItem
 {
-    protected override string ItemName { get; } = "Small House";
+    protected override string ItemName { get; } = "Small House Type 1";
     
     protected override Ingredient[] Ingredients =>
     [

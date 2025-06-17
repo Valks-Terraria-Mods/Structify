@@ -7,9 +7,9 @@ public abstract class StructureItem : ModItem
 {
     protected abstract Ingredient[] Ingredients { get; }
     protected abstract string[] Authors { get; }
-    protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
-    protected virtual string ItemName { get; } = "";
-    public virtual int VerticalOffset { get; } = 0;
+    protected virtual int ItemRarity => ItemRarityID.LightPurple;
+    protected virtual string ItemName => "";
+    public virtual int VerticalOffset => 0;
 
     private bool _canUseItem;
 

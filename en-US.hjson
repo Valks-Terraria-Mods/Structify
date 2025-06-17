@@ -70,6 +70,21 @@ Mods: {
 				DisplayName: Tower Gate1
 				Tooltip: ""
 			}
+
+			BossArenaOutdoorsLarge: {
+				DisplayName: Boss Arena Outdoors Large
+				Tooltip: ""
+			}
+
+			Greenhouse1: {
+				DisplayName: Greenhouse1
+				Tooltip: ""
+			}
+
+			Greenhouse2: {
+				DisplayName: Greenhouse2
+				Tooltip: ""
+			}
 		}
 
 		Configs: {

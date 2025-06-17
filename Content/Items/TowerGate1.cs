@@ -14,6 +14,6 @@ public class TowerGate1 : SchematicItem
     [
         new(ItemID.StoneBlock, 250),
         new(ItemID.Wood, 50),
-        new(ItemID.IronBar, 20)
+        new(RecipeGroupID.IronBar, 10)
     ];
 }
