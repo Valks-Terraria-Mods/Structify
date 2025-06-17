@@ -40,6 +40,11 @@ Mods: {
 				DisplayName: Fishing Pond
 				Tooltip: ""
 			}
+
+			SmallHouse2: {
+				DisplayName: Small House2
+				Tooltip: ""
+			}
 		}
 
 		Configs: {
