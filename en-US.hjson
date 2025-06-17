@@ -3,42 +3,42 @@ Mods: {
 		Items: {
 			Hellavator: {
 				DisplayName: Hellavator
-				Tooltip: Built by Valkyrienyanko
+				Tooltip: ""
 			}
 
 			LargeHouse: {
 				DisplayName: Large House
-				Tooltip: Built by Name36154
+				Tooltip: ""
 			}
 
 			MediumHouse: {
 				DisplayName: Medium House
-				Tooltip: Built by Name36154
+				Tooltip: ""
 			}
 
 			PrisonCluster: {
 				DisplayName: Prison Cluster
-				Tooltip: Built by Name36154
+				Tooltip: ""
 			}
 
 			SmallHouse: {
 				DisplayName: Small House
-				Tooltip: Built by ColinFour
+				Tooltip: ""
 			}
 
 			TowerCluster: {
-				Tooltip: Built by Name36154
+				Tooltip: ""
 				DisplayName: Tower Cluster
 			}
 
 			CastleGate: {
 				DisplayName: Castle Gate
-				Tooltip: Built by Valkyrienyanko and Burlierbuffalo1
+				Tooltip: ""
 			}
 
 			FishingPond: {
 				DisplayName: Fishing Pond
-				Tooltip: Built by Valkyrienyanko and Burlierbuffalo1
+				Tooltip: ""
 			}
 		}
 

@@ -1,10 +1,12 @@
 ﻿using Structify.Utils;
+using StructureHelper;
 
 namespace Structify.Common.Items;
 
 public abstract class StructureItem : ModItem
 {
     protected abstract Ingredient[] Ingredients { get; }
+    protected abstract string[] Authors { get; }
     protected virtual int ItemRarity { get; } = ItemRarityID.LightPurple;
     public virtual int VerticalOffset { get; } = 0;
 
@@ -35,6 +37,18 @@ public abstract class StructureItem : ModItem
         recipe.Register();
     }
 
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        AddMoreTooltips(tooltips);
+        
+        // Authors always appended last
+        string authors = FormatAuthors(Authors);
+        
+        tooltips.Add(new TooltipLine(Mod, "Authors", $"Built by {authors}"));
+    }
+
+    protected virtual void AddMoreTooltips(List<TooltipLine> tooltips) {}
+
     public override bool? UseItem(Player player)
     {
         // UseItem is called for every client so we need to check if this is the local player
@@ -57,5 +71,31 @@ public abstract class StructureItem : ModItem
     public override bool ConsumeItem(Player player)
     {
         return _canUseItem;
+    }
+    
+    /// <summary>
+    /// Formats the author string into a nice readable format.
+    /// </summary>
+    private static string FormatAuthors(IEnumerable<string> authors)
+    {
+        List<string> authorList = authors.ToList();
+
+        switch (authorList.Count)
+        {
+            case 0:
+                return string.Empty;
+            case 1:
+                // "A"
+                return authorList[0];
+            case 2:
+                // "A and B"
+                return $"{authorList[0]} and {authorList[1]}";
+        }
+
+        // For 3 or more authors: "A, B and C"
+        IEnumerable<string> allButLast = authorList.Take(authorList.Count - 1);
+        string lastAuthor = authorList.Last();
+
+        return $"{string.Join(", ", allButLast)} and {lastAuthor}";
     }
 }

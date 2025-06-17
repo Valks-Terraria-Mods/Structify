@@ -1,4 +1,5 @@
 ﻿using Structify.Common.Items;
+using Structify.Utils;
 
 namespace Structify.Content.Items;
 
@@ -11,8 +12,9 @@ public class Hellavator : StructureItem
 {
     protected override Ingredient[] Ingredients =>
     [
-        new(ItemID.StoneBlock, 100)
+        new(ItemID.StoneBlock, 300)
     ];
+    protected override string[] Authors { get; } = [Builders.Valkyrienyanko];
 
     protected override int ItemRarity => ItemRarityID.Red;
 

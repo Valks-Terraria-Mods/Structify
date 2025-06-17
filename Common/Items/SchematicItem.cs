@@ -12,11 +12,11 @@ public abstract class SchematicItem : StructureItem
         StructureUtils.Generate(this, mPos);
         return true;
     }
-    
-    public override void ModifyTooltips(List<TooltipLine> tooltips)
+
+    protected override void AddMoreTooltips(List<TooltipLine> tooltips)
     {
         Point16 dimensions = StructureUtils.GetDimensions(this);
-        tooltips.Add(new TooltipLine(Mod, "Dimensions", $"Width: {dimensions.X}, Height: {dimensions.Y}"));
+        tooltips.Add(new TooltipLine(Mod, "Dimensions", $"Size: {dimensions.X} x {dimensions.Y}"));
         
         if (VerticalOffset != 0)
             tooltips.Add(new TooltipLine(Mod, "Offset", $"Rooted {VerticalOffset} tiles beneath the surface"));
