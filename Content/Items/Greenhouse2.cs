@@ -5,14 +5,8 @@ namespace Structify.Content.Items;
 
 public class Greenhouse2 : SchematicItem
 {
-    protected override string ItemName { get; } = "Greenhouse Type 2";
-    
-    protected override Ingredient[] Ingredients =>
-    [
-        new(ItemID.Wood, 175)
-    ];
-
-    public override int VerticalOffset { get; } = 16;
-
+    protected override string ItemName => "Greenhouse Type 2";
+    protected override string Description => "The interior is empty so you can place what you want.";
+    public override int VerticalOffset => 16;
     protected override string[] Authors { get; } = [Builders.Grim];
 }

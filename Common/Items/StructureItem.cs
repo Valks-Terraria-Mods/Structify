@@ -5,10 +5,10 @@ namespace Structify.Common.Items;
 
 public abstract class StructureItem : ModItem
 {
-    protected abstract Ingredient[] Ingredients { get; }
     protected abstract string[] Authors { get; }
     protected virtual int ItemRarity => ItemRarityID.LightPurple;
-    protected virtual string ItemName => "";
+    protected abstract string ItemName { get; }
+    protected abstract string Description { get; }
     public virtual int VerticalOffset => 0;
 
     private bool _canUseItem;
@@ -31,23 +31,14 @@ public abstract class StructureItem : ModItem
         Item.shoot = ProjectileID.BoneArrow;
     }
 
-    public override void AddRecipes()
-    {
-        Recipe recipe = CreateRecipe().AddTile(TileID.HeavyWorkBench);
-
-        foreach (Ingredient ingredient in Ingredients)
-            recipe.AddIngredient(ingredient.ItemId, ingredient.Amount);
-
-        recipe.Register();
-    }
-
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
         AddMoreTooltips(tooltips);
         
         // Authors always appended last
         string authors = FormatAuthors(Authors);
-        
+
+        tooltips.Add(new TooltipLine(Mod, "Description", Description));
         tooltips.Add(new TooltipLine(Mod, "Authors", $"Built by {authors}"));
     }
 
