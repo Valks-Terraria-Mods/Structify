@@ -1,16 +1,18 @@
 Tired of building structures? Let this mod do it for you!
 
-Current Structures (All Crafted at a Heavy Workbench)
-- Small House Type 1 (75 wood)
-- Small House Type 2 (125 wood)
-- Large House (250 wood, 100 stone)
-- Greenhouse Type 1 (150 wood)
-- Greenhouse Type 2 (175 wood)
-- Fishing Pond (100 wood, 25 stone)
-- Tower Gate (250 stone, 50 wood, 10 iron bars)
-- Tower Cluster (225 wood)
-- Large Outdoors Boss Arena (300 stone, 15 iron bars)
-- Hellavator (300 stone)
+A new NPC named Bob will move into your town and sell you the structures.
+
+Current Structures
+- Small House Type 1
+- Small House Type 2
+- Large House
+- Greenhouse Type 1
+- Greenhouse Type 2
+- Fishing Pond
+- Tower Gate
+- Tower Cluster
+- Large Outdoors Boss Arena
+- Hellavator
 
 Thank you to the following people for helping build the structures
 - Burlierbuffalo1
