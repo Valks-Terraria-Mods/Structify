@@ -5,6 +5,19 @@ using Terraria.Utilities;
 
 namespace Structify.Content.NPCs;
 
+public class MerchantSpawnsRightAway : ModSystem
+{
+	public override void PostWorldGen()
+	{
+		IEntitySource source = new EntitySource_WorldGen();
+		int x = Main.spawnTileX * 16;
+		int y = Main.spawnTileY * 16;
+		int type = ModContent.NPCType<StructureMerchant>();
+
+		NPC.NewNPC(source, x, y, type);
+	}
+}
+
 [AutoloadHead]
 public class StructureMerchant : ModNPC
 {
