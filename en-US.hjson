@@ -85,6 +85,16 @@ Mods: {
 				DisplayName: Greenhouse2
 				Tooltip: ""
 			}
+
+			MediumHouse1: {
+				Tooltip: ""
+				DisplayName: Medium House1
+			}
+
+			PrisonCell1: {
+				Tooltip: ""
+				DisplayName: Prison Cell1
+			}
 		}
 
 		Configs: {
@@ -99,6 +109,11 @@ Mods: {
 				BuildTickRate: {
 					Label: Build Tick Rate
 					Tooltip: ""
+				}
+
+				BossArenaIgnoresTiles: {
+					Tooltip: ""
+					Label: Boss Arena Ignores Tiles
 				}
 			}
 		}

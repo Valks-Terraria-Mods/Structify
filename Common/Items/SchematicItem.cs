@@ -25,10 +25,10 @@ public abstract class SchematicItem : StructureItem
             {
                 for (int y = bottomLeftAnchor.Y; y < bottomLeftAnchor.Y + dimensions.Y; y++)
                 {
-                    if (!Main.tile[x, y].HasTile && Main.tile[x, y].WallType == WallID.None) 
+                    if (!Main.tile[x, y].HasTile/* && Main.tile[x, y].WallType == WallID.None*/) 
                         continue;
                     
-                    Main.NewText("There is a tile or wall blocking the structure from being placed.", Color.Red);
+                    Main.NewText("There is a tile blocking the structure from being placed.", Color.Red);
                     return false;
                 }
             }

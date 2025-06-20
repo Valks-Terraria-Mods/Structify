@@ -1,0 +1,17 @@
+[h2]A Special Encounter with Bob[/h2]
+While I was building my rectangle houses, someone named Bob joined my world. He said to me "It's okay, the rectangles can't hurt you anymore, for I am here now". He helped me survive, he gave me a shelter, a place to call home. Bob forever changed my life.
+
+This mod adds an NPC named Bob that will immediately join your world and sell you structures that you can place.
+
+[h2]My First Time Building[/h2]
+This is the first time I actually tried to build something that looks good. Pretty much all structures built by me need a remaster. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
+
+[h2]Credit[/h2]
+Thank you to the amazing people for helping build:
+- Burlierbuffalo1
+- ColinFour
+- Name36154
+- Grim
+
+Source Code: https://github.com/Valks-Terraria-Mods/Structify
+Mod Version: {ModVersion}, tML Version: {tMLVersion}
