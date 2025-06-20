@@ -112,6 +112,7 @@ public override string GetChat()
 		AddItem<PrisonCell1>(Item.buyPrice(silver: 1));
 		AddItem<TowerGate1>(Item.buyPrice(silver: 40));
 		AddItem<Hellavator>(Item.buyPrice(gold: 1));
+		AddItem<WallOfFleshArena>(Item.buyPrice(silver: 10));
 		AddItem<BossArenaOutdoorsLarge>(Item.buyPrice(gold: 2));
 	}
 
