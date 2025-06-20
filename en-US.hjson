@@ -95,6 +95,11 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Prison Cell1
 			}
+
+			UndergroundHouse1: {
+				Tooltip: ""
+				DisplayName: Underground House1
+			}
 		}
 
 		Configs: {

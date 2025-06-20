@@ -103,6 +103,7 @@ public override string GetChat()
 		AddItem<SmallHouse1>(Item.buyPrice(silver: 10));
 		AddItem<MediumHouse1>(Item.buyPrice(silver: 20));
 		AddItem<LargeHouse1>(Item.buyPrice(silver: 30));
+		AddItem<UndergroundHouse1>(Item.buyPrice(silver: 25));
 		
 		AddItem<Greenhouse1>(Item.buyPrice(silver: 25));
 		AddItem<Greenhouse2>(Item.buyPrice(silver: 30));

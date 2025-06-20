@@ -4,7 +4,7 @@ While I was building my rectangle houses, someone named Bob joined my world. He 
 This mod adds an NPC named Bob that will immediately join your world and sell you structures that you can place.
 
 [h2]My First Time Building[/h2]
-This is the first time I actually tried to build something that looks good. Pretty much all structures built by me need a remaster. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
+This is the first time I actually tried to build something that looks good. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
 
 [h2]Credit[/h2]
 Thank you to the amazing people for helping build:
