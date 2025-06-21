@@ -3,6 +3,22 @@ While I was building my rectangle houses, someone named Bob joined my world. He 
 
 This mod adds an NPC named Bob that will immediately join your world and sell you structures that you can place.
 
+[h2]Structures[/h2]
+Surface
+- Small House
+- Medium House
+- Large House
+- Tower Gate
+- Greenhouse
+- Overgrown House
+- Fishing Pond
+- Boss Arena (can not be placed over existing tiles but this can be disabled in config)
+
+Underground
+- Prison Cell
+- House
+- Wall of Flesh Arena
+
 [h2]My First Time Building[/h2]
 This is the first time I actually tried to build something that looks good. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
 

@@ -122,7 +122,7 @@ Mods: {
 				}
 
 				BossArenaIgnoresTiles: {
-					Tooltip: ""
+					Tooltip: Should placing the boss arena ignore tiles?
 					Label: Boss Arena Ignores Tiles
 				}
 			}

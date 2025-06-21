@@ -28,7 +28,7 @@ public abstract class SchematicItem : StructureItem
                     if (!Main.tile[x, y].HasTile/* && Main.tile[x, y].WallType == WallID.None*/) 
                         continue;
                     
-                    Main.NewText("There is a tile blocking the structure from being placed.", Color.Red);
+                    Main.NewText("There is a tile blocking the structure from being placed. You can disable this check in the mods config.", Color.Red);
                     return false;
                 }
             }
