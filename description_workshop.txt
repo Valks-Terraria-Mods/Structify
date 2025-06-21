@@ -4,7 +4,6 @@ While I was building my rectangle houses, someone named Bob joined my world. He 
 This mod adds an NPC named Bob that should immediately join your world and sell you structures that you can place. If for some reason he did not join your world on world start, he should join your world the following day.
 
 [h2]Structures[/h2]
-[b]Surface[/b]
 - Small House
 - Medium House
 - Large House
@@ -13,23 +12,17 @@ This mod adds an NPC named Bob that should immediately join your world and sell 
 - Greenhouse
 - Overgrown House
 - Fishing Pond
-- Boss Arena
-
-[b]Underground[/b]
 - Prison Cell
 - House
+- Boss Arena
 - Wall of Flesh Arena
+- Boat
+- Underwater Structure
 
-[h2]My First Time Building[/h2]
-This is the first time I actually tried to build something that looks good. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
-
-[h2]Structures that Need Remastering[/h2]
-- Greenhouse
+[h2]Looking for Builders[/h2]
+If you would like to help remaster or build new structures please join the discord. {ModHomepage}
 
 [h2]Ideas for New Structures that Might get Added[/h2]
-- Pirate Ship
-- Underwater Home
-- Castle
 - Sky Castle
 - Small Modular Mineshafts (Horizontal, Vertical, Cross Shape, T-Shape)
 - Even Larger House

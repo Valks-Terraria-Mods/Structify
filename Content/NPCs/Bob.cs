@@ -101,17 +101,22 @@ public override string GetChat()
 
 	private void AddItemsToShop()
 	{
+		// Houses
 		AddItem<SmallHouse1>(Item.buyPrice(silver: 10));
 		AddItem<MediumHouse1>(Item.buyPrice(silver: 20));
 		AddItem<LargeHouse1>(Item.buyPrice(silver: 30));
-		AddItem<Castle1>(Item.buyPrice(gold: 3));
 		AddItem<UndergroundHouse1>(Item.buyPrice(silver: 25));
-		
 		AddItem<Greenhouse1>(Item.buyPrice(silver: 25));
 		AddItem<Greenhouse2>(Item.buyPrice(silver: 30));
-		
-		AddItem<FishingPond1>(Item.buyPrice(silver: 25));
 		AddItem<PrisonCell1>(Item.buyPrice(silver: 1));
+		
+		// Water
+		AddItem<FishingPond1>(Item.buyPrice(silver: 25));
+		AddItem<UnderWaterDome>(Item.buyPrice(silver: 10));
+		AddItem<Ship1>(Item.buyPrice(silver: 20));
+		
+		// Castle
+		AddItem<Castle1>(Item.buyPrice(gold: 3));
 		AddItem<TowerGate1>(Item.buyPrice(silver: 40));
 		AddItem<Hellavator>(Item.buyPrice(gold: 1));
 		AddItem<BossArena>(Item.buyPrice(silver: 5));

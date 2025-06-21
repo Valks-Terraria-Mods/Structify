@@ -115,6 +115,16 @@ Mods: {
 				DisplayName: Castle1
 				Tooltip: ""
 			}
+
+			Ship1: {
+				DisplayName: Ship1
+				Tooltip: ""
+			}
+
+			UnderWaterDome: {
+				DisplayName: Under Water Dome
+				Tooltip: ""
+			}
 		}
 
 		Configs: {
