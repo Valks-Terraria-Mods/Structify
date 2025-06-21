@@ -12,7 +12,7 @@ Surface
 - Greenhouse
 - Overgrown House
 - Fishing Pond
-- Boss Arena (can not be placed over existing tiles but this can be disabled in config)
+- Boss Arena
 
 Underground
 - Prison Cell

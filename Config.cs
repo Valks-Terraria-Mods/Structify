@@ -10,6 +10,6 @@ public class Config : ModConfig
         Instance = this;
     }
     
-    [DefaultValue(false)]
-    public bool BossArenaIgnoresTiles { get; set; }
+    //[DefaultValue(false)]
+    //public bool BossArenaIgnoresTiles { get; set; }
 }

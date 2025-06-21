@@ -76,6 +76,11 @@ Mods: {
 				Tooltip: ""
 			}
 
+			BossArena: {
+				DisplayName: Boss Arena
+				Tooltip: ""
+			}
+
 			Greenhouse1: {
 				DisplayName: Greenhouse1
 				Tooltip: ""
