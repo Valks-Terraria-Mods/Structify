@@ -8,6 +8,7 @@ This mod adds an NPC named Bob that should immediately join your world and sell 
 - Small House
 - Medium House
 - Large House
+- Castle
 - Tower Gate
 - Greenhouse
 - Overgrown House

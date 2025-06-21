@@ -110,6 +110,11 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Wall Of Flesh Arena
 			}
+
+			Castle1: {
+				DisplayName: Castle1
+				Tooltip: ""
+			}
 		}
 
 		Configs: {
