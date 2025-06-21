@@ -1,10 +1,10 @@
 [h2]A Special Encounter with Bob[/h2]
 While I was building my rectangle houses, someone named Bob joined my world. He said to me "It's okay, the rectangles can't hurt you anymore, for I am here now". He helped me survive, he gave me a shelter, a place to call home. Bob forever changed my life.
 
-This mod adds an NPC named Bob that will immediately join your world and sell you structures that you can place.
+This mod adds an NPC named Bob that should immediately join your world and sell you structures that you can place. If for some reason he did not join your world on world start, he should join your world the following day.
 
 [h2]Structures[/h2]
-Surface
+[b]Surface[/b]
 - Small House
 - Medium House
 - Large House
@@ -14,13 +14,24 @@ Surface
 - Fishing Pond
 - Boss Arena
 
-Underground
+[b]Underground[/b]
 - Prison Cell
 - House
 - Wall of Flesh Arena
 
 [h2]My First Time Building[/h2]
 This is the first time I actually tried to build something that looks good. If you would like to help remaster or build new structures please join the discord. {ModHomepage}
+
+[h2]Structures that Need Remastering[/h2]
+- Greenhouse
+
+[h2]Ideas for New Structures that Might get Added[/h2]
+- Pirate Ship
+- Underwater Home
+- Castle
+- Sky Castle
+- Small Modular Mineshafts (Horizontal, Vertical, Cross Shape, T-Shape)
+- Even Larger House
 
 [h2]Credit[/h2]
 Thank you to the amazing people for helping build:

@@ -12,14 +12,14 @@ public class MerchantSpawnsRightAway : ModSystem
 		IEntitySource source = new EntitySource_WorldGen();
 		int x = Main.spawnTileX * 16;
 		int y = Main.spawnTileY * 16;
-		int type = ModContent.NPCType<StructureMerchant>();
+		int type = ModContent.NPCType<Bob>();
 
 		NPC.NewNPC(source, x, y, type);
 	}
 }
 
 [AutoloadHead]
-public class StructureMerchant : ModNPC
+public class Bob : ModNPC
 {
 	public const string ShopName = "Shop";
 	
@@ -43,6 +43,7 @@ public class StructureMerchant : ModNPC
     {
 	    NPC.townNPC = true; // Sets NPC to be a Town NPC
 	    NPC.friendly = true; // NPC Will not attack player
+	    NPC.homeless = true;
 	    NPC.width = 18;
 	    NPC.height = 40;
 	    NPC.aiStyle = 7;
