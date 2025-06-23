@@ -125,6 +125,16 @@ Mods: {
 				DisplayName: Under Water Dome
 				Tooltip: ""
 			}
+
+			PrisonCell3: {
+				Tooltip: ""
+				DisplayName: Prison Cell3
+			}
+
+			PrisonCell2: {
+				Tooltip: ""
+				DisplayName: Prison Cell2
+			}
 		}
 
 		Configs: {
