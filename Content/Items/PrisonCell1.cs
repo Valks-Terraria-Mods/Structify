@@ -5,7 +5,7 @@ namespace Structify.Content.Items;
 
 public class PrisonCell1 : SchematicItem
 {
-    protected override string ItemName => "Prison Cell";
-    protected override string Description => "Can hold 1 NPC but commonly stacked adjacent to other prison cells to hold more.";
+    protected override string ItemName => "Prison Cell (Underground)";
+    protected override string Description => "Holds 1 NPC, usually placed deep underground.";
     protected override string[] Authors { get; } = [Builders.Valkyrienyanko];
 }

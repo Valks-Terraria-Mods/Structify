@@ -109,6 +109,8 @@ public override string GetChat()
 		AddItem<Greenhouse1>(Item.buyPrice(silver: 25));
 		AddItem<Greenhouse2>(Item.buyPrice(silver: 30));
 		AddItem<PrisonCell1>(Item.buyPrice(silver: 1));
+		AddItem<PrisonCell2>(Item.buyPrice(silver: 1));
+		AddItem<PrisonCell3>(Item.buyPrice(silver: 1));
 		
 		// Water
 		AddItem<FishingPond1>(Item.buyPrice(silver: 25));
