@@ -74,6 +74,8 @@ public class DraggableUIPanelState : UIState
     private void StartDrag(UIMouseEvent evt)
     {
         _dragging = true;
-        _dragOffset = Main.MouseScreen - new Vector2(Panel.Left.Pixels, Panel.Top.Pixels);
+        // Use actual panel screen position to calculate offset
+        Vector2 panelPos = Panel.GetDimensions().Position();
+        _dragOffset = Main.MouseScreen - panelPos;
     }
 }
