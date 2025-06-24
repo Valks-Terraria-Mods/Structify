@@ -10,15 +10,18 @@ public class CustomShopSystem : ModSystem
     private bool _visible;
     private GameTime _lastTime;
 
+    public void Hide()
+    {
+        _visible = false;
+    }
+
     public override void Load()
     {
-        if (!Main.dedServ)
-        {
-            _toggleKey = KeybindLoader.RegisterKeybind(Mod, "Toggle Shop UI", "Y");
-            _ui = new CustomShopUI();
-            _interface = new UserInterface();
-            _ui.Activate();
-        }
+        if (Main.dedServ) return;
+        _toggleKey = KeybindLoader.RegisterKeybind(Mod, "Toggle Shop UI", "Y");
+        _ui = new CustomShopUI();
+        _interface = new UserInterface();
+        _ui.Activate();
     }
 
     public override void UpdateUI(GameTime gameTime)

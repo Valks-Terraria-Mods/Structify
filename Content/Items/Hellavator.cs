@@ -1,36 +1,28 @@
-﻿using Structify.Common.Items;
-using Structify.Utils;
-
-namespace Structify.Content.Items;
+﻿namespace Structify.Content.Items;
 
 public enum MessageType : byte
 {
     SpawnHellavator
 }
 
-public class Hellavator : StructureItem
+public class Hellavator
 {
-    public override string ItemName => "Hellavator";
-    public override string Description => "An elevator to hell.";
-    public override string[] Authors { get; } = [Builders.Valkyrienyanko];
-    public override int ItemRarity => ItemRarityID.Red;
-
-    protected override bool UseTheItem(Player player, Point16 mPos)
+    public static void Build(Mod mod, Player player, Point16 mPos)
     {
         // If I'm a multiplayer client, ask the server to build the hellavator
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            ModPacket packet = Mod.GetPacket();
+            ModPacket packet = mod.GetPacket();
             packet.Write((byte)MessageType.SpawnHellavator);
             packet.Write((short)mPos.X);
             packet.Write((short)mPos.Y);
             packet.Send(); // to server
-            return true;
         }
-
-        // Singleplayer
-        BuildHellavator(mPos);
-        return true;
+        else
+        {
+            // Singleplayer
+            BuildHellavator(mPos);
+        }
     }
 
     public static void BuildHellavator(Point16 mPos)

@@ -1,77 +1,232 @@
 using Microsoft.Xna.Framework.Graphics;
-using Structify.Common.Items;
 using Structify.Common.Players;
 using Structify.Utils;
-using StructureHelper.API;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.UI;
 
 namespace Structify.UI;
 
+public class Structure()
+{
+    public string Schematic { get; init; }
+    public string DisplayName { get; init; }
+    public string Description { get; init; }
+    public int Cost { get; init; }
+    public int Offset { get; init; }
+    public bool Procedural { get; init; }
+    public string[] Authors { get; init; }
+}
+
 public class CustomShopUI : UIState
 {
+    private const float MainPanelWidth = 800;
+    private const float MainPanelHeight = 400;
+    
     private UIPanel _mainPanel;
     private UIList _itemList;
     private UIScrollbar _scrollBar;
-
-    private class Structure()
-    {
-        public string Description { get; init; }
-        public int Cost { get; init; }
-        public int Offset { get; init; }
-        public string[] Authors { get; init; }
-    }
-
-    private Dictionary<string, Structure> _structures = new()
-    {
-        {
-            "Boss Arena", new Structure
-            {
-                Description = "Section of a boss arena meant to be stacked adjacently with itself.",
-                Cost = 10,
-                Offset = 4,
-                Authors = [Builders.Valkyrienyanko]
-            } 
-        }
-    };
     
-    private struct Entry(int type, string name, int cost)
-    {
-        public readonly int Type = type;
-        public readonly string Name = name;
-        public readonly int Cost = cost;
-    }
-
-    private List<Entry> _entries;
+    private readonly List<Structure> _structures =
+    [
+        new Structure
+        {
+            Schematic = "BossArena",
+            DisplayName = "Boss Arena",
+            Description = "A small section of an arena meant to be stacked adjacently with itself.",
+            Cost = 1000,
+            Offset = 4,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "Castle1",
+            DisplayName = "Castle",
+            Description = "A mostly empty castle for all your storage needs.",
+            Cost = 30000,
+            Offset = 15,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "FishingPond1",
+            DisplayName = "Fishing Pond",
+            Description = "A small pond surrounded by a small hut on either side.",
+            Cost = 2500,
+            Offset = 7,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "Greenhouse1",
+            DisplayName = "Greenhouse",
+            Description = "The structure comes with many flower pots.",
+            Cost = 2500,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "Greenhouse2",
+            DisplayName = "Overgrown House",
+            Description = "The interior is empty so you can place what you want.",
+            Cost = 3000,
+            Offset = 16,
+            Authors = [Builders.Grim]
+        },
+        new Structure
+        {
+            Schematic = "JungleFarm",
+            DisplayName = "Jungle Farm",
+            Description = "Several rows of mud and grass usually placed deep inside the jungle.",
+            Cost = 500,
+            Offset = 4,
+            Authors = [Builders.Toast]
+        },
+        new Structure
+        {
+            Schematic = "LargeHouse1",
+            DisplayName = "Large House",
+            Description = "A large house that can hold 3 NPC's and comes with a basement and actic.",
+            Cost = 3000,
+            Offset = 6,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "MediumHouse1",
+            DisplayName = "Medium House",
+            Description = "A medium house that can hold 2 NPC's and comes with a basement.",
+            Cost = 2000,
+            Offset = 6,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "SmallHouse1",
+            DisplayName = "Small House",
+            Description = "A small house that can hold 1 NPC and comes with a basement.",
+            Cost = 1000,
+            Offset = 5,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "PrisonCell1",
+            DisplayName = "Underground Prison Cell",
+            Description = "Holds 1 NPC, usually placed deep underground.",
+            Cost = 100,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "PrisonCell2",
+            DisplayName = "Wide Prison Cell",
+            Description = "Holds 1 NPC, entry is from top. Usually placed near surface underground.",
+            Cost = 100,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "PrisonCell3",
+            DisplayName = "Sky Prison Cell",
+            Description = "Holds 1 NPC, usually placed in the sky.",
+            Cost = 100,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "Ship1",
+            DisplayName = "Boat",
+            Description = "A boat to place on the water for fishing perhaps?",
+            Cost = 200,
+            Offset = 5,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "TowerGate1",
+            DisplayName = "Tower Gate",
+            Description = "Defensive structure commonly used to divide biomes.",
+            Cost = 400,
+            Offset = 2,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "UndergroundHouse1",
+            DisplayName = "Underground House",
+            Description = "The interior is empty allowing you to decorate it yourself.",
+            Cost = 250,
+            Offset = 1,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "UnderWaterDome",
+            DisplayName = "Underwater Dome",
+            Description = "A structure you can place deep under water in the sea.",
+            Cost = 100,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "WallOfFleshArena",
+            DisplayName = "Wall of Flesh Arena",
+            Description = "Can be stacked horizontally.",
+            Cost = 100,
+            Offset = 5,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            DisplayName = "Hellavator",
+            Description = "An elevator to hell.",
+            Cost = 10000,
+            Authors = [Builders.Valkyrienyanko],
+            Procedural = true
+        }
+    ];
     
     private bool _dragging;
     private Vector2 _dragOffset;
 
     public override void OnInitialize()
     {
-        _entries = ModContent.GetContent<StructureItem>()
-            .Where(m => m.Mod == ModContent.GetInstance<Structify>())
-            .Select(m => new Entry(
-                type: m.Type,
-                name: m.ItemName,
-                cost: m.Item.shopCustomPrice ?? 0
-            ))
-            .ToList();
-        
         AddMainPanel();
         AddScrollBar();
         AddItemList();
         
-        foreach (Entry entry in _entries)
+        foreach (Structure structure in _structures)
         {
-            AddItem(entry);
+            AddItem(structure);
         }
     }
+    
+    public override void Update(GameTime gameTime)
+    {
+        if (!_dragging) 
+            return;
+        
+        Vector2 diff = Main.MouseScreen - _dragOffset;
+        _mainPanel.Left.Set(diff.X, 0f);
+        _mainPanel.Top.Set(diff.Y, 0f);
+    }
 
-    private const float MainPanelWidth = 800;
-    private const float MainPanelHeight = 400;
-
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        base.DrawSelf(spriteBatch);
+        
+        // Prevent player from interacting with the world when clicking on the UI
+        if (_mainPanel.ContainsPoint(Main.MouseScreen)) {
+            Main.LocalPlayer.mouseInterface = true;
+        }
+        
+        // Prevent scrolling the hotbar when scrolling in the custom UI
+        if (_mainPanel.IsMouseHovering) {
+            PlayerInput.LockVanillaMouseScroll("Structify/ScrollListB"); // The passed in string can be anything.
+        }
+    }
+    
     private void AddMainPanel()
     {
         _mainPanel = new UIPanel
@@ -131,10 +286,8 @@ public class CustomShopUI : UIState
         Click
     }
     
-    private void AddItem(Entry entry)
+    private void AddItem(Structure structure)
     {
-        string name = entry.Name;
-
         Dictionary<ClickType, Color> colors = new()
         {
             { ClickType.Normal, new Color(30, 30, 30, 200)    },
@@ -150,13 +303,18 @@ public class CustomShopUI : UIState
         };
         
         itemPanel.SetPadding(4);
-        itemPanel.OnLeftClick += (evt, elm) => TrySpawn(entry.Type);
+        itemPanel.OnLeftClick += (evt, elm) =>
+        {
+            ModContent.GetInstance<CustomShopSystem>().Hide();
+            Main.LocalPlayer.GetModPlayer<StructureSilhouette>().StartDrawingOutline(structure);
+        };
+        
         itemPanel.OnLeftMouseDown += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Click];
         itemPanel.OnLeftMouseUp += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Hover];
         itemPanel.OnMouseOver += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Hover];
         itemPanel.OnMouseOut += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Normal];
 
-        UIText text = new(name, 0.8f)
+        UIText text = new(structure.DisplayName, 0.8f)
         {
             Left = { Pixels = 5 },
             VAlign = 0.5f
@@ -164,7 +322,7 @@ public class CustomShopUI : UIState
         
         itemPanel.Append(text);
 
-        UIText costText = new(entry.Cost + "", 0.8f)
+        UIText costText = new(structure.Cost.ToString(), 0.8f)
         {
             HAlign = 1f,
             VAlign = 0.5f,
@@ -174,37 +332,6 @@ public class CustomShopUI : UIState
         itemPanel.Append(costText);
 
         _itemList.Add(itemPanel);
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        if (!_dragging) 
-            return;
-        
-        Vector2 diff = Main.MouseScreen - _dragOffset;
-        _mainPanel.Left.Set(diff.X, 0f);
-        _mainPanel.Top.Set(diff.Y, 0f);
-    }
-
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-        base.DrawSelf(spriteBatch);
-        
-        // Prevent player from interacting with the world when clicking on the UI
-        if (_mainPanel.ContainsPoint(Main.MouseScreen)) {
-            Main.LocalPlayer.mouseInterface = true;
-        }
-        
-        // Prevent scrolling the hotbar when scrolling in the custom UI
-        if (_mainPanel.IsMouseHovering) {
-            PlayerInput.LockVanillaMouseScroll("Structify/ScrollListB"); // The passed in string can be anything.
-        }
-    }
-
-    private static void TrySpawn(int type)
-    {
-        Player player = Main.LocalPlayer;
-        player.QuickSpawnItem(player.GetSource_OpenItem(type), type);
     }
 
     private void StartDrag(UIMouseEvent evt)
