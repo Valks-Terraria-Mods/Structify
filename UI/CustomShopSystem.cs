@@ -6,7 +6,7 @@ public class CustomShopSystem : ModSystem
 {
     private UserInterface _interface;
     private CustomShopUI _ui;
-    private static ModKeybind _toggleKey;
+    private ModKeybind _toggleKey;
     private bool _visible;
     private GameTime _lastTime;
 
@@ -27,11 +27,13 @@ public class CustomShopSystem : ModSystem
     public override void UpdateUI(GameTime gameTime)
     {
         _lastTime = gameTime;
+        
         if (_toggleKey.JustPressed)
         {
             _visible = !_visible;
             _interface.SetState(_visible ? _ui : null);
         }
+        
         if (_visible)
             _interface.Update(gameTime);
     }
