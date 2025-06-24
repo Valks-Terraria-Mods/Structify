@@ -57,10 +57,8 @@ public class DraggableUIPanelState : UIState
         
         Panel.OnLeftMouseDown += (evt, elm) =>
         {
-            if (evt.Target == Panel)
-            {
+            //if (evt.Target == Panel) // Only drag the main panel
                 StartDrag(evt); 
-            }
         };
         
         Panel.OnLeftMouseUp += (evt, elm) =>

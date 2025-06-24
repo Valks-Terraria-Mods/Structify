@@ -57,6 +57,28 @@ public class StructureSilhouette : ModPlayer
     private void OnRightClick()
     {
         _drawOutline = false;
+        
+        // Refund player
+        GivePlayerCoins(Main.LocalPlayer, _structure.Cost);
+    }
+    
+    private static void GivePlayerCoins(Player player, int totalCopper)
+    {
+        int platinum = totalCopper / 1_000_000;
+        int gold     = (totalCopper /    10_000) % 100;
+        int silver   = (totalCopper /       100) % 100;
+        int copper   = totalCopper % 100;
+        
+        EntitySource_Misc source = new("CoinHelper.GivePlayerCoins");
+        
+        if (platinum > 0)
+            player.QuickSpawnItem(source, ItemID.PlatinumCoin, platinum);
+        if (gold > 0)
+            player.QuickSpawnItem(source, ItemID.GoldCoin, gold);
+        if (silver > 0)
+            player.QuickSpawnItem(source, ItemID.SilverCoin, silver);
+        if (copper > 0)
+            player.QuickSpawnItem(source, ItemID.CopperCoin, copper);
     }
 
     private void HandleClicks(Point16 mPos)

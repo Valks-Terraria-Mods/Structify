@@ -56,6 +56,11 @@ public class UIButton : UIPanel
         _labelText.SetText(text);
     }
 
+    public void SetTextColor(Color color)
+    {
+        _labelText.TextColor = color;
+    }
+
     public void CenterText()
     {
         _labelText.HAlign = 0.5f;
