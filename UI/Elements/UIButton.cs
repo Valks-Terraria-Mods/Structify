@@ -11,9 +11,9 @@ public class UIButton : UIPanel
 
     private readonly UIText _labelText;
 
-    public UIButton(string text, bool updateWidth = true) : this(text, new Color(30, 30, 30), updateWidth) { }
+    public UIButton(string text, float textScale = 0.8f, bool updateWidth = true) : this(text, new Color(30, 30, 30), textScale, updateWidth) { }
 
-    public UIButton(string text, Color baseColor, bool updateWidth = true)
+    public UIButton(string text, Color baseColor, float textScale = 0.8f, bool updateWidth = true)
     {
         // Initialize colors
         _baseColor = baseColor;
@@ -26,7 +26,7 @@ public class UIButton : UIPanel
         SetPadding(4);
 
         // Label
-        _labelText = new UIText(text, 0.8f)
+        _labelText = new UIText(text, textScale)
         {
             Left = { Pixels = 5 },
             VAlign = 0.5f
@@ -54,6 +54,12 @@ public class UIButton : UIPanel
     public void SetText(string text)
     {
         _labelText.SetText(text);
+    }
+
+    public void CenterText()
+    {
+        _labelText.HAlign = 0.5f;
+        _labelText.VAlign = 0.5f;
     }
 
     public override void LeftMouseDown(UIMouseEvent evt)

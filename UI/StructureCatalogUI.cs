@@ -8,11 +8,6 @@ public class StructureCatalogUI : DraggableUIPanelState
     private const float MainPanelWidth = 800;
     private const float MainPanelHeight = 400;
     
-    private UIList _itemList;
-    private UIText _description;
-    private UIText _authors;
-    private UIButton _placeStructure;
-    private UIScrollbar _scrollBar;
     private Structure _selectedStructure;
 
     public override void OnInitialize()
@@ -22,93 +17,46 @@ public class StructureCatalogUI : DraggableUIPanelState
         Width = MainPanelWidth;
         Height = MainPanelHeight;
         
-        AddScrollBar();
-        AddItemList();
-        AddDescription();
-        AddAuthors();
-        AddPlaceStructureButton();
+        UIScrollbar scrollBar = CreateScrollBar();
+        UIList list = CreateItemList(scrollBar);
+        UIPanel infoPanel = CreateInfoPanel();
         
-        foreach (Structure structure in StructureCatalog.All)
+        Panel.Append(scrollBar);
+        Panel.Append(list);
+        Panel.Append(infoPanel);
+
+        UIText title = CreateInfoTitle();
+        UIText description = CreateInfoDescription();
+        UIButton createBtn = CreatePlaceStructureBtn();
+        
+        infoPanel.Append(title);
+        infoPanel.Append(description);
+        infoPanel.Append(createBtn);
+        
+        foreach (UIButton item in StructureCatalog.All.Select(structure => CreateItem(structure, title, description)))
         {
-            AddItem(structure);
+            list.Add(item);
         }
     }
-
-    private void AddScrollBar()
+    
+    private UIButton CreatePlaceStructureBtn()
     {
-        _scrollBar = new UIScrollbar()
+        UIButton button = new("Place Structure", new Color(50, 50, 50), textScale: 1.0f)
         {
-            Left = { Pixels = 300 }
-        };
-        
-        _scrollBar.Height.Set(MainPanelHeight, 0);
-        _scrollBar.Width.Set(5, 0f);
-        
-        Panel.Append(_scrollBar);
-    }
-
-    private void AddPlaceStructureButton()
-    {
-        _placeStructure = new UIButton("Place " + StructureCatalog.All[0].DisplayName, Color.Green)
-        {
-            Left = { Pixels = 450 },
-            Top = { Pixels = 350 }
+            HAlign = 0.5f,
+            VAlign = 1.0f
         };
 
-        _placeStructure.OnLeftClick += (evt, elm) =>
+        button.OnLeftClick += (evt, elm) =>
         {
             ModContent.GetInstance<CustomShopSystem>().Hide();
             Main.LocalPlayer.GetModPlayer<StructureSilhouette>().StartDrawingOutline(_selectedStructure);
         };
-        
-        Panel.Append(_placeStructure);
-    }
 
-    private void AddDescription()
-    {
-        _description = new UIText(StructureCatalog.All[0].Description, 0.9f)
-        {
-            Left = { Pixels = 320 },
-            Top = { Pixels = 0 },
-            Width = { Pixels = MainPanelWidth - 320 },
-            TextOriginX = 0f,
-            IsWrapped = true
-        };
-        
-        Panel.Append(_description);
-    }
-
-    private void AddAuthors()
-    {
-        _authors = new UIText("This structure was built by " + FormatAuthors(StructureCatalog.All[0].Authors), 0.9f)
-        {
-            Left = { Pixels = 320 },
-            Top = { Pixels = 60 },
-            Width = { Pixels = MainPanelWidth - 320 },
-            TextOriginX = 0f,
-            IsWrapped = true
-        };
-        
-        Panel.Append(_authors);
-    }
-
-    private void AddItemList()
-    {
-        _itemList = new UIList
-        {
-            Width = { Pixels = 300 },
-            Height = { Pixels = MainPanelHeight },
-            Left = { Pixels = 0 },
-            Top = { Pixels = 0 },
-            ListPadding = 5f
-        };
-        
-        _itemList.SetScrollbar(_scrollBar);
-        
-        Panel.Append(_itemList);
+        return button;
     }
     
-    private void AddItem(Structure structure)
+    private UIButton CreateItem(Structure structure, UIText title, UIText description)
     {
         UIButton itemPanel = new(structure.DisplayName, updateWidth: false)
         {
@@ -116,24 +64,87 @@ public class StructureCatalogUI : DraggableUIPanelState
             Height = { Pixels = 30 }
         };
         
+        itemPanel.CenterText();
+        
         itemPanel.OnLeftClick += (evt, elm) =>
         {
-            _description.SetText(structure.Description);
-            _authors.SetText("This structure was built by " + FormatAuthors(structure.Authors));
-            _placeStructure.SetText("Place " + structure.DisplayName);
+            title.SetText($"[c/32FF82:{structure.DisplayName}]");
+            description.SetText(GetInfo(structure));
             _selectedStructure = structure;
         };
-
-        UIText costText = new(structure.Cost.ToString(), 0.8f)
+        
+        return itemPanel;
+    }
+    
+    private static UIText CreateInfoTitle()
+    {
+        return new UIText($"[c/32FF82:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
         {
-            HAlign = 1f,
-            VAlign = 0.5f,
-            Left = { Pixels = -5 }
+            Width = { Percent = 1.0f },
+            HAlign = 0.5f
+        };
+    }
+
+    private static UIText CreateInfoDescription()
+    {
+        return new UIText(GetInfo(StructureCatalog.All[0]), 0.9f)
+        {
+            Top = { Pixels = 30 },
+            Width = { Percent = 1.0f},
+            TextOriginX = 0f,
+            IsWrapped = true
+        };
+    }
+    
+    private static UIList CreateItemList(UIScrollbar scrollBar)
+    {
+        UIList list = new()
+        {
+            Width = { Pixels = 200 },
+            Height = { Pixels = MainPanelHeight },
+            Left = { Pixels = 0 },
+            Top = { Pixels = 0 },
+            ListPadding = 5f
         };
         
-        itemPanel.Append(costText);
+        list.SetScrollbar(scrollBar);
 
-        _itemList.Add(itemPanel);
+        return list;
+    }
+    
+    private static UIScrollbar CreateScrollBar()
+    {
+        UIScrollbar scrollBar = new()
+        {
+            Left = { Pixels = 200 }
+        };
+        
+        scrollBar.Height.Set(MainPanelHeight, 0);
+        scrollBar.Width.Set(5, 0f);
+        
+        return scrollBar;
+    }
+    
+    private static UIPanel CreateInfoPanel()
+    {
+        UIPanel panel = new()
+        {
+            BackgroundColor = Color.Transparent,
+            Left = { Pixels = 220 },
+            Width = { Pixels = MainPanelWidth - 240 },
+            Height = { Percent = 1.0f }
+        };
+
+        return panel;
+    }
+    
+    private static string GetInfo(Structure structure)
+    {
+        string info = 
+            $"{structure.Description}\n\n" +
+            $"Built by [c/32FF82:{FormatAuthors(structure.Authors)}].";
+        
+        return info;
     }
     
     /// <summary>
