@@ -5,7 +5,7 @@ namespace Structify.UI;
 public class CustomShopSystem : ModSystem
 {
     private UserInterface _interface;
-    private CustomShopUI _ui;
+    private StructureCatalogUI _ui;
     private ModKeybind _toggleKey;
     private bool _visible;
     private GameTime _lastTime;
@@ -18,8 +18,8 @@ public class CustomShopSystem : ModSystem
     public override void Load()
     {
         if (Main.dedServ) return;
-        _toggleKey = KeybindLoader.RegisterKeybind(Mod, "Toggle Shop UI", "Y");
-        _ui = new CustomShopUI();
+        _toggleKey = KeybindLoader.RegisterKeybind(Mod, "Structure Catalog", "Y");
+        _ui = new StructureCatalogUI();
         _interface = new UserInterface();
         _ui.Activate();
     }
