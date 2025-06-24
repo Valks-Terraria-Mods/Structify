@@ -19,6 +19,7 @@ This mod adds an NPC named Bob that should immediately join your world and sell 
 - Boat
 - Underwater Structure
 - Hellavator
+- Jungle Farm
 
 [h2]Looking for Builders[/h2]
 If you would like to help remaster or build new structures please join the discord. {ModHomepage}
@@ -29,6 +30,7 @@ Thank you to the amazing people for helping build:
 - ColinFour
 - Name36154
 - Grim
+- Toast
 
 Source Code: https://github.com/Valks-Terraria-Mods/Structify
 Mod Version: {ModVersion}, tML Version: {tMLVersion}

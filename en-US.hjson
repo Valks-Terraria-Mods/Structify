@@ -135,6 +135,11 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Prison Cell2
 			}
+
+			JungleFarm: {
+				DisplayName: Jungle Farm
+				Tooltip: ""
+			}
 		}
 
 		Configs: {

@@ -123,6 +123,9 @@ public override string GetChat()
 		AddItem<Hellavator>(Item.buyPrice(gold: 1));
 		AddItem<BossArena>(Item.buyPrice(silver: 5));
 		AddItem<WallOfFleshArena>(Item.buyPrice(silver: 10));
+		
+		// Msc
+		AddItem<JungleFarm>(Item.buyPrice(silver: 5));
 	}
 
 	private void AddItem<T>(int cost) where T : ModItem
