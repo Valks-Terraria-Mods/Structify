@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Structify.Common.Players;
 using StructureHelper.API;
 using Terraria.GameContent.UI.Elements;
@@ -8,9 +9,12 @@ public class StructureCatalogUI : DraggableUIPanelState
 {
     private const float MainPanelWidth = 800;
     private const float MainPanelHeight = 400;
-    private const string HighlightColor = "32FF82";
+    private const string PrimaryColor = "808080";
+    private const string SecondaryColor = "32FF82";
     
     private Structure _selectedStructure;
+    private UIPanel _pageStructures;
+    private UIPanel _pageHome;
 
     public override void OnInitialize()
     {
@@ -19,26 +23,122 @@ public class StructureCatalogUI : DraggableUIPanelState
         Width = MainPanelWidth;
         Height = MainPanelHeight;
         
+        ShowHomePage();
+    }
+
+    private void ShowHomePage()
+    {
+        _pageHome = CreatePagePanel();
+
+        UIText title = new("Structify", 1f, large: true)
+        {
+            HAlign = 0.5f
+        };
+
+        UIButton structuresPageBtn = new("Structure Catalog", 1.0f)
+        {
+            VAlign = 0.1f,
+            HAlign = 0.5f,
+        };
+        
+        structuresPageBtn.OnLeftClick += (evt, elm) =>
+        {
+            HideHomePage();
+            ShowStructuresPage();
+        };
+
+        UIButton discordBtn = new("Discord", 1.0f)
+        {
+            HAlign = 1.0f,
+            VAlign = 1.0f
+        };
+
+        discordBtn.OnLeftClick += (evt, elm) =>
+        {
+            Terraria.Utils.OpenToURL("https://discord.gg/j8HQZZ76r8");
+        };
+        
+        // todo: tell people how to submit their structures (show item IDs of structure wands in panel?)
+        // todo: credits
+        // todo: github
+
+        _pageHome.Append(title);
+        _pageHome.Append(structuresPageBtn);
+        _pageHome.Append(discordBtn);
+
+        Panel.Append(_pageHome);
+    }
+
+    private void HideHomePage()
+    {
+        _pageHome?.Remove();
+    }
+
+    private void HideStructuresPage()
+    {
+        _pageStructures?.Remove();
+    }
+
+    private static UIPanel CreatePagePanel()
+    {
+        UIPanel panel = new()
+        {
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.Transparent,
+            Width = { Pixels = MainPanelWidth },
+            Height = { Pixels = MainPanelHeight },
+        };
+        
+        panel.SetPadding(0);
+
+        return panel;
+    }
+
+    private void ShowStructuresPage()
+    {
+        _pageStructures = CreatePagePanel();
+        
         UIScrollbar scrollBar = CreateScrollBar();
         UIList list = CreateItemList(scrollBar);
         UIPanel infoPanel = CreateInfoPanel();
         
-        Panel.Append(scrollBar);
-        Panel.Append(list);
-        Panel.Append(infoPanel);
+        _pageStructures.Append(scrollBar);
+        _pageStructures.Append(list);
+        _pageStructures.Append(infoPanel);
 
         UIText title = CreateInfoTitle();
         UIText description = CreateInfoDescription();
         UIButton createBtn = CreatePlaceStructureBtn();
+        UIButton goBackBtn = CreateGoBackToHomePageBtn();
         
         infoPanel.Append(title);
         infoPanel.Append(description);
         infoPanel.Append(createBtn);
+        infoPanel.Append(goBackBtn);
         
         foreach (UIButton item in StructureCatalog.All.Select(structure => CreateItem(structure, title, description)))
         {
             list.Add(item);
         }
+        
+        Panel.Append(_pageStructures);
+    }
+
+    private UIButton CreateGoBackToHomePageBtn()
+    {
+        UIButton button = new("Go Back", new Color(50, 50, 50), textScale: 1.0f)
+        {
+            HAlign = 0.0f,
+            VAlign = 1.0f
+        };
+
+        button.OnLeftClick += (evt, elm) =>
+        {
+            HideStructuresPage();
+            ShowHomePage();
+        };
+
+        return button;
     }
     
     private UIButton CreatePlaceStructureBtn()
@@ -61,7 +161,7 @@ public class StructureCatalogUI : DraggableUIPanelState
             else
             {
                 int needed = _selectedStructure.Cost - GetPlayerCoinCount();
-                Main.NewText($"[c/808080:Could not purchase] [c/{HighlightColor}:{_selectedStructure.DisplayName}] [c/808080:because you are short by] {FormatPrice(needed)}[c/808080:.]");
+                Main.NewText($"[c/{PrimaryColor}:Could not purchase] [c/{SecondaryColor}:{_selectedStructure.DisplayName}] [c/{PrimaryColor}:because you are short by] {FormatPrice(needed)}[c/{PrimaryColor}:.]");
             }
         };
 
@@ -94,7 +194,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         
         itemPanel.OnLeftClick += (evt, elm) =>
         {
-            title.SetText($"[c/{HighlightColor}:{structure.DisplayName}]");
+            title.SetText($"[c/{SecondaryColor}:{structure.DisplayName}]");
             description.SetText(GetInfo(structure));
             _selectedStructure = structure;
         };
@@ -104,7 +204,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     
     private static UIText CreateInfoTitle()
     {
-        return new UIText($"[c/{HighlightColor}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
+        return new UIText($"[c/{SecondaryColor}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
         {
             Width = { Percent = 1.0f },
             HAlign = 0.5f
@@ -171,25 +271,25 @@ public class StructureCatalogUI : DraggableUIPanelState
         string info = $"{structure.Description}";
         
         if (structure.NPCs > 0)
-            info += $"\nHas [c/{HighlightColor}:{structure.NPCs}] NPC rooms.";
+            info += $"\nHas [c/{SecondaryColor}:{structure.NPCs}] NPC rooms.";
 
         info += "\n";
         
         if (!structure.Procedural && structure.Offset > 0)
         {
-            info += $"\nRooted [c/{HighlightColor}:{structure.Offset}] tiles beneath the surface.";
+            info += $"\nRooted [c/{SecondaryColor}:{structure.Offset}] tiles beneath the surface.";
         }
 
         if (!structure.Procedural)
         {
             string path = $"Schematics/{structure.Schematic}.shstruct";
             Point16 dimensions = Generator.GetStructureDimensions(path, ModContent.GetInstance<Structify>());
-            info += $"\nSize: [c/{HighlightColor}:{dimensions.X}] x [c/{HighlightColor}:{dimensions.Y}]";
+            info += $"\nSize: [c/{SecondaryColor}:{dimensions.X}] x [c/{SecondaryColor}:{dimensions.Y}]";
         }
 
         info += $"\nCost: {FormatPrice(structure.Cost)}";
 
-        info += $"\n\nBuilt by [c/{HighlightColor}:{FormatAuthors(structure.Authors)}].";
+        info += $"\n\nBuilt by [c/{SecondaryColor}:{FormatAuthors(structure.Authors)}].";
         
         return info;
     }
@@ -207,7 +307,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         if (copper   > 0) parts.Add($"{copper} copper");
 
         if (parts.Count == 0)
-            return "[c/808080:No value]"; // Dark Gray (aka Color.Gray)
+            return $"[c/{PrimaryColor}:No value]"; // Dark Gray (aka Color.Gray)
 
         string combined = string.Join(" ", parts);
         

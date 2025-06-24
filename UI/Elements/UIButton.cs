@@ -18,8 +18,8 @@ public class UIButton : UIPanel
         // Initialize colors
         _baseColor = baseColor;
         _baseColor.A = 200;
-        _hoverColor = AddToColor(baseColor, 50);
-        _clickColor = AddToColor(baseColor, 120);
+        _hoverColor = AddToColor(baseColor, 80);
+        _clickColor = AddToColor(baseColor, 130);
 
         // Initial styling
         BackgroundColor = _baseColor;
