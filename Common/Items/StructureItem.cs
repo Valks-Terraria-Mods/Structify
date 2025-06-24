@@ -5,10 +5,10 @@ namespace Structify.Common.Items;
 
 public abstract class StructureItem : ModItem
 {
-    protected abstract string[] Authors { get; }
-    protected virtual int ItemRarity => ItemRarityID.LightPurple;
-    protected abstract string ItemName { get; }
-    protected abstract string Description { get; }
+    public abstract string[] Authors { get; }
+    public virtual int ItemRarity => ItemRarityID.LightPurple;
+    public abstract string ItemName { get; }
+    public abstract string Description { get; }
     public virtual int VerticalOffset => 0;
 
     private bool _canUseItem;

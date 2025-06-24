@@ -10,10 +10,10 @@ public enum MessageType : byte
 
 public class Hellavator : StructureItem
 {
-    protected override string ItemName => "Hellavator";
-    protected override string Description => "An elevator to hell.";
-    protected override string[] Authors { get; } = [Builders.Valkyrienyanko];
-    protected override int ItemRarity => ItemRarityID.Red;
+    public override string ItemName => "Hellavator";
+    public override string Description => "An elevator to hell.";
+    public override string[] Authors { get; } = [Builders.Valkyrienyanko];
+    public override int ItemRarity => ItemRarityID.Red;
 
     protected override bool UseTheItem(Player player, Point16 mPos)
     {

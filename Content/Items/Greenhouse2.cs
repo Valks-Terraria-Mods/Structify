@@ -5,8 +5,8 @@ namespace Structify.Content.Items;
 
 public class Greenhouse2 : SchematicItem
 {
-    protected override string ItemName => "Overgrown House";
-    protected override string Description => "The interior is empty so you can place what you want.";
+    public override string ItemName => "Overgrown House";
+    public override string Description => "The interior is empty so you can place what you want.";
     public override int VerticalOffset => 16;
-    protected override string[] Authors { get; } = [Builders.Grim];
+    public override string[] Authors { get; } = [Builders.Grim];
 }

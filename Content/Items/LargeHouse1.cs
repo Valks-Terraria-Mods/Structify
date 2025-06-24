@@ -5,8 +5,8 @@ namespace Structify.Content.Items;
 
 public class LargeHouse1 : SchematicItem
 {
-    protected override string ItemName => "Large House";
-    protected override string Description => "Can hold 3 NPCs and comes with a basement.";
-    protected override string[] Authors { get; } = [Builders.Valkyrienyanko];
+    public override string ItemName => "Large House";
+    public override string Description => "Can hold 3 NPCs and comes with a basement.";
+    public override string[] Authors { get; } = [Builders.Valkyrienyanko];
     public override int VerticalOffset => 6;
 }
