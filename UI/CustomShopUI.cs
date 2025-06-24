@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Structify.Common.Items;
 using Structify.Common.Players;
+using Structify.Utils;
 using StructureHelper.API;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
@@ -14,6 +15,27 @@ public class CustomShopUI : UIState
     private UIList _itemList;
     private UIScrollbar _scrollBar;
 
+    private class Structure()
+    {
+        public string Description { get; init; }
+        public int Cost { get; init; }
+        public int Offset { get; init; }
+        public string[] Authors { get; init; }
+    }
+
+    private Dictionary<string, Structure> _structures = new()
+    {
+        {
+            "Boss Arena", new Structure
+            {
+                Description = "Section of a boss arena meant to be stacked adjacently with itself.",
+                Cost = 10,
+                Offset = 4,
+                Authors = [Builders.Valkyrienyanko]
+            } 
+        }
+    };
+    
     private struct Entry(int type, string name, int cost)
     {
         public readonly int Type = type;
@@ -37,14 +59,28 @@ public class CustomShopUI : UIState
             ))
             .ToList();
         
-        // Main draggable panel
+        AddMainPanel();
+        AddScrollBar();
+        AddItemList();
+        
+        foreach (Entry entry in _entries)
+        {
+            AddItem(entry);
+        }
+    }
+
+    private const float MainPanelWidth = 800;
+    private const float MainPanelHeight = 400;
+
+    private void AddMainPanel()
+    {
         _mainPanel = new UIPanel
         {
             BackgroundColor = new Color(0, 0, 0, 150),
-            Width = { Pixels = 400 },
-            Height = { Pixels = 500 },
-            Left = { Pixels = 200 },
-            Top = { Pixels = 100 }
+            Width = { Pixels = MainPanelWidth },
+            Height = { Pixels = MainPanelHeight },
+            Left = { Percent = 0.5f, Pixels = -MainPanelWidth / 2 },
+            Top = { Percent = 0.5f, Pixels = -MainPanelHeight / 2 }
         };
         
         _mainPanel.OnLeftMouseDown += (evt, elm) =>
@@ -61,30 +97,83 @@ public class CustomShopUI : UIState
         };
         
         Append(_mainPanel);
+    }
 
-        // Scrollbar
+    private void AddScrollBar()
+    {
         _scrollBar = new UIScrollbar()
         {
-            Left = { Pixels = 10 }
+            Left = { Pixels = 300 }
         };
-        _scrollBar.Height.Set(0, 1f);
-        _scrollBar.Width.Set(20, 0f);
-        _scrollBar.HAlign = 1;
+        _scrollBar.Height.Set(MainPanelHeight, 0);
+        _scrollBar.Width.Set(5, 0f);
         _mainPanel.Append(_scrollBar);
+    }
 
-        // Item list
+    private void AddItemList()
+    {
         _itemList = new UIList
         {
-            Width = { Pixels = 350 },
-            Height = { Pixels = 430 },
-            HAlign = 0.5f,
-            VAlign = 0.5f,
+            Width = { Pixels = 300 },
+            Height = { Pixels = MainPanelHeight },
+            Left = { Pixels = 0 },
+            Top = { Pixels = 0 },
             ListPadding = 5f
         };
         _itemList.SetScrollbar(_scrollBar);
         _mainPanel.Append(_itemList);
+    }
 
-        PopulateList();
+    private enum ClickType
+    {
+        Normal,
+        Hover,
+        Click
+    }
+    
+    private void AddItem(Entry entry)
+    {
+        string name = entry.Name;
+
+        Dictionary<ClickType, Color> colors = new()
+        {
+            { ClickType.Normal, new Color(30, 30, 30, 200)    },
+            { ClickType.Hover,  new Color(80, 80, 80, 200)    },
+            { ClickType.Click,  new Color(150, 150, 150, 200) }
+        };
+
+        UIPanel itemPanel = new()
+        {
+            BackgroundColor = colors[ClickType.Normal],
+            Width = { Percent = 1f },
+            Height = { Pixels = 30 }
+        };
+        
+        itemPanel.SetPadding(4);
+        itemPanel.OnLeftClick += (evt, elm) => TrySpawn(entry.Type);
+        itemPanel.OnLeftMouseDown += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Click];
+        itemPanel.OnLeftMouseUp += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Hover];
+        itemPanel.OnMouseOver += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Hover];
+        itemPanel.OnMouseOut += (evt, elm) => itemPanel.BackgroundColor = colors[ClickType.Normal];
+
+        UIText text = new(name, 0.8f)
+        {
+            Left = { Pixels = 5 },
+            VAlign = 0.5f
+        };
+        
+        itemPanel.Append(text);
+
+        UIText costText = new(entry.Cost + "", 0.8f)
+        {
+            HAlign = 1f,
+            VAlign = 0.5f,
+            Left = { Pixels = -5 }
+        };
+        
+        itemPanel.Append(costText);
+
+        _itemList.Add(itemPanel);
     }
 
     public override void Update(GameTime gameTime)
@@ -109,45 +198,6 @@ public class CustomShopUI : UIState
         // Prevent scrolling the hotbar when scrolling in the custom UI
         if (_mainPanel.IsMouseHovering) {
             PlayerInput.LockVanillaMouseScroll("Structify/ScrollListB"); // The passed in string can be anything.
-        }
-    }
-
-    private void PopulateList()
-    {
-        _itemList.Clear();
-        
-        foreach (Entry entry in _entries)
-        {
-            string name = entry.Name;
-
-            UIPanel itemPanel = new()
-            {
-                BackgroundColor = new Color(30, 30, 30, 200),
-                Width = { Percent = 1f },
-                Height = { Pixels = 30 }
-            };
-            
-            itemPanel.SetPadding(4);
-            itemPanel.OnLeftClick += (evt, elm) => TrySpawn(entry.Type);
-            itemPanel.OnMouseOver += (evt, elm) => itemPanel.BackgroundColor = new Color(80, 80, 80, 200);
-            itemPanel.OnMouseOut += (evt, elm) => itemPanel.BackgroundColor = new Color(30, 30, 30, 200);
-
-            UIText text = new(name, 0.8f)
-            {
-                Left = { Pixels = 5 },
-                VAlign = 0.5f
-            };
-            itemPanel.Append(text);
-
-            UIText costText = new(entry.Cost + "", 0.8f)
-            {
-                HAlign = 1f,
-                VAlign = 0.5f,
-                Left = { Pixels = -5 }
-            };
-            itemPanel.Append(costText);
-
-            _itemList.Add(itemPanel);
         }
     }
 
