@@ -12,8 +12,6 @@ global using System.Linq;
 
 using Structify.Content.Items;
 using System.IO;
-using Terraria.Localization;
-using Terraria.Chat;
 
 namespace Structify;
 

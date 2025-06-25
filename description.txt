@@ -1,7 +1,7 @@
-While I was building my rectangle houses, someone named Bob joined my world. He said to me "It's okay, the rectangles can't hurt you anymore, for I am here now". He helped me survive, he gave me a shelter, a place to call home. Bob forever changed my life.
+This mod adds several structures for you to place in the world.
 
-This mod adds an NPC named Bob that will immediately join your world and sell you structures that you can place.
+Set and use the "Structure Catalog" keybind in-game.
 
-This is the first time I actually tried to build something that looks good. Pretty much all structures built by me need a remaster. If you would like to help remaster or build new structures please join the discord. https://discord.gg/j8HQZZ76r8
+Join the discord if you would like to submit a new structure. https://discord.gg/j8HQZZ76r8
 
 Source Code: https://github.com/Valks-Terraria-Mods/Structify

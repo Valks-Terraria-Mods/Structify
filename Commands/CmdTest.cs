@@ -1,5 +1,4 @@
 using StructureHelper.API;
-using Terraria;
 
 namespace Structify.Commands;
 

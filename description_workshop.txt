@@ -1,28 +1,10 @@
-[h2]A Special Encounter with Bob[/h2]
-While I was building my rectangle houses, someone named Bob joined my world. He said to me "It's okay, the rectangles can't hurt you anymore, for I am here now". He helped me survive, he gave me a shelter, a place to call home. Bob forever changed my life.
+This mod adds several structures for you to place in the world.
 
-This mod adds an NPC named Bob that should immediately join your world and sell you structures that you can place. If for some reason he did not join your world on world start, he should join your world the following day.
+[h2]How to Use[/h2]
+Set and use the "Structure Catalog" keybind in-game.
 
-[h2]Structures[/h2]
-- Small House
-- Medium House
-- Large House
-- Castle
-- Tower Gate
-- Greenhouse
-- Overgrown House
-- Fishing Pond
-- Prison Cell
-- House
-- Boss Arena
-- Wall of Flesh Arena
-- Boat
-- Underwater Structure
-- Hellavator
-- Jungle Farm
-
-[h2]Looking for Builders[/h2]
-If you would like to help remaster or build new structures please join the discord. {ModHomepage}
+[h2]Submissions[/h2]
+Want to see your structure in this mod? Learn how to contribute in the discord. {ModHomepage}
 
 [h2]Credit[/h2]
 Thank you to the amazing people for helping build:

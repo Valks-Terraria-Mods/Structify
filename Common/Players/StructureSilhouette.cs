@@ -1,4 +1,5 @@
-using Structify.Common.Items;
+using Structify.Content.Items;
+using Structify.UI;
 using Structify.Utils;
 using StructureHelper.API;
 
@@ -6,48 +7,107 @@ namespace Structify.Common.Players;
 
 public class StructureSilhouette : ModPlayer
 {
-    private bool _holdingStructureItem;
+    private bool _drawOutline;
     private Point16 _dimensions;
-    private int _lastHeldItemType = -1;
-    private SchematicItem _heldItem;
+    private Structure _structure;
     
-    public override void PreUpdate()
-    {
-        if (Player.HeldItem.type == _lastHeldItemType) 
-            return;
-        
-        OnHeldItemChanged(Player.HeldItem);
-        _lastHeldItemType = Player.HeldItem.type;
-    }
+    private bool _previousMouseLeft;
+    private bool _previousMouseRight;
     
-    private void OnHeldItemChanged(Item newItem)
+    public void StartDrawingOutline(Structure structure)
     {
-        if (newItem.ModItem is SchematicItem item)
+        if (structure.Procedural)
         {
-            string path = $"Schematics/{item.SchematicName}.shstruct";
-            
-            _holdingStructureItem = true;
-            _heldItem = item;
-            _dimensions = Generator.GetStructureDimensions(path, Mod);
+            _dimensions = new Point16(1, 1);
         }
         else
         {
-            _holdingStructureItem = false;
+            string path = $"Schematics/{structure.Schematic}.shstruct";
+            _dimensions = Generator.GetStructureDimensions(path, Mod);
         }
+        
+        _structure = structure;
+        _drawOutline = true;
     }
 
     public override void PostUpdate()
     {
-        if (!_holdingStructureItem)
+        if (!_drawOutline)
             return;
 
         Point16 mPos = Main.MouseWorld.ToTileCoordinates16();
-        Point16 bottomLeftAnchor = StructureUtils.GetOrigin(_heldItem, _dimensions, mPos);
+        DrawDust(mPos);
+        HandleClicks(mPos);
+    }
+
+    private void OnLeftClick(Point16 mPos)
+    {
+        _drawOutline = false;
+
+        if (_structure.Procedural)
+        {
+            Hellavator.Build(Mod, Main.player[Main.myPlayer], mPos);
+        }
+        else
+        {
+            StructureUtils.Generate(_structure.Schematic, _structure.Offset, Mod, mPos);
+        }
+    }
+
+    private void OnRightClick()
+    {
+        _drawOutline = false;
+        
+        // Refund player
+        GivePlayerCoins(Main.LocalPlayer, _structure.Cost);
+    }
+    
+    private static void GivePlayerCoins(Player player, int totalCopper)
+    {
+        int platinum = totalCopper / 1_000_000;
+        int gold     = (totalCopper /    10_000) % 100;
+        int silver   = (totalCopper /       100) % 100;
+        int copper   = totalCopper % 100;
+        
+        EntitySource_Misc source = new("CoinHelper.GivePlayerCoins");
+        
+        if (platinum > 0)
+            player.QuickSpawnItem(source, ItemID.PlatinumCoin, platinum);
+        if (gold > 0)
+            player.QuickSpawnItem(source, ItemID.GoldCoin, gold);
+        if (silver > 0)
+            player.QuickSpawnItem(source, ItemID.SilverCoin, silver);
+        if (copper > 0)
+            player.QuickSpawnItem(source, ItemID.CopperCoin, copper);
+    }
+
+    private void HandleClicks(Point16 mPos)
+    {
+        bool currentMouseLeft = Main.mouseLeft;
+        bool currentMouseRight = Main.mouseRight;
+        
+        if (currentMouseLeft && !_previousMouseLeft)
+        {
+            OnLeftClick(mPos);
+        }
+
+        if (currentMouseRight && !_previousMouseRight)
+        {
+            OnRightClick();
+        }
+
+        _previousMouseLeft = currentMouseLeft;
+        _previousMouseRight = currentMouseRight;
+    }
+
+    private void DrawDust(Point16 mPos)
+    {
+        Point16 bottomLeftAnchor = StructureUtils.GetOrigin(_structure.Offset, _dimensions, mPos);
         
         // Draw ground level
         for (int x = 1; x <= _dimensions.X; x++)
         {
-            Vector2 pos = new((bottomLeftAnchor.X + x) * 16 - 3, (bottomLeftAnchor.Y + _dimensions.Y - _heldItem.VerticalOffset - 1) * 16 - 3);
+            Vector2 pos = new((bottomLeftAnchor.X + x) * 16 - 3, (bottomLeftAnchor.Y + _dimensions.Y - _structure.Offset - 1) * 16 - 3);
             
             int dustId = Dust.NewDust(pos, 1, 1, DustID.GreenTorch);
         

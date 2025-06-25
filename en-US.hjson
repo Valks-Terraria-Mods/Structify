@@ -194,5 +194,12 @@ Mods: {
 				DisplayName: Bob
 			}
 		}
+
+		Keybinds: {
+			"Open Shop UI.DisplayName": Open  Shop  U I
+			"Toggle Shop UI.DisplayName": Toggle  Shop  U I
+			"Toggle Structure Catalog UI.DisplayName": Toggle  Structure  Catalog  U I
+			"Structure Catalog.DisplayName": Structure  Catalog
+		}
 	}
 }
