@@ -8,4 +8,28 @@ public static class Builders
     public const string ColinFour = "ColinFour";
     public const string Grim = "Grim";
     public const string Toast = "Toast";
+    
+    public static string GetCurrentBuilders()
+    {
+        string[] builderNames =
+        [
+            //Valkyrienyanko, // :P
+            Grim,
+            Toast,
+        ];
+        
+        return string.Join(", ", builderNames);
+    }
+
+    public static string GetPreviousBuilders()
+    {
+        string[] builderNames =
+        [
+            Burlierbuffalo1,
+            Name36154,
+            ColinFour,
+        ];
+
+        return string.Join(", ", builderNames);
+    }
 }

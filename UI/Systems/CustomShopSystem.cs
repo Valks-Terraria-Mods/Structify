@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Input;
 using Terraria.UI;
 
 namespace Structify.UI;
@@ -32,6 +33,11 @@ public class CustomShopSystem : ModSystem
         {
             _visible = !_visible;
             _interface.SetState(_visible ? _ui : null);
+        }
+        
+        if (_visible && Main.keyState.IsKeyDown(Keys.Escape) && Main.oldKeyState.IsKeyUp(Keys.Escape))
+        {
+            Hide();
         }
         
         if (_visible)

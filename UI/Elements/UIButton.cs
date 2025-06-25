@@ -11,9 +11,9 @@ public class UIButton : UIPanel
 
     private readonly UIText _labelText;
 
-    public UIButton(string text, float textScale = 0.8f, bool updateWidth = true) : this(text, new Color(30, 30, 30), textScale, updateWidth) { }
+    public UIButton(string text, float textScale = 0.8f, bool updateWidth = true, bool largeText = false) : this(text, new Color(30, 30, 30), textScale, updateWidth, largeText) { }
 
-    public UIButton(string text, Color baseColor, float textScale = 0.8f, bool updateWidth = true)
+    public UIButton(string text, Color baseColor, float textScale = 0.8f, bool updateWidth = true, bool largeText = false)
     {
         // Initialize colors
         _baseColor = baseColor;
@@ -26,7 +26,7 @@ public class UIButton : UIPanel
         SetPadding(4);
 
         // Label
-        _labelText = new UIText(text, textScale)
+        _labelText = new UIText(text, textScale, largeText)
         {
             Left = { Pixels = 5 },
             VAlign = 0.5f

@@ -1,5 +1,6 @@
-using System.Diagnostics;
+using System.Text;
 using Structify.Common.Players;
+using Structify.Utils;
 using StructureHelper.API;
 using Terraria.GameContent.UI.Elements;
 
@@ -9,8 +10,12 @@ public class StructureCatalogUI : DraggableUIPanelState
 {
     private const float MainPanelWidth = 800;
     private const float MainPanelHeight = 400;
-    private const string PrimaryColor = "808080";
-    private const string SecondaryColor = "32FF82";
+
+    private readonly Color BackgroundColor = new(50, 50, 50); // Blackish
+    private readonly Color PrimaryColor = new(150, 150, 150); // Gray
+    private readonly Color SecondaryColor = new(50, 255, 130); // Green
+    private const string PrimaryColorHex = "969696"; // Gray
+    private const string SecondaryColorHex = "32FF82"; // Green
     
     private Structure _selectedStructure;
     private UIPanel _pageStructures;
@@ -30,21 +35,44 @@ public class StructureCatalogUI : DraggableUIPanelState
     {
         _pageHome = CreatePagePanel();
 
-        UIText title = new("Structify", 1f, large: true)
+        UIText title = new(GradientText("Structify", Color.Green, new Color(150, 255, 150)), 0.7f, large: true)
         {
+            Top = { Pixels = 20 },
             HAlign = 0.5f
         };
 
-        UIButton structuresPageBtn = new("Structure Catalog", 1.0f)
+        UIText info = new("Structify, the ever growing structure mod.", 0.9f)
         {
-            VAlign = 0.1f,
+            Top = { Pixels = 60 },
             HAlign = 0.5f,
+            TextColor = PrimaryColor
+        };
+
+        UIButton structuresPageBtn = new(">> Click to View Structures <<", 0.7f, updateWidth: true, largeText: true)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f,
         };
         
+        structuresPageBtn.SetTextColor(SecondaryColor);
         structuresPageBtn.OnLeftClick += (evt, elm) =>
         {
             HideHomePage();
             ShowStructuresPage();
+        };
+
+        string newBuilders = Builders.GetCurrentBuilders();
+        string oldBuilders = Builders.GetPreviousBuilders();
+
+        string thankYou = 
+            $"Thank you to [c/{SecondaryColorHex}:{newBuilders}] and the previous builders [c/{SecondaryColorHex}:{oldBuilders}] for helping!";
+
+        UIText someText = new(thankYou, 0.9f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.85f,
+            TextColor = PrimaryColor,
+            Width = { Pixels = MainPanelWidth }
         };
 
         UIButton discordBtn = new("Discord", 1.0f)
@@ -57,16 +85,52 @@ public class StructureCatalogUI : DraggableUIPanelState
         {
             Terraria.Utils.OpenToURL("https://discord.gg/j8HQZZ76r8");
         };
-        
-        // todo: tell people how to submit their structures (show item IDs of structure wands in panel?)
-        // todo: credits
-        // todo: github
+
+        UIButton gitHubBtn = new("GitHub", 1.0f)
+        {
+            HAlign = 0.0f,
+            VAlign = 1.0f
+        };
+
+        gitHubBtn.OnLeftClick += (evt, elm) =>
+        {
+            Terraria.Utils.OpenToURL("https://github.com/Valks-Terraria-Mods/Structify");
+        };
 
         _pageHome.Append(title);
+        _pageHome.Append(info);
+        _pageHome.Append(someText);
         _pageHome.Append(structuresPageBtn);
         _pageHome.Append(discordBtn);
+        _pageHome.Append(gitHubBtn);
 
         Panel.Append(_pageHome);
+    }
+    
+    /// <summary>
+    /// Wraps each character of <paramref name="text"/> in a [c/rrggbb:char] tag,
+    /// interpolating from <paramref name="start"/> to <paramref name="end"/>.
+    /// </summary>
+    public static string GradientText(string text, Color start, Color end)
+    {
+        if (string.IsNullOrEmpty(text))
+            return "";
+
+        StringBuilder sb = new();
+        int len = text.Length;
+        for (int i = 0; i < len; i++)
+        {
+            float t = i / (float)(len - 1);
+            Color c = new Color(
+                (byte)MathHelper.Lerp(start.R, end.R, t),
+                (byte)MathHelper.Lerp(start.G, end.G, t),
+                (byte)MathHelper.Lerp(start.B, end.B, t)
+            );
+            // format as RRBBGG
+            string hex = $"{c.R:X2}{c.G:X2}{c.B:X2}";
+            sb.Append($"[c/{hex}:{text[i]}]");
+        }
+        return sb.ToString();
     }
 
     private void HideHomePage()
@@ -126,7 +190,7 @@ public class StructureCatalogUI : DraggableUIPanelState
 
     private UIButton CreateGoBackToHomePageBtn()
     {
-        UIButton button = new("Go Back", new Color(50, 50, 50), textScale: 1.0f)
+        UIButton button = new("Go Back", BackgroundColor, textScale: 1.0f)
         {
             HAlign = 0.0f,
             VAlign = 1.0f
@@ -143,7 +207,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     
     private UIButton CreatePlaceStructureBtn()
     {
-        UIButton button = new("Place Structure", new Color(50, 50, 50), textScale: 1.0f)
+        UIButton button = new("Place Structure", BackgroundColor, textScale: 1.0f)
         {
             HAlign = 0.5f,
             VAlign = 1.0f
@@ -161,7 +225,7 @@ public class StructureCatalogUI : DraggableUIPanelState
             else
             {
                 int needed = _selectedStructure.Cost - GetPlayerCoinCount();
-                Main.NewText($"[c/{PrimaryColor}:Could not purchase] [c/{SecondaryColor}:{_selectedStructure.DisplayName}] [c/{PrimaryColor}:because you are short by] {FormatPrice(needed)}[c/{PrimaryColor}:.]");
+                Main.NewText($"[c/{SecondaryColorHex}:!!!] [c/{PrimaryColorHex}:Could not purchase] [c/{SecondaryColorHex}:{_selectedStructure.DisplayName}] [c/{PrimaryColorHex}:because you are short by] {FormatPrice(needed)}[c/{PrimaryColorHex}:.]");
             }
         };
 
@@ -194,7 +258,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         
         itemPanel.OnLeftClick += (evt, elm) =>
         {
-            title.SetText($"[c/{SecondaryColor}:{structure.DisplayName}]");
+            title.SetText($"[c/{SecondaryColorHex}:{structure.DisplayName}]");
             description.SetText(GetInfo(structure));
             _selectedStructure = structure;
         };
@@ -204,7 +268,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     
     private static UIText CreateInfoTitle()
     {
-        return new UIText($"[c/{SecondaryColor}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
+        return new UIText($"[c/{SecondaryColorHex}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
         {
             Width = { Percent = 1.0f },
             HAlign = 0.5f
@@ -271,25 +335,25 @@ public class StructureCatalogUI : DraggableUIPanelState
         string info = $"{structure.Description}";
         
         if (structure.NPCs > 0)
-            info += $"\nHas [c/{SecondaryColor}:{structure.NPCs}] NPC rooms.";
+            info += $"\nHas [c/{SecondaryColorHex}:{structure.NPCs}] NPC rooms.";
 
         info += "\n";
         
         if (!structure.Procedural && structure.Offset > 0)
         {
-            info += $"\nRooted [c/{SecondaryColor}:{structure.Offset}] tiles beneath the surface.";
+            info += $"\nRooted [c/{SecondaryColorHex}:{structure.Offset}] tiles beneath the surface.";
         }
 
         if (!structure.Procedural)
         {
             string path = $"Schematics/{structure.Schematic}.shstruct";
             Point16 dimensions = Generator.GetStructureDimensions(path, ModContent.GetInstance<Structify>());
-            info += $"\nSize: [c/{SecondaryColor}:{dimensions.X}] x [c/{SecondaryColor}:{dimensions.Y}]";
+            info += $"\nSize: [c/{SecondaryColorHex}:{dimensions.X}] x [c/{SecondaryColorHex}:{dimensions.Y}]";
         }
 
         info += $"\nCost: {FormatPrice(structure.Cost)}";
 
-        info += $"\n\nBuilt by [c/{SecondaryColor}:{FormatAuthors(structure.Authors)}].";
+        info += $"\n\nBuilt by [c/{SecondaryColorHex}:{FormatAuthors(structure.Authors)}].";
         
         return info;
     }
@@ -307,7 +371,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         if (copper   > 0) parts.Add($"{copper} copper");
 
         if (parts.Count == 0)
-            return $"[c/{PrimaryColor}:No value]"; // Dark Gray (aka Color.Gray)
+            return $"[c/{PrimaryColorHex}:No value]"; // Dark Gray (aka Color.Gray)
 
         string combined = string.Join(" ", parts);
         

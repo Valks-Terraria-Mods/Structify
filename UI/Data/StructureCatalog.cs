@@ -8,11 +8,32 @@ public static class StructureCatalog
     [
         new Structure
         {
-            Schematic = "BossArena",
-            DisplayName = "Boss Arena",
-            Description = "A small section of an arena meant to be stacked adjacently with itself.",
+            Schematic = "SmallHouse1",
+            DisplayName = "Small House",
+            Description = "A small house that comes with a basement.",
+            NPCs = 1,
             Cost = 500,
-            Offset = 4,
+            Offset = 5,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "MediumHouse1",
+            DisplayName = "Medium House",
+            Description = "A medium house that comes with a basement.",
+            NPCs = 2,
+            Cost = 1000,
+            Offset = 6,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "LargeHouse1",
+            DisplayName = "Large House",
+            Description = "A large house that comes with a basement and an actic.",
+            NPCs = 3,
+            Cost = 1500,
+            Offset = 6,
             Authors = [Builders.Valkyrienyanko]
         },
         new Structure
@@ -23,6 +44,15 @@ public static class StructureCatalog
             NPCs = 3,
             Cost = 30000,
             Offset = 15,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
+            Schematic = "BossArena",
+            DisplayName = "Boss Arena",
+            Description = "A small section of an arena meant to be stacked adjacently with itself.",
+            Cost = 500,
+            Offset = 4,
             Authors = [Builders.Valkyrienyanko]
         },
         new Structure
@@ -61,36 +91,6 @@ public static class StructureCatalog
             Cost = 500,
             Offset = 4,
             Authors = [Builders.Toast]
-        },
-        new Structure
-        {
-            Schematic = "LargeHouse1",
-            DisplayName = "Large House",
-            Description = "A large house that comes with a basement and an actic.",
-            NPCs = 3,
-            Cost = 1500,
-            Offset = 6,
-            Authors = [Builders.Valkyrienyanko]
-        },
-        new Structure
-        {
-            Schematic = "MediumHouse1",
-            DisplayName = "Medium House",
-            Description = "A medium house that comes with a basement.",
-            NPCs = 2,
-            Cost = 1000,
-            Offset = 6,
-            Authors = [Builders.Valkyrienyanko]
-        },
-        new Structure
-        {
-            Schematic = "SmallHouse1",
-            DisplayName = "Small House",
-            Description = "A small house that comes with a basement.",
-            NPCs = 1,
-            Cost = 500,
-            Offset = 5,
-            Authors = [Builders.Valkyrienyanko]
         },
         new Structure
         {
