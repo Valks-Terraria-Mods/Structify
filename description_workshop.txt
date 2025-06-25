@@ -1,23 +1,7 @@
+This mod adds several structures for you to place in the world.
+
 [h2]How to Use[/h2]
 Set and use the "Structure Catalog" keybind in-game.
-
-[h2]Structures[/h2]
-- Small House
-- Medium House
-- Large House
-- Castle
-- Tower Gate
-- Greenhouse
-- Overgrown House
-- Fishing Pond
-- 3 Types of Prison Cell Designs
-- Underground House
-- Boss Arena
-- Wall of Flesh Arena
-- Boat
-- Underwater Structure
-- Hellavator
-- Jungle Farm
 
 [h2]Submissions[/h2]
 Want to see your structure in this mod? Learn how to contribute in the discord. {ModHomepage}

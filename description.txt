@@ -1,3 +1,5 @@
+This mod adds several structures for you to place in the world.
+
 Set and use the "Structure Catalog" keybind in-game.
 
 Join the discord if you would like to submit a new structure. https://discord.gg/j8HQZZ76r8

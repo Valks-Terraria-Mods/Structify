@@ -1,5 +1,5 @@
 displayName = Structify
 author = valkyrienyanko
-version = 0.1.67
+version = 0.1.68
 homepage = https://discord.gg/j8HQZZ76r8
 modReferences = StructureHelper
