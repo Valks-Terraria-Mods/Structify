@@ -47,12 +47,34 @@ public class StructureSilhouette : ModPlayer
         if (_structure.Procedural)
         {
             Hellavator.Build(Mod, Main.player[Main.myPlayer], mPos);
+            return;
         }
-        else
+
+        if (_structure.Schematic == "PylonUniversal")
         {
-            StructureUtils.Generate(_structure.Schematic, _structure.Offset, Mod, mPos);
+            Player player = Main.LocalPlayer;
+
+            string biomeSuffix = BiomeConditions.FirstOrDefault(kvp => kvp.Value(player)).Key ?? "Universal";
+            string schematic = "Pylon" + biomeSuffix;
+            
+            StructureUtils.Generate(schematic, _structure.Offset, Mod, mPos);
+            return;
         }
+
+        StructureUtils.Generate(_structure.Schematic, _structure.Offset, Mod, mPos);
     }
+    
+    private static readonly Dictionary<string, Func<Player, bool>> BiomeConditions = new()
+    {
+        ["Cavern"]    = p => p.ZoneNormalCaverns,
+        ["Desert"]    = p => p.ZoneDesert || p.ZoneUndergroundDesert,
+        ["Forest"]    = p => p.ZoneForest,
+        ["Hallowed"]  = p => p.ZoneHallow,
+        ["Jungle"]    = p => p.ZoneJungle,
+        ["Mushroom"]  = p => p.ZoneGlowshroom,
+        ["Ocean"]     = p => p.ZoneBeach,
+        ["Snow"]      = p => p.ZoneSnow,
+    };
 
     private void OnRightClick()
     {

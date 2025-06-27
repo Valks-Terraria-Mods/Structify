@@ -8,6 +8,14 @@ public static class StructureCatalog
     [
         new Structure
         {
+            Schematic = "PylonUniversal",
+            DisplayName = "Pylon",
+            Description = "A pylon structure that changes based on what biome you place it in.",
+            Cost = 10000,
+            Authors = [Builders.Valkyrienyanko]
+        },
+        new Structure
+        {
             Schematic = "SmallHouse1",
             DisplayName = "Small House",
             Description = "A small house that comes with a basement.",
