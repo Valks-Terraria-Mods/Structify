@@ -39,14 +39,15 @@ public class HomepageUI
         string oldBuilders = Builders.GetPreviousBuilders();
 
         string thankYou = 
-            $"Thank you to [c/{Colors.SecondaryHex}:{newBuilders}] and the previous builders [c/{Colors.SecondaryHex}:{oldBuilders}] for helping!";
+            $"Thank you to [c/{Colors.SecondaryHex}:{newBuilders}] and the previous builders\n[c/{Colors.SecondaryHex}:{oldBuilders}] for helping!";
 
         UIText someText = new(thankYou, 0.9f)
         {
             HAlign = 0.5f,
-            VAlign = 0.85f,
+            VAlign = 0.80f,
             TextColor = Colors.Primary,
-            Width = { Pixels = StructureCatalogUI.MainPanelWidth }
+            Width = { Pixels = StructureCatalogUI.MainPanelWidth },
+            IsWrapped = true
         };
 
         UIButton discordBtn = new("Discord", 1.0f)
@@ -59,12 +60,16 @@ public class HomepageUI
         {
             Terraria.Utils.OpenToURL("https://discord.gg/j8HQZZ76r8");
         };
+        
+        discordBtn.SetTextColor(Colors.Secondary);
 
         UIButton gitHubBtn = new("GitHub", 1.0f)
         {
             HAlign = 0.0f,
             VAlign = 1.0f
         };
+        
+        gitHubBtn.SetTextColor(Colors.Secondary);
 
         gitHubBtn.OnLeftClick += (evt, elm) =>
         {

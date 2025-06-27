@@ -6,7 +6,7 @@ public static class StructureCatalog
 {
     public static List<Structure> All { get; } =
     [
-        new Structure
+        new()
         {
             Schematic = "PylonUniversal",
             DisplayName = "Pylon",
@@ -14,7 +14,47 @@ public static class StructureCatalog
             Cost = 10000,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
+        {
+            Schematic = "House1_Expination",
+            DisplayName = "Medieval House (Front)",
+            Description = "A detailed house with 2 rooms and an attic.",
+            NPCs = 2,
+            Cost = 2000,
+            Offset = 1,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "House2_Expination",
+            DisplayName = "Medieval House (Side)",
+            Description = "A detailed house with 2 rooms.",
+            NPCs = 2,
+            Cost = 2000,
+            Offset = 1,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "House3_Expination",
+            DisplayName = "Medieval Double House",
+            Description = "A detailed house with 4 rooms and a very small attic.",
+            NPCs = 3,
+            Cost = 2000,
+            Offset = 1,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "House4_Expination",
+            DisplayName = "Medieval Blacksmith",
+            Description = "A detailed blacksmith with various workstations.",
+            NPCs = 1,
+            Cost = 2000,
+            Offset = 1,
+            Authors = [Builders.Expination]
+        },
+        new()
         {
             Schematic = "SmallHouse1",
             DisplayName = "Small House",
@@ -24,7 +64,7 @@ public static class StructureCatalog
             Offset = 5,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "MediumHouse1",
             DisplayName = "Medium House",
@@ -34,7 +74,7 @@ public static class StructureCatalog
             Offset = 6,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "LargeHouse1",
             DisplayName = "Large House",
@@ -44,7 +84,7 @@ public static class StructureCatalog
             Offset = 6,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "Castle1",
             DisplayName = "Castle",
@@ -54,7 +94,7 @@ public static class StructureCatalog
             Offset = 15,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "BossArena",
             DisplayName = "Boss Arena",
@@ -63,7 +103,7 @@ public static class StructureCatalog
             Offset = 4,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "FishingPond1",
             DisplayName = "Fishing Pond",
@@ -73,7 +113,7 @@ public static class StructureCatalog
             Offset = 7,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "Greenhouse1",
             DisplayName = "Greenhouse",
@@ -82,7 +122,7 @@ public static class StructureCatalog
             Cost = 2500,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "Greenhouse2",
             DisplayName = "Overgrown House",
@@ -91,7 +131,7 @@ public static class StructureCatalog
             Offset = 16,
             Authors = [Builders.Grim]
         },
-        new Structure
+        new()
         {
             Schematic = "JungleFarm",
             DisplayName = "Jungle Farm",
@@ -100,7 +140,7 @@ public static class StructureCatalog
             Offset = 4,
             Authors = [Builders.Toast]
         },
-        new Structure
+        new()
         {
             Schematic = "PrisonCell1",
             DisplayName = "Underground Prison Cell",
@@ -109,7 +149,7 @@ public static class StructureCatalog
             Cost = 100,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "PrisonCell2",
             DisplayName = "Wide Prison Cell",
@@ -118,7 +158,7 @@ public static class StructureCatalog
             Cost = 100,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "PrisonCell3",
             DisplayName = "Sky Prison Cell",
@@ -127,7 +167,7 @@ public static class StructureCatalog
             Cost = 100,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "Ship1",
             DisplayName = "Boat",
@@ -136,7 +176,7 @@ public static class StructureCatalog
             Offset = 5,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "TowerGate1",
             DisplayName = "Tower Gate",
@@ -145,7 +185,7 @@ public static class StructureCatalog
             Offset = 2,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "UndergroundHouse1",
             DisplayName = "Underground House",
@@ -154,7 +194,7 @@ public static class StructureCatalog
             Offset = 1,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "UnderWaterDome",
             DisplayName = "Underwater Dome",
@@ -162,7 +202,7 @@ public static class StructureCatalog
             Cost = 1000,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             Schematic = "WallOfFleshArena",
             DisplayName = "Wall of Flesh Arena",
@@ -171,7 +211,7 @@ public static class StructureCatalog
             Offset = 5,
             Authors = [Builders.Valkyrienyanko]
         },
-        new Structure
+        new()
         {
             DisplayName = "Hellavator",
             Description = "An elevator to hell.",
