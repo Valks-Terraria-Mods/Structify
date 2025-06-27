@@ -50,6 +50,19 @@ public class HomepageUI
             IsWrapped = true
         };
 
+        UIButton submitStructureBtn = new("Submit Your Own Structure", 1.0f)
+        {
+            HAlign = 0.5f,
+            VAlign = 1.0f
+        };
+        
+        submitStructureBtn.SetTextColor(Colors.Secondary);
+
+        submitStructureBtn.OnLeftClick += (evt, elm) =>
+        {
+            Terraria.Utils.OpenToURL("https://github.com/Valks-Terraria-Mods/Structify/wiki/How-to-Submit-your-Structure");
+        };
+
         UIButton discordBtn = new("Discord", 1.0f)
         {
             HAlign = 1.0f,
@@ -81,6 +94,7 @@ public class HomepageUI
         _pageHome.Append(someText);
         _pageHome.Append(structuresPageBtn);
         _pageHome.Append(discordBtn);
+        _pageHome.Append(submitStructureBtn);
         _pageHome.Append(gitHubBtn);
 
         panel.Append(_pageHome);
