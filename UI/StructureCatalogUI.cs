@@ -1,23 +1,14 @@
-using System.Text;
 using Structify.Common.Players;
 using Structify.Utils;
-using StructureHelper.API;
 using Terraria.GameContent.UI.Elements;
 
 namespace Structify.UI;
 
 public class StructureCatalogUI : DraggableUIPanelState
 {
-    public const string PrimaryColorHex = "969696"; // Gray
-    public const string SecondaryColorHex = "32FF82"; // Green
-    
     private const float MainPanelWidth = 800;
     private const float MainPanelHeight = 400;
 
-    private readonly Color BackgroundColor = new(50, 50, 50); // Blackish
-    private readonly Color PrimaryColor = new(150, 150, 150); // Gray
-    private readonly Color SecondaryColor = new(50, 255, 130); // Green
-    
     private Structure _selectedStructure;
     private UIPanel _pageStructures;
     private UIPanel _pageHome;
@@ -46,7 +37,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         {
             Top = { Pixels = 60 },
             HAlign = 0.5f,
-            TextColor = PrimaryColor
+            TextColor = Colors.Primary
         };
 
         UIButton structuresPageBtn = new(">> Click to View Structures <<", 0.7f, updateWidth: true, largeText: true)
@@ -55,7 +46,7 @@ public class StructureCatalogUI : DraggableUIPanelState
             VAlign = 0.5f,
         };
         
-        structuresPageBtn.SetTextColor(SecondaryColor);
+        structuresPageBtn.SetTextColor(Colors.Secondary);
         structuresPageBtn.OnLeftClick += (evt, elm) =>
         {
             HideHomePage();
@@ -66,13 +57,13 @@ public class StructureCatalogUI : DraggableUIPanelState
         string oldBuilders = Builders.GetPreviousBuilders();
 
         string thankYou = 
-            $"Thank you to [c/{SecondaryColorHex}:{newBuilders}] and the previous builders [c/{SecondaryColorHex}:{oldBuilders}] for helping!";
+            $"Thank you to [c/{Colors.SecondaryHex}:{newBuilders}] and the previous builders [c/{Colors.SecondaryHex}:{oldBuilders}] for helping!";
 
         UIText someText = new(thankYou, 0.9f)
         {
             HAlign = 0.5f,
             VAlign = 0.85f,
-            TextColor = PrimaryColor,
+            TextColor = Colors.Primary,
             Width = { Pixels = MainPanelWidth }
         };
 
@@ -165,7 +156,7 @@ public class StructureCatalogUI : DraggableUIPanelState
 
     private UIButton CreateGoBackToHomePageBtn()
     {
-        UIButton button = new("Go Back", BackgroundColor, textScale: 1.0f)
+        UIButton button = new("Go Back", Colors.Background, textScale: 1.0f)
         {
             HAlign = 0.0f,
             VAlign = 1.0f
@@ -182,7 +173,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     
     private UIButton CreatePlaceStructureBtn()
     {
-        UIButton button = new("Place Structure", BackgroundColor, textScale: 1.0f)
+        UIButton button = new("Place Structure", Colors.Background, textScale: 1.0f)
         {
             HAlign = 0.5f,
             VAlign = 1.0f
@@ -200,7 +191,7 @@ public class StructureCatalogUI : DraggableUIPanelState
             else
             {
                 int needed = _selectedStructure.Cost - Helpers.GetPlayerCoinCount();
-                Main.NewText($"[c/{SecondaryColorHex}:!!!] [c/{PrimaryColorHex}:Could not purchase] [c/{SecondaryColorHex}:{_selectedStructure.DisplayName}] [c/{PrimaryColorHex}:because you are short by] {Helpers.FormatPrice(needed)}[c/{PrimaryColorHex}:.]");
+                Main.NewText($"[c/{Colors.SecondaryHex}:!!!] [c/{Colors.PrimaryHex}:Could not purchase] [c/{Colors.SecondaryHex}:{_selectedStructure.DisplayName}] [c/{Colors.PrimaryHex}:because you are short by] {Helpers.FormatPrice(needed)}[c/{Colors.PrimaryHex}:.]");
             }
         };
 
@@ -220,7 +211,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         
         itemPanel.OnLeftClick += (evt, elm) =>
         {
-            title.SetText($"[c/{SecondaryColorHex}:{structure.DisplayName}]");
+            title.SetText($"[c/{Colors.SecondaryHex}:{structure.DisplayName}]");
             description.SetText(Helpers.GetInfo(structure));
             _selectedStructure = structure;
         };
@@ -230,7 +221,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     
     private static UIText CreateInfoTitle()
     {
-        return new UIText($"[c/{SecondaryColorHex}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
+        return new UIText($"[c/{Colors.SecondaryHex}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
         {
             Width = { Percent = 1.0f },
             HAlign = 0.5f

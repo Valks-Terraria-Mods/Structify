@@ -1,6 +1,7 @@
 using System.Text;
 using Structify.UI;
 using StructureHelper.API;
+using Colors = Structify.UI.Colors;
 
 namespace Structify.Utils;
 
@@ -102,25 +103,25 @@ public static class Helpers
         string info = $"{structure.Description}";
         
         if (structure.NPCs > 0)
-            info += $"\nHas [c/{StructureCatalogUI.SecondaryColorHex}:{structure.NPCs}] NPC rooms.";
+            info += $"\nHas [c/{Colors.SecondaryHex}:{structure.NPCs}] NPC rooms.";
 
         info += "\n";
         
         if (!structure.Procedural && structure.Offset > 0)
         {
-            info += $"\nRooted [c/{StructureCatalogUI.SecondaryColorHex}:{structure.Offset}] tiles beneath the surface.";
+            info += $"\nRooted [c/{Colors.SecondaryHex}:{structure.Offset}] tiles beneath the surface.";
         }
 
         if (!structure.Procedural)
         {
             string path = $"Schematics/{structure.Schematic}.shstruct";
             Point16 dimensions = Generator.GetStructureDimensions(path, ModContent.GetInstance<Structify>());
-            info += $"\nSize: [c/{StructureCatalogUI.SecondaryColorHex}:{dimensions.X}] x [c/{StructureCatalogUI.SecondaryColorHex}:{dimensions.Y}]";
+            info += $"\nSize: [c/{Colors.SecondaryHex}:{dimensions.X}] x [c/{Colors.SecondaryHex}:{dimensions.Y}]";
         }
 
         info += $"\nCost: {FormatPrice(structure.Cost)}";
 
-        info += $"\n\nBuilt by [c/{StructureCatalogUI.SecondaryColorHex}:{FormatAuthors(structure.Authors)}].";
+        info += $"\n\nBuilt by [c/{Colors.SecondaryHex}:{FormatAuthors(structure.Authors)}].";
         
         return info;
     }
