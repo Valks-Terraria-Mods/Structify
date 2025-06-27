@@ -8,14 +8,15 @@ namespace Structify.UI;
 
 public class StructureCatalogUI : DraggableUIPanelState
 {
+    public const string PrimaryColorHex = "969696"; // Gray
+    public const string SecondaryColorHex = "32FF82"; // Green
+    
     private const float MainPanelWidth = 800;
     private const float MainPanelHeight = 400;
 
     private readonly Color BackgroundColor = new(50, 50, 50); // Blackish
     private readonly Color PrimaryColor = new(150, 150, 150); // Gray
     private readonly Color SecondaryColor = new(50, 255, 130); // Green
-    private const string PrimaryColorHex = "969696"; // Gray
-    private const string SecondaryColorHex = "32FF82"; // Green
     
     private Structure _selectedStructure;
     private UIPanel _pageStructures;
@@ -35,7 +36,7 @@ public class StructureCatalogUI : DraggableUIPanelState
     {
         _pageHome = CreatePagePanel();
 
-        UIText title = new(GradientText("Structify", Color.Green, new Color(150, 255, 150)), 0.7f, large: true)
+        UIText title = new(Helpers.GradientText("Structify", Color.Green, new Color(150, 255, 150)), 0.7f, large: true)
         {
             Top = { Pixels = 20 },
             HAlign = 0.5f
@@ -105,32 +106,6 @@ public class StructureCatalogUI : DraggableUIPanelState
         _pageHome.Append(gitHubBtn);
 
         Panel.Append(_pageHome);
-    }
-    
-    /// <summary>
-    /// Wraps each character of <paramref name="text"/> in a [c/rrggbb:char] tag,
-    /// interpolating from <paramref name="start"/> to <paramref name="end"/>.
-    /// </summary>
-    public static string GradientText(string text, Color start, Color end)
-    {
-        if (string.IsNullOrEmpty(text))
-            return "";
-
-        StringBuilder sb = new();
-        int len = text.Length;
-        for (int i = 0; i < len; i++)
-        {
-            float t = i / (float)(len - 1);
-            Color c = new Color(
-                (byte)MathHelper.Lerp(start.R, end.R, t),
-                (byte)MathHelper.Lerp(start.G, end.G, t),
-                (byte)MathHelper.Lerp(start.B, end.B, t)
-            );
-            // format as RRBBGG
-            string hex = $"{c.R:X2}{c.G:X2}{c.B:X2}";
-            sb.Append($"[c/{hex}:{text[i]}]");
-        }
-        return sb.ToString();
     }
 
     private void HideHomePage()
@@ -224,25 +199,12 @@ public class StructureCatalogUI : DraggableUIPanelState
             }
             else
             {
-                int needed = _selectedStructure.Cost - GetPlayerCoinCount();
-                Main.NewText($"[c/{SecondaryColorHex}:!!!] [c/{PrimaryColorHex}:Could not purchase] [c/{SecondaryColorHex}:{_selectedStructure.DisplayName}] [c/{PrimaryColorHex}:because you are short by] {FormatPrice(needed)}[c/{PrimaryColorHex}:.]");
+                int needed = _selectedStructure.Cost - Helpers.GetPlayerCoinCount();
+                Main.NewText($"[c/{SecondaryColorHex}:!!!] [c/{PrimaryColorHex}:Could not purchase] [c/{SecondaryColorHex}:{_selectedStructure.DisplayName}] [c/{PrimaryColorHex}:because you are short by] {Helpers.FormatPrice(needed)}[c/{PrimaryColorHex}:.]");
             }
         };
 
         return button;
-    }
-
-    private static int GetPlayerCoinCount()
-    {
-        Player player = Main.LocalPlayer;
-        
-        int playerCoins = 0;
-        playerCoins += player.CountItem(ItemID.PlatinumCoin) * 1_000_000;
-        playerCoins += player.CountItem(ItemID.GoldCoin)     * 10_000;
-        playerCoins += player.CountItem(ItemID.SilverCoin)   * 100;
-        playerCoins += player.CountItem(ItemID.CopperCoin);
-
-        return playerCoins;
     }
     
     private UIButton CreateItem(Structure structure, UIText title, UIText description)
@@ -259,7 +221,7 @@ public class StructureCatalogUI : DraggableUIPanelState
         itemPanel.OnLeftClick += (evt, elm) =>
         {
             title.SetText($"[c/{SecondaryColorHex}:{structure.DisplayName}]");
-            description.SetText(GetInfo(structure));
+            description.SetText(Helpers.GetInfo(structure));
             _selectedStructure = structure;
         };
         
@@ -277,7 +239,7 @@ public class StructureCatalogUI : DraggableUIPanelState
 
     private static UIText CreateInfoDescription()
     {
-        return new UIText(GetInfo(StructureCatalog.All[0]), 0.9f)
+        return new UIText(Helpers.GetInfo(StructureCatalog.All[0]), 0.9f)
         {
             Top = { Pixels = 40 },
             Width = { Percent = 1.0f},
@@ -328,87 +290,5 @@ public class StructureCatalogUI : DraggableUIPanelState
         };
 
         return panel;
-    }
-    
-    private static string GetInfo(Structure structure)
-    {
-        string info = $"{structure.Description}";
-        
-        if (structure.NPCs > 0)
-            info += $"\nHas [c/{SecondaryColorHex}:{structure.NPCs}] NPC rooms.";
-
-        info += "\n";
-        
-        if (!structure.Procedural && structure.Offset > 0)
-        {
-            info += $"\nRooted [c/{SecondaryColorHex}:{structure.Offset}] tiles beneath the surface.";
-        }
-
-        if (!structure.Procedural)
-        {
-            string path = $"Schematics/{structure.Schematic}.shstruct";
-            Point16 dimensions = Generator.GetStructureDimensions(path, ModContent.GetInstance<Structify>());
-            info += $"\nSize: [c/{SecondaryColorHex}:{dimensions.X}] x [c/{SecondaryColorHex}:{dimensions.Y}]";
-        }
-
-        info += $"\nCost: {FormatPrice(structure.Cost)}";
-
-        info += $"\n\nBuilt by [c/{SecondaryColorHex}:{FormatAuthors(structure.Authors)}].";
-        
-        return info;
-    }
-    
-    private static string FormatPrice(int price) {
-        int platinum = price / 1_000_000;
-        int gold     = (price /   10_000) % 100;
-        int silver   = (price /      100) % 100;
-        int copper   = price % 100;
-        
-        List<string> parts = [];
-        if (platinum > 0) parts.Add($"{platinum} platinum");
-        if (gold     > 0) parts.Add($"{gold} gold");
-        if (silver   > 0) parts.Add($"{silver} silver");
-        if (copper   > 0) parts.Add($"{copper} copper");
-
-        if (parts.Count == 0)
-            return $"[c/{PrimaryColorHex}:No value]"; // Dark Gray (aka Color.Gray)
-
-        string combined = string.Join(" ", parts);
-        
-        string hex;
-        if (platinum > 0) hex = "E5E4E2";   // Platinum
-        else if (gold > 0) hex = "FFD700";   // Gold
-        else if (silver > 0) hex = "C0C0C0"; // Silver
-        else               hex = "B87333";   // Copper
-        
-        return $"[c/{hex}:{combined}]";
-    }
-
-
-    
-    /// <summary>
-    /// Formats the author string into a nice readable format.
-    /// </summary>
-    private static string FormatAuthors(IEnumerable<string> authors)
-    {
-        List<string> authorList = authors.ToList();
-
-        switch (authorList.Count)
-        {
-            case 0:
-                return string.Empty;
-            case 1:
-                // "A"
-                return authorList[0];
-            case 2:
-                // "A and B"
-                return $"{authorList[0]} and {authorList[1]}";
-        }
-
-        // For 3 or more authors: "A, B and C"
-        IEnumerable<string> allButLast = authorList.Take(authorList.Count - 1);
-        string lastAuthor = authorList.Last();
-
-        return $"{string.Join(", ", allButLast)} and {lastAuthor}";
     }
 }
