@@ -28,7 +28,12 @@ public class StructuresPageUI
         infoPanel.Append(createBtn);
         infoPanel.Append(goBackBtn);
         
-        foreach (UIButton item in StructureCatalog.All.Select(structure => CreateItem(structure, title, description)))
+        // Prevent Terraria from automatically sorting when adding elements to the list
+        list.ManualSortMethod = _ => { };
+
+        IOrderedEnumerable<Structure> ordered = StructureCatalog.All.OrderBy(x => x.DisplayName);
+        
+        foreach (UIButton item in ordered.Select(structure => CreateItem(structure, title, description)))
         {
             list.Add(item);
         }

@@ -16,6 +16,54 @@ public static class StructureCatalog
         },
         new()
         {
+            Schematic = "PineTree1",
+            DisplayName = "Pine Tree 1",
+            Description = "Fully actuated pine tree.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "PineTree2",
+            DisplayName = "Pine Tree 2",
+            Description = "Some leaves are not actuated.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "ForestTree1",
+            DisplayName = "Forest Tree 1",
+            Description = "Some leaves are not actuated.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "ForestTree2",
+            DisplayName = "Forest Tree 2",
+            Description = "Some leaves are not actuated.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "JungleTree1",
+            DisplayName = "Jungle Tree 1",
+            Description = "Some leaves are not actuated.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
+            Schematic = "JungleTree2",
+            DisplayName = "Jungle Tree 2",
+            Description = "Some leaves are not actuated.",
+            Cost = 100,
+            Authors = [Builders.Expination]
+        },
+        new()
+        {
             Schematic = "House1_Expination",
             DisplayName = "Medieval House (Front)",
             Description = "A detailed house with 2 rooms and an attic.",
