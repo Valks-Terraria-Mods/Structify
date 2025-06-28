@@ -19,6 +19,7 @@ public static class StructureCatalog
             Schematic = "PineTree1",
             DisplayName = "Pine Tree 1",
             Description = "Fully actuated pine tree.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
@@ -27,6 +28,7 @@ public static class StructureCatalog
             Schematic = "PineTree2",
             DisplayName = "Pine Tree 2",
             Description = "Some leaves are not actuated.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
@@ -35,6 +37,7 @@ public static class StructureCatalog
             Schematic = "ForestTree1",
             DisplayName = "Forest Tree 1",
             Description = "Some leaves are not actuated.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
@@ -43,6 +46,7 @@ public static class StructureCatalog
             Schematic = "ForestTree2",
             DisplayName = "Forest Tree 2",
             Description = "Some leaves are not actuated.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
@@ -51,6 +55,7 @@ public static class StructureCatalog
             Schematic = "JungleTree1",
             DisplayName = "Jungle Tree 1",
             Description = "Some leaves are not actuated.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
@@ -59,6 +64,7 @@ public static class StructureCatalog
             Schematic = "JungleTree2",
             DisplayName = "Jungle Tree 2",
             Description = "Some leaves are not actuated.",
+            Offset = -1,
             Cost = 100,
             Authors = [Builders.Expination]
         },
