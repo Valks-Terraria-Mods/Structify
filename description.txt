@@ -2,6 +2,9 @@ This mod adds several structures for you to place in the world.
 
 Set and use the "Structure Catalog" keybind in-game.
 
+NEW* Structures can now be previewed in the UI and when placing them.
+NEW* You can now undo structure placements with the "Undo Last Placement" keybind.
+
 Join the discord if you would like to submit a new structure. https://discord.gg/j8HQZZ76r8
 
 Source Code: https://github.com/Valks-Terraria-Mods/Structify
