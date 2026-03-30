@@ -1,7 +1,10 @@
 using Structify.Content.Items;
 using Structify.UI;
+using Structify.UI.StructuresPage;
 using Structify.Utils;
 using StructureHelper.API;
+using Terraria.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Structify.Common.Players;
 
@@ -10,6 +13,7 @@ public class StructureSilhouette : ModPlayer
     private bool _drawOutline;
     private Point16 _dimensions;
     private Structure _structure;
+    private Texture2D _previewTexture;
     
     private bool _previousMouseLeft;
     private bool _previousMouseRight;
@@ -28,6 +32,7 @@ public class StructureSilhouette : ModPlayer
         
         _structure = structure;
         _drawOutline = true;
+        TryRefreshPreviewTexture();
     }
 
     public override void PostUpdate()
@@ -35,14 +40,55 @@ public class StructureSilhouette : ModPlayer
         if (!_drawOutline)
             return;
 
+        if (_previewTexture == null)
+            TryRefreshPreviewTexture();
+
         Point16 mPos = Main.MouseWorld.ToTileCoordinates16();
         DrawDust(mPos);
         HandleClicks(mPos);
     }
 
+    public override void DrawPlayer(Camera camera)
+    {
+        if (!_drawOutline || _previewTexture == null || Player.whoAmI != Main.myPlayer)
+            return;
+
+        Point16 mPos = Main.MouseWorld.ToTileCoordinates16();
+        Point16 bottomLeftAnchor = StructureUtils.GetOrigin(_structure.Offset, _dimensions, mPos);
+
+        Vector2 worldPos = new(bottomLeftAnchor.X * 16f, bottomLeftAnchor.Y * 16f);
+        Vector2 scale = new(
+            (_dimensions.X * 16f) / _previewTexture.Width,
+            (_dimensions.Y * 16f) / _previewTexture.Height);
+
+        Main.EntitySpriteDraw(
+            _previewTexture,
+            worldPos - Main.screenPosition,
+            null,
+            new Color(255, 255, 255, 80),
+            0f,
+            Vector2.Zero,
+            scale,
+            SpriteEffects.None,
+            0f);
+    }
+
+    private void TryRefreshPreviewTexture()
+    {
+        if (_structure == null || _structure.Procedural || string.IsNullOrWhiteSpace(_structure.Schematic))
+        {
+            _previewTexture = null;
+            return;
+        }
+
+        StructurePreviewResult result = StructurePreviewCache.GetOrRequestPreview(_structure);
+        _previewTexture = result.State == StructurePreviewState.Ready ? result.Texture : null;
+    }
+
     private void OnLeftClick(Point16 mPos)
     {
         _drawOutline = false;
+        _previewTexture = null;
 
         if (_structure.Procedural)
         {
@@ -79,6 +125,7 @@ public class StructureSilhouette : ModPlayer
     private void OnRightClick()
     {
         _drawOutline = false;
+        _previewTexture = null;
         
         // Refund player
         GivePlayerCoins(Main.LocalPlayer, _structure.Cost);
