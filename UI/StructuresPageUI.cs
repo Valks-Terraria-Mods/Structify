@@ -1,4 +1,5 @@
 using Structify.Common.Players;
+using Structify.UI.StructuresPage;
 using Structify.Utils;
 using Terraria.GameContent.UI.Elements;
 
@@ -8,23 +9,30 @@ public class StructuresPageUI
 {
     public static void Show(UIPanel panel)
     {
-        UIPanel _pageStructures = StructureCatalogUI.CreatePagePanel();
+        UIPanel pageStructures = StructureCatalogUI.CreatePagePanel();
         
         UIScrollbar scrollBar = CreateScrollBar();
         UIList list = CreateItemList(scrollBar);
         UIPanel infoPanel = CreateInfoPanel();
         
-        _pageStructures.Append(scrollBar);
-        _pageStructures.Append(list);
-        _pageStructures.Append(infoPanel);
+        pageStructures.Append(scrollBar);
+        pageStructures.Append(list);
+        pageStructures.Append(infoPanel);
 
         UIText title = CreateInfoTitle();
         UIText description = CreateInfoDescription();
+        UIPanel metadataPanel = CreateMetadataPanel();
+        UIText metadata = CreateMetadataText();
+        StructurePreviewView previewView = CreatePreviewView();
         UIButton createBtn = CreatePlaceStructureBtn();
-        UIButton goBackBtn = CreateGoBackToHomePageBtn(_pageStructures, panel);
+        UIButton goBackBtn = CreateGoBackToHomePageBtn(pageStructures, panel);
+
+        metadataPanel.Append(metadata);
         
         infoPanel.Append(title);
         infoPanel.Append(description);
+        infoPanel.Append(metadataPanel);
+        infoPanel.Append(previewView);
         infoPanel.Append(createBtn);
         infoPanel.Append(goBackBtn);
         
@@ -33,12 +41,15 @@ public class StructuresPageUI
 
         IOrderedEnumerable<Structure> ordered = StructureCatalog.All.OrderBy(x => x.DisplayName);
         
-        foreach (UIButton item in ordered.Select(structure => CreateItem(structure, title, description)))
+        foreach (UIButton item in ordered.Select(structure => CreateItem(structure, title, description, metadata, previewView)))
         {
             list.Add(item);
         }
+
+        if (StructureCatalog.All.Count > 0)
+            SetStructureSelection(StructureCatalog.All[0], title, description, metadata, previewView);
         
-        panel.Append(_pageStructures);
+        panel.Append(pageStructures);
     }
     
     private static UIButton CreateGoBackToHomePageBtn(UIPanel pageStructures, UIPanel panel)
@@ -46,7 +57,8 @@ public class StructuresPageUI
         UIButton button = new("Go Back", Colors.Background, textScale: 1.0f)
         {
             HAlign = 0.0f,
-            VAlign = 1.0f
+            VAlign = 1.0f,
+            Top = { Pixels = -8 }
         };
 
         button.OnLeftClick += (evt, elm) =>
@@ -63,7 +75,8 @@ public class StructuresPageUI
         UIButton button = new("Place Structure", Colors.Background, textScale: 1.0f)
         {
             HAlign = 0.5f,
-            VAlign = 1.0f
+            VAlign = 1.0f,
+            Top = { Pixels = -8 }
         };
 
         button.OnLeftClick += (evt, elm) =>
@@ -85,7 +98,12 @@ public class StructuresPageUI
         return button;
     }
     
-    private static UIButton CreateItem(Structure structure, UIText title, UIText description)
+    private static UIButton CreateItem(
+        Structure structure,
+        UIText title,
+        UIText description,
+        UIText metadata,
+        StructurePreviewView previewView)
     {
         UIButton itemPanel = new(structure.DisplayName, updateWidth: false)
         {
@@ -98,17 +116,29 @@ public class StructuresPageUI
         
         itemPanel.OnLeftClick += (evt, elm) =>
         {
-            title.SetText($"[c/{Colors.SecondaryHex}:{structure.DisplayName}]");
-            description.SetText(Helpers.GetInfo(structure));
-            StructureCatalogUI.SelectedStructure = structure;
+            SetStructureSelection(structure, title, description, metadata, previewView);
         };
         
         return itemPanel;
     }
+
+    private static void SetStructureSelection(
+        Structure structure,
+        UIText title,
+        UIText description,
+        UIText metadata,
+        StructurePreviewView previewView)
+    {
+        title.SetText($"[c/{Colors.SecondaryHex}:{structure.DisplayName}]");
+        description.SetText(StructureSelectionFormatter.GetDescriptionText(structure));
+        metadata.SetText(StructureSelectionFormatter.GetMetadataText(structure));
+        previewView.SetStructure(structure);
+        StructureCatalogUI.SelectedStructure = structure;
+    }
     
     private static UIText CreateInfoTitle()
     {
-        return new UIText($"[c/{Colors.SecondaryHex}:{StructureCatalog.All[0].DisplayName}]", 0.6f, true)
+        return new UIText(string.Empty, 0.6f, true)
         {
             Width = { Percent = 1.0f },
             HAlign = 0.5f
@@ -117,13 +147,50 @@ public class StructuresPageUI
 
     private static UIText CreateInfoDescription()
     {
-        return new UIText(Helpers.GetInfo(StructureCatalog.All[0]), 0.9f)
+        return new UIText(string.Empty, 0.9f)
         {
-            Top = { Pixels = 40 },
-            Width = { Percent = 1.0f},
+            Top = { Pixels = 42 },
+            Width = { Percent = 1.0f },
             TextOriginX = 0f,
             IsWrapped = true,
             TextColor = Color.Gray
+        };
+    }
+
+    private static UIPanel CreateMetadataPanel()
+    {
+        UIPanel panel = new()
+        {
+            Top = { Pixels = 132 },
+            Width = { Pixels = 270 },
+            Height = { Pixels = 186 },
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.Transparent
+        };
+
+        panel.SetPadding(8f);
+        return panel;
+    }
+
+    private static UIText CreateMetadataText()
+    {
+        return new UIText(string.Empty, 0.9f)
+        {
+            Width = { Percent = 1.0f },
+            TextOriginX = 0f,
+            IsWrapped = false,
+            TextColor = Color.Gray
+        };
+    }
+
+    private static StructurePreviewView CreatePreviewView()
+    {
+        return new StructurePreviewView
+        {
+            Left = { Pixels = 286 },
+            Top = { Pixels = 132 },
+            Width = { Pixels = StructureCatalogUI.MainPanelWidth - 240 - 286 },
+            Height = { Pixels = 186 }
         };
     }
     
