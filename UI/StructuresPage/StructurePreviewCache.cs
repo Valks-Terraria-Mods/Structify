@@ -121,14 +121,16 @@ public static class StructurePreviewCache
         if (!string.IsNullOrWhiteSpace(structure.Schematic))
         {
             yield return $"Content/Previews/{structure.Schematic}";
-            yield return $"Content/Items/{structure.Schematic}";
+            yield break;
         }
 
         string displayNameKey = NormalizeDisplayName(structure.DisplayName);
         if (!string.IsNullOrWhiteSpace(displayNameKey))
         {
             yield return $"Content/Previews/{displayNameKey}";
-            yield return $"Content/Items/{displayNameKey}";
+
+            if (structure.Procedural)
+                yield return $"Content/Items/{displayNameKey}";
         }
     }
 
