@@ -1,4 +1,5 @@
 using Structify.Common.Players;
+using Structify.UI.Elements;
 using Structify.UI.StructuresPage;
 using Structify.Utils;
 using Terraria.GameContent.UI.Elements;
@@ -212,13 +213,13 @@ public class StructuresPageUI
     
     private static UIScrollbar CreateScrollBar()
     {
-        UIScrollbar scrollBar = new()
+        UIScrollbar scrollBar = new BlackScrollbar()
         {
             Left = { Pixels = 200 }
         };
         
         scrollBar.Height.Set(StructureCatalogUI.MainPanelHeight, 0);
-        scrollBar.Width.Set(5, 0f);
+        scrollBar.Width.Set(20, 0f);
         
         return scrollBar;
     }
