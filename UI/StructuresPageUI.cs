@@ -26,6 +26,7 @@ public class StructuresPageUI
         UIText metadata = CreateMetadataText();
         StructurePreviewView previewView = CreatePreviewView();
         UIButton createBtn = CreatePlaceStructureBtn();
+        UIButton undoBtn = CreateUndoPlacementBtn();
         UIButton goBackBtn = CreateGoBackToHomePageBtn(pageStructures, panel);
 
         metadataPanel.Append(metadata);
@@ -35,6 +36,7 @@ public class StructuresPageUI
         infoPanel.Append(metadataPanel);
         infoPanel.Append(previewView);
         infoPanel.Append(createBtn);
+        infoPanel.Append(undoBtn);
         infoPanel.Append(goBackBtn);
         
         // Prevent Terraria from automatically sorting when adding elements to the list
@@ -94,6 +96,24 @@ public class StructuresPageUI
                 int needed = StructureCatalogUI.SelectedStructure.Cost - Helpers.GetPlayerCoinCount();
                 Main.NewText($"[c/{Colors.SecondaryHex}:!!!] [c/{Colors.PrimaryHex}:Could not purchase] [c/{Colors.SecondaryHex}:{StructureCatalogUI.SelectedStructure.DisplayName}] [c/{Colors.PrimaryHex}:because you are short by] {Helpers.FormatPrice(needed)}[c/{Colors.PrimaryHex}:.]");
             }
+        };
+
+        return button;
+    }
+
+    private static UIButton CreateUndoPlacementBtn()
+    {
+        UIButton button = new("Undo", Colors.Background, textScale: 1.0f)
+        {
+            HAlign = 1.0f,
+            VAlign = 1.0f,
+            Top = { Pixels = -8 }
+        };
+
+        button.OnLeftClick += (evt, elm) =>
+        {
+            bool undone = StructureUtils.UndoLastPlacement();
+            Main.NewText(undone ? "Undid last structure placement." : "No recent structure placement to undo.", undone ? Color.LightGreen : Color.Gray);
         };
 
         return button;
